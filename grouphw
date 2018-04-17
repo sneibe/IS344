@@ -138,3 +138,14 @@ CREATE TABLE person_org (
   CONSTRAINT person_org_pk PRIMARY KEY (personid, org_id),
   CONSTRAINT person_org_person_fk FOREIGN KEY (personid) REFERENCES person (personid),
   CONSTRAINT person_org_org_fk FOREIGN KEY (org_id) REFERENCES org (org_id));
+  
+  -The table below creates Services table
+CREATE TABLE services
+servicesid NUMBER (6)
+servicename VARCHAR2 (35) NOT NULL,
+CONSTRAINT services_servicesid_PK Primary Key (servicesid));
+
+—The table below creates Services provided M:M Table
+CREATE TABLE Services_Provided 
+schoolid NUMBER (6),
+servicesid NUMBER (6),
