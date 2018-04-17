@@ -221,3 +221,18 @@ CREATE TABLE allergy (
   all_desc VARCHAR2(50) NOT NULL,
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+  
+  --The code below creates the table for Services
+CREATE TABLE services
+servicesid NUMBER (6)
+servicename VARCHAR2 (35) NOT NULL,
+CONSTRAINT services_servicesid_PK Primary Key (servicesid));
+
+—The table below creates Services provided M:M Table
+CREATE TABLE Services_Provided 
+  schoolid NUMBER (6),
+  servicesid NUMBER (6),
+CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
+CONSTRAINT servicesprov_school1_person_fk FOREIGN KEY (schoolid) REFERENCES organization (org_id),
+CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
+
