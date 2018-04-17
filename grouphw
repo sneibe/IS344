@@ -1,4 +1,5 @@
---Group Project
+--Group Project 
+--Brandon, Stacey, Molly, Alison, Jamie
 
 --Drop tables plus cascade constraints
 DROP TABLE email CASCADE CONSTRAINTS;
