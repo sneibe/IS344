@@ -32,7 +32,7 @@ DROP TABLE person CASCADE CONSTRAINTS;
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
 CREATE TABLE person(
-  personid NUMBER(6) NOT NULL,
+  personid NUMBER(10) NOT NULL,
   lname    VARCHAR2(35) NOT NULL,
   fname    VARCHAR2(35) NOT NULL,
   mname    VARCHAR2 (35),
