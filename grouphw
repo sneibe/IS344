@@ -1,5 +1,5 @@
 --Group Project 
---Brandon Simonis, Stacey Ibe, Molly, Alison, Jamie Berger
+--Brandon S, Stacey, Molly, Alison, Jamie Berger
 
 --Drop tables plus cascade constraints
 DROP TABLE email CASCADE CONSTRAINTS;
@@ -222,14 +222,14 @@ CREATE TABLE medical_history (
 
 --The code below creates the table for Allergy where memberid is the primary key and foreign key
 CREATE TABLE allergy (
-  memberid NUMBER (8) NOT NULL,
+  memberid NUMBER (6) NOT NULL,
   all_desc VARCHAR2(50) NOT NULL,
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
   
   --The code below creates the table for Services
 CREATE TABLE services (
-  servicesid NUMBER(6),
+  servicesid NUMBER(7),
   servicename VARCHAR2 (35) NOT NULL,
   CONSTRAINT services_servicesid_PK Primary Key (servicesid));
 
@@ -248,5 +248,4 @@ CREATE TABLE Services_Used(
     CONSTRAINT servicesused_memberid_PK PRIMARY KEY (memberid,servicesid),
     CONSTRAINT servicesused_memberidfk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
     CONSTRAINT servicesused_servicesid_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
-    
---The code below ceates this table 
+
