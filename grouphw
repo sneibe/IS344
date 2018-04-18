@@ -32,7 +32,7 @@ DROP TABLE person CASCADE CONSTRAINTS;
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
 CREATE TABLE person(
-  personid NUMBER(10) NOT NULL,
+  personid NUMBER(6) NOT NULL,
   lname    VARCHAR2(35) NOT NULL,
   fname    VARCHAR2(35) NOT NULL,
   mname    VARCHAR2 (35),
@@ -222,14 +222,14 @@ CREATE TABLE medical_history (
 
 --The code below creates the table for Allergy where memberid is the primary key and foreign key
 CREATE TABLE allergy (
-  memberid NUMBER (8) NOT NULL,
+  memberid NUMBER (6) NOT NULL,
   all_desc VARCHAR2(50) NOT NULL,
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
   
   --The code below creates the table for Services
 CREATE TABLE services (
-  servicesid NUMBER(7),
+  servicesid NUMBER(6),
   servicename VARCHAR2 (35) NOT NULL,
   CONSTRAINT services_servicesid_PK Primary Key (servicesid));
 
