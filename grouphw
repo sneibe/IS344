@@ -225,15 +225,23 @@ CREATE TABLE allergy (
   
   --The code below creates the table for Services
 CREATE TABLE services
-servicesid NUMBER (6)
-servicename VARCHAR2 (35) NOT NULL,
-CONSTRAINT services_servicesid_PK Primary Key (servicesid));
+  servicesid NUMBER (6)
+  servicename VARCHAR2 (35) NOT NULL,
+  CONSTRAINT services_servicesid_PK Primary Key (servicesid));
 
-—The table below creates Services provided M:M Table
+—-The table below creates Services provided M:M Table
 CREATE TABLE Services_Provided 
   schoolid NUMBER (6),
   servicesid NUMBER (6),
-CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
-CONSTRAINT servicesprov_school1_person_fk FOREIGN KEY (schoolid) REFERENCES organization (org_id),
-CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
+  CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
+  CONSTRAINT servicesprov_school1_person_fk FOREIGN KEY (schoolid) REFERENCES organization (org_id),
+  CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
+  
+--The code below creates the services_used table 
+CREATE TABLE Services_Used
+    memberid NUMBER (6),
+    servicesid NUMBER (6),
+    CONSTRAINT servicesused_memberid_PK PRIMARY KEY (memberid,servicesid),
+    CONSTRAINT servicesused_memberidfk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
+    CONSTRAINT servicesused_servicesid_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
 
