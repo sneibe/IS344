@@ -234,7 +234,7 @@ CREATE TABLE services (
   CONSTRAINT services_servicesid_PK Primary Key (servicesid));
 
 --The table below creates Services provided M:M Table
-CREATE TABLE Services_Provided (
+CREATE TABLE services_provided (
   schoolid NUMBER (6),
   servicesid NUMBER (6),
   CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
@@ -242,7 +242,7 @@ CREATE TABLE Services_Provided (
   CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
   
 --The code below creates the services_used table 
-CREATE TABLE Services_Used(
+CREATE TABLE services_used(
     memberid NUMBER (6),
     servicesid NUMBER (6),
     CONSTRAINT servicesused_memberid_PK PRIMARY KEY (memberid,servicesid),
