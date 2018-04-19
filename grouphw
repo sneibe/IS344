@@ -1,5 +1,7 @@
---Group Project 
---Brandon S, Stacey, Molly, Alison, Jamie Berger
+--Stacey Ibe, Alison Von Haden, Molly Brewer, Brandon Simonis, Jamie Berger
+--IS 344: Group Project 
+--Dr.Jean Pratt
+--May 4,2018
 
 --Drop tables plus cascade constraints
 DROP TABLE email CASCADE CONSTRAINTS;
@@ -26,10 +28,15 @@ DROP TABLE o_ethnicity CASCADE CONSTRAINTS;
 DROP TABLE truancy CASCADE CONSTRAINTS;
 DROP TABLE academic_info CASCADE CONSTRAINTS;
 DROP TABLE person CASCADE CONSTRAINTS;
+DROP TABLE SocialDev CASCADE CONSTRAINTS;
+DROP TABLE healthcondition CASCADE CONSTRAINTS;
+DROP TABLE medstaff CASCADE CONSTRAINTS;
+DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
+DROP TABLE consentform CASCADE CONSTRAINTS;
+DROP TABLE medication CASCADE CONSTRAINTS;
 
 
 --Drop statments for Sequences
-
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -166,16 +173,16 @@ CREATE TABLE address (
   city VARCHAR2 (35) NOT NULL,
   ste CHAR (2) DEFAULT 'WI' NOT NULL,
   zipcode VARCHAR2 (10) NOT NULL,
-  CONSTRAINT addr_addrid_pk PRIMARY KEY(addrid));
+  CONSTRAINT addr_addrid1_pk PRIMARY KEY(addrid));
 
 --The code below creates the Personaddress table which is the associative table that connects address and person 
 --Where addrid and personid are the primary and foreign keys
 CREATE TABLE person_address (
   addrid NUMBER (6) NOT NULL, 
   personid NUMBER (6) NOT NULL,
-  CONSTRAINT personaddr_peraddr_pk PRIMARY KEY (addrid,personid),
-  CONSTRAINT personaddr_personid_fk FOREIGN KEY (personid) REFERENCES person (personid),
-  CONSTRAINT personaddr_addrid_fk FOREIGN KEY (addrid) REFERENCES address (addrid));
+  CONSTRAINT personaddr_peraddr1_pk PRIMARY KEY (addrid,personid),
+  CONSTRAINT personaddr_personid4_fk FOREIGN KEY (personid) REFERENCES person (personid),
+  CONSTRAINT personaddr_addrid6_fk FOREIGN KEY (addrid) REFERENCES address (addrid));
   
 -- The code below creates the table for Organization where org_id is the primary key
 CREATE TABLE org (
@@ -284,3 +291,78 @@ CREATE TABLE allergy (
   all_desc VARCHAR2(50) NOT NULL,
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+  
+
+--The code below creates the table for Consent Form
+CREATE TABLE consentform (
+    conid NUMBER (6) NOT NULL,
+    memberstatus CHAR(1) NOT NULL,
+    paid CHAR(1), 
+    paymenttype CHAR (2) NOT NULL, 
+    paymentamnt NUMBER (10) NOT NULL, 
+    daterecievedpay DATE NOT NULL,
+    dateenteredpay DATE NOT NULL,
+    orienschedule DATE NOT NULL,
+    orientationtime DATE NOT NULL,
+    completedorient DATE NOT NULL,
+    memberid NUMBER (6) NOT NULL,
+    authorizedindid NUMBER (6),
+    staffid NUMBER (6) NOT NULL,
+    CONSTRAINT consentform_cc CHECK (paymenttype IN ('CA', 'CK','MO','SS')),
+    CONSTRAINT consentpay_cc CHECK (paid IN ('Y', 'N')),
+    CONSTRAINT consentform_conid_pk PRIMARY KEY (conid),
+    CONSTRAINT consentform1_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
+    CONSTRAINT consentform_authid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
+    CONSTRAINT consentform_staff_fk FOREIGN KEY (staffid) REFERENCES person (personid));
+
+---The code below creates the table for Social Development 
+CREATE TABLE SocialDev (
+    socialdevid NUMBER (6) NOT NULL,
+    socialdevtype VARCHAR2 (25) NOT NULL,
+    socialdevdesc VARCHAR2 (50) NOT NULL,
+    memberid NUMBER (6) NOT NULL,
+    CONSTRAINT socialdev_socialdevid_pk PRIMARY KEY (socialdevid),
+    CONSTRAINT socialdev_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+
+--The code below creates the table for Medication 
+CREATE TABLE medication (
+    medicationid NUMBER (6) NOT NULL,
+    medname VARCHAR (35) NOT NULL,
+CONSTRAINT medication_medid_pk PRIMARY KEY (medicationid));
+
+--The code below creates the table for Health Condition 
+CREATE TABLE healthcondition (
+    healthcondid NUMBER (6) NOT NULL,
+    healthcondname VARCHAR (25) NOT NULL, 
+    CONSTRAINT healthcondname_CC CHECK (healthcondname IN ('anxiety', 'asthma','attention deficiet hyperactive disorder',
+        'autism', 'bi-polar', 'bleeding disorder' , 'bone coniditon','joint condiiton', 'cancer','depression','diabetes', 'ear infection',
+        'eating disorder', 'epliepsy','seizures','blackouts', 'gastrointestinal disorder', 'bowel disorder', 'migraines', 'headaches',
+        'hearing disability', 'heart disease', 'hepatitis', 'high blood pressure', 'low blood pressure', 'kidney disease', 'mental problems',
+        'emotional problems')),
+    CONSTRAINT healthcon_healthcondid_pk PRIMARY KEY (healthcondid));
+
+--THe code below creates the table for Medical Staff
+CREATE TABLE medstaff (
+    medstaffid NUMBER (6) NOT NULL,
+    memberid NUMBER (6) NOT NULL,
+    jobtype VARCHAR (25) NOT NULL,
+    CONSTRAINT medstaff_medstaffid__pk PRIMARY KEY (medstaffid,memberid),
+    CONSTRAINT medstaff_staffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid),
+    CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+    
+--The code below creates the table for Member Medical Informaton 
+CREATE TABLE mbrmedinfo (
+    memberid NUMBER (6) NOT NULL, 
+    medicationid NUMBER (6) NOT NULL,
+    healthcondid NUMBER (6) NOT NULL,
+    medstaffid NUMBER (6) NOT NULL,
+    amnt_medication NUMBER (10) NOT NULL,
+    how_medication VARCHAR2 (25) NOT NULL,
+    time_medication DATE NOT NULL, 
+    reason_medication VARCHAR (35) NOT NULL,
+    CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,healthcondid,medstaffid),
+    CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
+    CONSTRAINT mbrmedinfo_medid_fk FOREIGN KEY (medicationid) REFERENCES medication (medicationid),
+    CONSTRAINT mbrmedinfo_healthcondid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
+    CONSTRAINT mbrmedinfo_medstaffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid));
+  
