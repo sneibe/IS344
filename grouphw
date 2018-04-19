@@ -23,7 +23,8 @@ DROP TABLE services_used CASCADE CONSTRAINTS;
 DROP TABLE allergy CASCADE CONSTRAINTS;
 DROP TABLE attendance CASCADE CONSTRAINTS;
 DROP TABLE o_ethnicity CASCADE CONSTRAINTS;
-DROP TABLE Truancy CASCADE CONSTRAINTS;
+DROP TABLE truancy CASCADE CONSTRAINTS;
+DROP TABLE academic_info CASCADE CONSTRAINTS;
 DROP TABLE person CASCADE CONSTRAINTS;
 
 
@@ -129,7 +130,19 @@ CREATE TABLE truancy (
   memberid NUMBER (6) NOT NULL,
   truancy_desc VARCHAR (35) NOT NULL,
   CONSTRAINT truancy_pk PRIMARY KEY (memberid),
-   CONSTRAINT truancy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+  CONSTRAINT truancy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+
+--The code below creates the table for academic_info where membrerid is the primary key and foreign key
+--Since we update this each year we will update the students grades and if their parents are satisfied each year
+CREATE TABLE academic_info (
+  memberid NUMBER (6) NOT NULL,
+  grade   VARCHAR2 (35) NOT NULL,
+  g_satis CHAR (1) NOT NULL,
+  held_back CHAR (1) NOT NULL,
+  CONSTRAINT g_statis_cc CHECK (g_satis IN ('Y', 'N')),
+  CONSTRAINT held_back_cc CHECK (held_back IN ('Y', 'N')),
+  CONSTRAINT academic_info_pk PRIMARY KEY (memberid),
+  CONSTRAINT academic_info_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
 
 --The code below creates the Phone table where phoneid is the primary key. Where Phone Types: 'M'= Mobile, 'H'= Home, 'W' = Work
 CREATE TABLE phone (
