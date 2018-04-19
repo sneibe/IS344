@@ -7,22 +7,23 @@ DROP TABLE dobirth CASCADE CONSTRAINTS;
 DROP TABLE familyinfo CASCADE CONSTRAINTS;
 DROP TABLE mbr CASCADE CONSTRAINTS;
 DROP TABLE phone CASCADE CONSTRAINTS;    
-DROP TABLE personphone CASCADE CONSTRAINTS; 
+DROP TABLE person_phone CASCADE CONSTRAINTS; 
 DROP TABLE address CASCADE CONSTRAINTS;
-DROP TABLE personaddress CASCADE CONSTRAINTS; 
+DROP TABLE person_address CASCADE CONSTRAINTS; 
 DROP TABLE person_org CASCADE CONSTRAINTS;
 DROP TABLE org CASCADE CONSTRAINTS;
 DROP TABLE authorized_individual CASCADE CONSTRAINTS;
 DROP TABLE memberreleaseform CASCADE CONSTRAINTS;
 DROP TABLE teacher CASCADE CONSTRAINTS;
 DROP TABLE medical_history CASCADE CONSTRAINTS;
-DROP TABLE lunch CASCADE CONSTRAINTS;
 DROP TABLE hw CASCADE CONSTRAINTS;
 DROP TABLE services CASCADE CONSTRAINTS;
 DROP TABLE services_provided CASCADE CONSTRAINTS;
 DROP TABLE services_used CASCADE CONSTRAINTS;
 DROP TABLE allergy CASCADE CONSTRAINTS;
-
+DROP TABLE attendance CASCADE CONSTRAINTS;
+DROP TABLE o_ethnicity CASCADE CONSTRAINTS;
+DROP TABLE Truancy CASCADE CONSTRAINTS;
 DROP TABLE person CASCADE CONSTRAINTS;
 
 
@@ -40,7 +41,7 @@ CREATE TABLE person(
   CONSTRAINT persongender_cc CHECK (gender IN ('M','F','O')),
   CONSTRAINT personid_pk PRIMARY KEY (personid));
   
---The code below creates a table for Email where emailid is the primary key
+--The code below creates a table for Email where personid is the primary key and foreign key
 CREATE TABLE email (
   personid NUMBER(6) NOT NULL,
   email_add VARCHAR2(35) NOT NULL,
@@ -76,43 +77,70 @@ CREATE TABLE dobirth (
   dob       DATE NOT NULL,
   CONSTRAINT dobirth_pk PRIMARY KEY (birthid));
 
---The code below creates table for Family Information where famid is the primary key
+--The code below creates the table for Family Information where famid is the primary key
+--Check constraint for liveswith, 'B'= Both Parents, 'M'= Mother, 'F'= Father, 'GP'= Grandparent(s), 
+--'G'=Guardian(s), 'R'= Relative(s), 'FP'= Foster Parent(s)
+--Check constraint for free_lunch, 'Y'= Yes, eligible for reduced/free lunch, and 'N' = no, not eligible for reduced/free lunch
 CREATE TABLE familyinfo (
   famid     NUMBER (6) NOT NULL,
   famsize   NUMBER (20) NOT NULL,
   famincome NUMBER (10) NOT NULL,
-  military  CHAR (1) NOT NULL,
-  branch    VARCHAR2(25) NOT NULL,
   liveswith VARCHAR2 (2) NOT NULL,
+  free_lunch CHAR (1) NOT NULL,
+  mil_b_name VARCHAR2 (25) DEFAULT 'None' NOT NULL,
   CONSTRAINT familyinfo_lives_cc CHECK (liveswith IN ('B', 'M', 'F', 'GP', 'G', 'R', 'FP')),
+  CONSTRAINT free_lunch_cc CHECK (free_lunch IN ('Y','N')),
   CONSTRAINT familyinfo_pk PRIMARY KEY (famid));
-
-
+  
 --The code below creates table for Member where memberid is the primary key
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
 CREATE TABLE mbr (
   memberid    NUMBER (6) NOT NULL,
-  ethnicty    VARCHAR2 (2),
-  eth_other   VARCHAR2 (35),
+  ethnicty    VARCHAR2 (2) NOT NULL,
   birthid     NUMBER(6) NOT NULL,
   famid       NUMBER(6) NOT NULL,
   CONSTRAINT mbr_ethnicty_cc CHECK (ethnicty IN ('C', 'AA','AI','AP','HP','ME','O')),
   CONSTRAINT mbr_memberid_pk PRIMARY KEY (memberid),
-  CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (PERSONID),
+  CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
   CONSTRAINT mbr_birthid_fk FOREIGN KEY (birthid) REFERENCES dobirth (birthid),
   CONSTRAINT mbr_famid_fk FOREIGN KEY (famid) REFERENCES familyinfo (famid));
+  
+--The code below creates the table for other ethnicity where memberid is the primary key and foreign key in the table
+CREATE TABLE o_ethnicity (
+  memberid  NUMBER (6) NOT NULL,
+  ethnicity_desc  VARCHAR2(35) NOT NULL,
+  CONSTRAINT o_ethnicity_pk PRIMARY KEY (memberid), 
+  CONSTRAINT o_ethnicity_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+  
+--The code below creates the table for attendance where attendance_id is the primary key and
+--memberid is the foreign key
+CREATE TABLE attendance (
+  attendance_id NUMBER (6) NOT NULL,
+  check_in    DATE NOT NULL,
+  check_out   DATE NOT NULL,
+  ch_in_out_day DATE NOT NULL,
+  memberid    NUMBER (6) NOT NULL,
+  CONSTRAINT attendance_pk PRIMARY KEY (attendance_id),
+  CONSTRAINT attendance_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+
+--The code below creates the table for Truancy where memberid is the primary key and foreign key  
+CREATE TABLE truancy (
+  memberid NUMBER (6) NOT NULL,
+  truancy_desc VARCHAR (35) NOT NULL,
+  CONSTRAINT truancy_pk PRIMARY KEY (memberid),
+   CONSTRAINT truancy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
 --The code below creates the Phone table where phoneid is the primary key. Where Phone Types: 'M'= Mobile, 'H'= Home, 'W' = Work
 CREATE TABLE phone (
-  phoneid NUMBER (6),
+  phoneid NUMBER (6) NOT NULL,
   pnumber NUMBER (10) NOT NULL,
   ptype  CHAR (1) NOT NULL,
   CONSTRAINT phone_ptype_cc CHECK ((ptype='M') OR (ptype='H') OR (ptype = 'W')),
   CONSTRAINT phone_phoneid_pk PRIMARY KEY (phoneid));
 
 --The code below creates the Personphone table which is the associative table that connects phone and person where phonid and personid are the primary and foreign keys
-CREATE TABLE personphone (
+CREATE TABLE person_phone (
   personid NUMBER (6) NOT NULL,
   phoneid NUMBER (6) NOT NULL, 
   CONSTRAINT personphone_personid_fk FOREIGN KEY (personid) REFERENCES person (personid),
@@ -129,9 +157,9 @@ CREATE TABLE address (
 
 --The code below creates the Personaddress table which is the associative table that connects address and person 
 --Where addrid and personid are the primary and foreign keys
-CREATE TABLE personaddress (
-  addrid NUMBER (5) NOT NULL, 
-  personid NUMBER (5) NOT NULL,
+CREATE TABLE person_address (
+  addrid NUMBER (6) NOT NULL, 
+  personid NUMBER (6) NOT NULL,
   CONSTRAINT personaddr_peraddr_pk PRIMARY KEY (addrid,personid),
   CONSTRAINT personaddr_personid_fk FOREIGN KEY (personid) REFERENCES person (personid),
   CONSTRAINT personaddr_addrid_fk FOREIGN KEY (addrid) REFERENCES address (addrid));
@@ -140,6 +168,7 @@ CREATE TABLE personaddress (
 CREATE TABLE org (
   org_id  NUMBER(6) NOT NULL,
   org_name VARCHAR2(35) NOT NULL,
+  fd_phone NUMBER (10) NOT NULL,
   CONSTRAINT org_org_id_pk PRIMARY KEY (org_id));
 
 --The code below creates the table for Person_Org where org_id and personid are the primary and foreign keys
@@ -152,13 +181,14 @@ CREATE TABLE person_org (
 
 --The code below creates the table for Teacher where personid and teacherid are the primary and foreign keys
 --The check constraint in this table to make sure they are entering a a valid school year
---'NA"= not in school 'PK'= preschool,'4K'= 4k, '5K'= 5k, '1'= 1st grade, '2'=2nd grade,'3'= 3rd grade,'4'= 4th grade,'5'= 5th grade,
+--'PK'= preschool,'4K'= 4k, '5K'= 5k, '1'= 1st grade, '2'=2nd grade,'3'= 3rd grade,'4'= 4th grade,'5'= 5th grade,
 --'6'= 6th grade,'7'= 7th grade,'8'= 8th grade,'FR'= Freshman,'SO'= Sophmore,'JR'= Junior,'SR'= Senior
 CREATE TABLE teacher (
   personid NUMBER (6) NOT NULL,
   teacherid NUMBER (6) NOT NULL,
   schoolyear VARCHAR(2) NOT NULL,
-  CONSTRAINT teacher_schoolyear_cc CHECK (schoolyear IN ('NA','PK','4K', '5K', '1', '2','3','4','5','6','7','8','FR','SO','JR','SR')),
+  academicyear DATE NOT NULL,
+  CONSTRAINT teacher_schoolyear_cc CHECK (schoolyear IN ('PK','4K', '5K', '1', '2','3','4','5','6','7','8','FR','SO','JR','SR')),
   CONSTRAINT teacher_pk PRIMARY KEY (personid, teacherid),
   CONSTRAINT teacher_person_fk FOREIGN KEY (personid) REFERENCES person (personid),
   CONSTRAINT teacher_teacher_fk FOREIGN KEY (personid) REFERENCES person (personid));
@@ -169,8 +199,7 @@ CREATE TABLE teacher (
 --Check constraint for computer access is "Y"= Yes, they have permission to access computers or "N" No, they do not give permission to access computers
 --Check constraint for authorized to leave is "A"= Authorized to leave unescorted or "U" = Unauthorized to leave unescorted
 CREATE TABLE memberreleaseform (
-  memberid NUMBER (6) NOT NULL,
-  authorizedindid NUMBER (6) NOT NULL,
+  release_form_id NUMBER(6) NOT NULL,
   liability CHAR (1) DEFAULT 'Y' NOT NULL,
   transportation CHAR (1) DEFAULT 'Y' NOT NULL,
   photo_video CHAR (1) DEFAULT 'Y' NOT NULL,
@@ -178,9 +207,11 @@ CREATE TABLE memberreleaseform (
   computer_policy CHAR (1) DEFAULT 'Y' NOT NULL,
   computer_access CHAR (1) NOT NULL,
   leave_club CHAR (1) NOT NULL,
-  electronics CHAR (1),
+  electronics CHAR (1) DEFAULT 'N' NOT NULL,
   memberdatesigned DATE NOT NULL,
   authorizedinddatesigned DATE NOT NULL,
+  memberid NUMBER (6) NOT NULL,
+  authorizedindid NUMBER (6) NOT NULL,
   CONSTRAINT liability_CC CHECK (liability IN ('Y', 'N')),
   CONSTRAINT transportation_CC CHECK (transportation IN ('Y', 'N')),
   CONSTRAINT phot_video_CC CHECK (photo_video IN ('Y', 'N')),
@@ -189,25 +220,39 @@ CREATE TABLE memberreleaseform (
   CONSTRAINT computer_access_CC CHECK (computer_access IN ('Y', 'N')),
   CONSTRAINT leave_club_CC CHECK (leave_club IN ('A', 'U')),
   CONSTRAINT electronics_CC CHECK (electronics IN ('Y', 'N')),
-  CONSTRAINT memberreleaseform_pk PRIMARY KEY (memberid, authorizedindid),
+  CONSTRAINT memberreleaseform_pk PRIMARY KEY (release_form_id),
   CONSTRAINT memberreleaseform_member_fk FOREIGN KEY (memberid) REFERENCES person (personid),
   CONSTRAINT memberrealease_authorized_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid));
  
---The code below creates the table for Lunch where memberid is the primary and foreign key
---Check constraint for free_lunch, "Y"= Yes, they are eligible for free lunch and "N"= No, they are not eligible for free lunch
-CREATE TABLE lunch (
-  memberid NUMBER (6) NOT NULL,
-  free_lunch CHAR (1) NOT NULL,
-  CONSTRAINTS free_lunch_cc CHECK (free_lunch IN ('Y', 'N')),
-  CONSTRAINT lunch_pk PRIMARY KEY (memberid),
-  CONSTRAINT lunch_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
   
 --The code below creates the table for homework(hw) where hw_id is the primary key
 CREATE TABLE hw (
   hw_id NUMBER (6) NOT NULL,
-  subject VARCHAR2(35) NOT NULL,
+  hw_desc VARCHAR2(35) NOT NULL,
   CONSTRAINT hw_pk PRIMARY KEY (hw_id));
   
+  --The code below creates the table for Services where servicesid is the primary key
+CREATE TABLE services (
+  servicesid NUMBER(6),
+  servicename VARCHAR2 (35) NOT NULL,
+  CONSTRAINT services_servicesid_PK PRIMARY KEY (servicesid));
+
+--The table below creates Services provided M:M Table where schoolid and servicesid becomes the primary and foreign keys
+CREATE TABLE services_provided (
+  schoolid NUMBER (6),
+  servicesid NUMBER (6),
+  CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
+  CONSTRAINT servicesprov_school1_person_fk FOREIGN KEY (schoolid) REFERENCES org (org_id),
+  CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
+  
+--The code below creates the services_used table where the memberid and servicesid becomes the primary and foreign keys
+CREATE TABLE services_used(
+    memberid NUMBER (6),
+    servicesid NUMBER (6),
+    CONSTRAINT servicesused_memberid_PK PRIMARY KEY (memberid,servicesid),
+    CONSTRAINT servicesused_memberidfk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
+    CONSTRAINT servicesused_servicesid_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
+    
 --The code below creates the table for Medical History where memberid is the primary and foreign key
 --Check constraint for immunization and counseling, "Y"= Yes and "N"= No
 CREATE TABLE medical_history (
@@ -226,26 +271,3 @@ CREATE TABLE allergy (
   all_desc VARCHAR2(50) NOT NULL,
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
-  
-  --The code below creates the table for Services
-CREATE TABLE services (
-  servicesid NUMBER(6),
-  servicename VARCHAR2 (35) NOT NULL,
-  CONSTRAINT services_servicesid_PK Primary Key (servicesid));
-
---The table below creates Services provided M:M Table
-CREATE TABLE services_provided (
-  schoolid NUMBER (6),
-  servicesid NUMBER (6),
-  CONSTRAINT servicesprov_school_pk PRIMARY KEY (schoolid, servicesid),
-  CONSTRAINT servicesprov_school1_person_fk FOREIGN KEY (schoolid) REFERENCES org (org_id),
-  CONSTRAINT servicesprov_service_org_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
-  
---The code below creates the services_used table 
-CREATE TABLE services_used(
-    memberid NUMBER (6),
-    servicesid NUMBER (6),
-    CONSTRAINT servicesused_memberid_PK PRIMARY KEY (memberid,servicesid),
-    CONSTRAINT servicesused_memberidfk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
-    CONSTRAINT servicesused_servicesid_fk FOREIGN KEY (servicesid) REFERENCES services (servicesid));
-
