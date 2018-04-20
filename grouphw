@@ -149,7 +149,8 @@ CREATE TABLE academic_info (
   CONSTRAINT academic_info_pk PRIMARY KEY (memberid),
   CONSTRAINT academic_info_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
 
---The code below creates the Phone table where phoneid is the primary key. Where Phone Types: 'M'= Mobile, 'H'= Home, 'W' = Work
+--The code below creates the Phone table where phoneid is the primary key. 
+--Check constraint for ptype: 'M'= Mobile, 'H'= Home, 'W' = Work
 CREATE TABLE phone (
   phoneid NUMBER (6) NOT NULL,
   pnumber NUMBER (10) NOT NULL,
