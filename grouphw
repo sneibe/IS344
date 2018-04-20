@@ -64,7 +64,6 @@ CREATE TABLE authorized_individual (
   authorizedindid NUMBER(6) NOT NULL,
   memberid        NUMBER(6) NOT NULL,
   relationship    VARCHAR2(2) NOT NULL,
-  orelationship   VARCHAR2(25),
   emg_cont        CHAR(1) NOT NULL,
   auth_pickup     CHAR(1) NOT NULL,
   headofhouse     CHAR(1) NOT NULL,
@@ -292,7 +291,9 @@ CREATE TABLE allergy (
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
   
 
---The code below creates the table for Consent Form
+--The code below creates the table for Consent Form where conid is the primary key and foreign keys are memberid, authorizedindid and staffid
+--Check constraint for memberstatus: 'G'= Guest, 'N'= New Member,'R'= Returning Member
+--Check constraint for paymenttype: 'CA'= Cash, 'CK'= Check,'MO'= Money Order,'SS'= Scholarship
 CREATE TABLE consentform (
     conid NUMBER (6) NOT NULL,
     memberstatus CHAR(1) NOT NULL,
@@ -307,6 +308,7 @@ CREATE TABLE consentform (
     memberid NUMBER (6) NOT NULL,
     authorizedindid NUMBER (6),
     staffid NUMBER (6) NOT NULL,
+    CONSTRAINT consentformmemberstatus_cc CHECK (memberstatus IN ('G', 'N','R')),
     CONSTRAINT consentform_cc CHECK (paymenttype IN ('CA', 'CK','MO','SS')),
     CONSTRAINT consentpay_cc CHECK (paid IN ('Y', 'N')),
     CONSTRAINT consentform_conid_pk PRIMARY KEY (conid),
@@ -314,48 +316,55 @@ CREATE TABLE consentform (
     CONSTRAINT consentform_authid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
     CONSTRAINT consentform_staff_fk FOREIGN KEY (staffid) REFERENCES person (personid));
 
----The code below creates the table for Social Development 
+--The code below creates the table for Social Development wheresocialdevid is the primary key and the memberid is the foreign key
+--Check constraint for socialdevtype: 'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
 CREATE TABLE SocialDev (
     socialdevid NUMBER (6) NOT NULL,
     socialdevtype VARCHAR2 (25) NOT NULL,
     socialdevdesc VARCHAR2 (50) NOT NULL,
     memberid NUMBER (6) NOT NULL,
+    CONSTRAINT socialdevtype_cc CHECK (socialdevtype IN ('DA', 'LI', 'BU', 'FS')),
     CONSTRAINT socialdev_socialdevid_pk PRIMARY KEY (socialdevid),
     CONSTRAINT socialdev_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
---The code below creates the table for Medication 
+--The code below creates the table for Medication where medicationid is the primary key
 CREATE TABLE medication (
     medicationid NUMBER (6) NOT NULL,
-    medname VARCHAR (35) NOT NULL,
+    medname VARCHAR2 (35) NOT NULL,
 CONSTRAINT medication_medid_pk PRIMARY KEY (medicationid));
 
---The code below creates the table for Health Condition 
+--The code below creates the table for Health Condition where helathcondid is the primary key
+--The check constraint is for the health condition name, we want to make sure whoever is entering the data spells the name right.
+--We us VARCHAR2 (39) because the longest helath condition we track is 39 characters long
 CREATE TABLE healthcondition (
     healthcondid NUMBER (6) NOT NULL,
-    healthcondname VARCHAR (25) NOT NULL, 
-    CONSTRAINT healthcondname_CC CHECK (healthcondname IN ('anxiety', 'asthma','attention deficiet hyperactive disorder',
-        'autism', 'bi-polar', 'bleeding disorder' , 'bone coniditon','joint condiiton', 'cancer','depression','diabetes', 'ear infection',
-        'eating disorder', 'epliepsy','seizures','blackouts', 'gastrointestinal disorder', 'bowel disorder', 'migraines', 'headaches',
-        'hearing disability', 'heart disease', 'hepatitis', 'high blood pressure', 'low blood pressure', 'kidney disease', 'mental problems',
-        'emotional problems')),
+    healthcondname VARCHAR2 (39) NOT NULL, 
+    CONSTRAINT healthcondname_CC CHECK (healthcondname IN ('Anxiety', 'Asthma','Attention deficiet hyperactive disorder',
+        'Autism', 'Bi-polar', 'Bleeding disorder' , 'Bone coniditon','Joint condiiton', 'Cancer','Depression','Diabetes', 'Ear infection',
+        'Eating disorder', 'Epliepsy','seizures','Blackouts', 'Gastrointestinal disorder', 'Bowel disorder', 'Migraines', 'Headaches',
+        'Hearing disability', 'Heart disease', 'Hepatitis', 'High blood pressure', 'Low blood pressure', 'Kidney disease', 'Mental problems',
+        'Emotional problems')),
     CONSTRAINT healthcon_healthcondid_pk PRIMARY KEY (healthcondid));
 
---THe code below creates the table for Medical Staff
+--The code below creates the table for Medical Staff where medstaffid and memberid are the primary and foreign keys
+--Check constraint for job type: 'P' = Physician, 'D' = Doctor
 CREATE TABLE medstaff (
     medstaffid NUMBER (6) NOT NULL,
     memberid NUMBER (6) NOT NULL,
-    jobtype VARCHAR (25) NOT NULL,
+    jobtype CHAR (1) NOT NULL,
+    CONSTRAINT jobtype_cc CHECK (jobtype IN('P', 'D')),
     CONSTRAINT medstaff_medstaffid__pk PRIMARY KEY (medstaffid,memberid),
     CONSTRAINT medstaff_staffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid),
     CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
     
---The code below creates the table for Member Medical Informaton 
+--The code below creates the table for Member Medical Informaton where memberid, medicationid, healthcondid, medstaffid are the primary and foreign keys
+--We use VARCHAR2 (25) for amnt_medication (amount of medication to take) so that the person can identify the units. For example take 2 pills or 3 teaspons 
 CREATE TABLE mbrmedinfo (
     memberid NUMBER (6) NOT NULL, 
     medicationid NUMBER (6) NOT NULL,
     healthcondid NUMBER (6) NOT NULL,
     medstaffid NUMBER (6) NOT NULL,
-    amnt_medication NUMBER (10) NOT NULL,
+    amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
     time_medication DATE NOT NULL, 
     reason_medication VARCHAR (35) NOT NULL,
@@ -364,4 +373,3 @@ CREATE TABLE mbrmedinfo (
     CONSTRAINT mbrmedinfo_medid_fk FOREIGN KEY (medicationid) REFERENCES medication (medicationid),
     CONSTRAINT mbrmedinfo_healthcondid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
     CONSTRAINT mbrmedinfo_medstaffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid));
-  
