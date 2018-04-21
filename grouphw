@@ -60,16 +60,15 @@ CREATE TABLE email (
 --The code below creates table for Authorized Individual where authorizedindid and memberid are the primary and foreign keys
 --Check constraints are for emergency contact, authorized to pick up, head of the house hold and edit account information
 --These constraints are all yes or no questions,so 'Y'= yes and n= 'N'
---Check constraint for relationship: 'P' = Parent, 'GP' = Grandparent, 'G' = Guardian, 'OR' = Other Relationship
+
 CREATE TABLE authorized_individual (
   authorizedindid NUMBER(6) NOT NULL,
   memberid        NUMBER(6) NOT NULL,
-  relationship    VARCHAR2(2) NOT NULL,
+  relationship    VARCHAR2(35) NOT NULL,
   emg_cont        CHAR(1) NOT NULL,
   auth_pickup     CHAR(1) NOT NULL,
   headofhouse     CHAR(1) NOT NULL,
   edit_acct_info  CHAR(1) NOT NULL,
-  CONSTRAINT authorized_relation_cc CHECK (relationship IN ('P', 'GP', 'G', 'OR')),
   CONSTRAINT authorized_emg_cont_cc CHECK (emg_cont IN ('Y', 'N')),
   CONSTRAINT authorized_individual_cc CHECK (auth_pickup IN ('Y', 'N')),
   CONSTRAINT authorized_headofhouse_cc CHECK (headofhouse IN ('Y', 'N')),
@@ -207,7 +206,8 @@ CREATE TABLE teacher (
   personid NUMBER (6) NOT NULL,
   teacherid NUMBER (6) NOT NULL,
   schoolyear VARCHAR(2) NOT NULL,
-  academicyear DATE NOT NULL,
+  fallacademicyear DATE NOT NULL,
+  springacademicyear DATE NOT NULL,
   CONSTRAINT teacher_schoolyear_cc CHECK (schoolyear IN ('PK','4K', '5K', '1', '2','3','4','5','6','7','8','FR','SO','JR','SR')),
   CONSTRAINT teacher_pk PRIMARY KEY (personid, teacherid),
   CONSTRAINT teacher_person_fk FOREIGN KEY (personid) REFERENCES person (personid),
@@ -392,8 +392,24 @@ INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J', 'M');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N', 'M');
 INSERT INTO person (personid, lname, fname, gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire', 'F');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Ben', 'R', 'M');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'England', 'Ben');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kay', 'Mary');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Strong', 'Derek');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Karp', 'David');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ott', 'Scott');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Adam');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Moriah');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Hank', 'Aron');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Aaron', 'M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Hayley', 'F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Mary', 'F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Danny', 'M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Sandy', 'F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'David', 'M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Kyle', 'M');
 
---Insert Statemnts for email
+
+--Insert statements for email
 INSERT INTO email VALUES (2, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (3, 'bsimonis59@gmail.com');
 INSERT INTO email VALUES (5, 'rjohnson@yahoo.com');
@@ -401,4 +417,29 @@ INSERT INTO email VALUES (6, 'mbrewer4@yahoo.com');
 INSERT INTO email VALUES (8, 'eberkley@gmail.com');
 INSERT INTO email VALUES (9, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (10, 'bschupp12@yahoo.com');
+
+--Insert statements for teacher
+INSERT INTO teacher VALUES (2,11,'FR', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (2,15,'8', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
+INSERT INTO teacher VALUES (3,12,'5', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (3,13,'4', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
+INSERT INTO teacher VALUES (4,12,'5', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (5,11,'SO', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (6,14,'5K', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (6,16,'4K', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
+INSERT INTO teacher VALUES (7,15,'7', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (7,12,'6', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
+INSERT INTO teacher VALUES (8,17,'2', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (9,18,'3', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (10,15,'7', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+INSERT INTO teacher VALUES (10,12,'6', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
+
+--Insert statements for authorized individual
+INSERT INTO authorized_individual VALUES (19,2, 'Father', 'Y', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (20,2, 'Mother', 'N', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (21,2, 'Aunt', 'N', 'Y', 'Y','N');
+INSERT INTO authorized_individual VALUES (22,3, 'Father', 'Y', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (23,3, 'Mother', 'N', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (24,3, 'Uncle', 'N', 'Y', 'N','N');
+INSERT INTO authorized_individual VALUES (25,3, 'Brother', 'N', 'N', 'Y','N');
 
