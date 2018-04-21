@@ -36,6 +36,7 @@ DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
 
 --Drop statments for Sequences
+DROP SEQUENCE seqpersonid;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -374,3 +375,30 @@ CREATE TABLE mbrmedinfo (
     CONSTRAINT mbrmedinfo_medid_fk FOREIGN KEY (medicationid) REFERENCES medication (medicationid),
     CONSTRAINT mbrmedinfo_healthcondid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
     CONSTRAINT mbrmedinfo_medstaffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid));
+       
+--Sequence is created to generate numbers for the PK personid
+CREATE SEQUENCE seqpersonid
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+
+--Intert statements for table person 
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Brandon', 'D', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Stacey', 'H', 'F');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Riley');
+INSERT INTO person (personid, lname, fname, mname) VALUES (seqpersonid.NEXTVAL, 'Brewer', 'Molly', 'J');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N', 'M');
+INSERT INTO person (personid, lname, fname, gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire', 'F');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Ben', 'R', 'M');
+
+--Insert Statemnts for email
+INSERT INTO email VALUES (2, 'mjohnson@gmail.com');
+INSERT INTO email VALUES (3, 'bsimonis59@gmail.com');
+INSERT INTO email VALUES (5, 'rjohnson@yahoo.com');
+INSERT INTO email VALUES (6, 'mbrewer4@yahoo.com');
+INSERT INTO email VALUES (8, 'eberkley@gmail.com');
+INSERT INTO email VALUES (9, 'mjohnson@gmail.com');
+INSERT INTO email VALUES (10, 'bschupp12@yahoo.com');
+
