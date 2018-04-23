@@ -312,10 +312,7 @@ CREATE TABLE consentform (
     conid NUMBER (6) NOT NULL,
     memberstatus CHAR(1) NOT NULL,
     paid CHAR(1), 
-    paymenttype CHAR (2) NOT NULL, 
-    paymentamnt NUMBER (10) NOT NULL, 
-    daterecievedpay DATE NOT NULL,
-    dateenteredpay DATE NOT NULL,
+    datedataentered DATE NOT NULL,
     orienschedule DATE NOT NULL,
     orientationtime DATE NOT NULL,
     completedorient CHAR(1) NOT NULL,
@@ -323,12 +320,25 @@ CREATE TABLE consentform (
     authorizedindid NUMBER (6),
     staffid NUMBER (6) NOT NULL,
     CONSTRAINT consentformmemberstatus_cc CHECK (memberstatus IN ('G', 'N','R')),
-    CONSTRAINT consentform_cc CHECK (paymenttype IN ('CA', 'CK','MO','SS')),
     CONSTRAINT consentpay_cc CHECK (paid IN ('Y', 'N')),
+    CONSTRAINT completedorient_cc CHECK (completedorient IN ('Y', 'N')),
     CONSTRAINT consentform_conid_pk PRIMARY KEY (conid),
     CONSTRAINT consentform1_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
     CONSTRAINT consentform_authid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
     CONSTRAINT consentform_staff_fk FOREIGN KEY (staffid) REFERENCES person (personid));
+    
+--The code below creates the table for Payment Information where conid is the primary key and foreign key
+--Check constraint for paymenttype: 'CA'= Cash, 'CK'= Check,'MO'= Money Order,'SS'= Scholarship
+
+CREATE TABLE paymentinfo (
+    conid NUMBER (6) NOT NULL,
+    paymenttype CHAR (2) NOT NULL, 
+    paymentamnt NUMBER (10) NOT NULL, 
+    daterecievedpay DATE NOT NULL,
+    dateenteredpay DATE NOT NULL,
+    CONSTRAINT paymentinfo_cc CHECK (paymenttype IN ('CA', 'CK','MO','SS')),
+    CONSTRAINT paymentinfo_conid_pk PRIMARY KEY (conid),
+    CONSTRAINT paymentinfo2_conid_fk FOREIGN KEY (conid) REFERENCES paymentinfo (conid));  
 
 --The code below creates the table for Social Development wheresocialdevid is the primary key and the memberid is the foreign key
 --Check constraint for socialdevtype: 'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
@@ -794,6 +804,32 @@ INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'7','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'2','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'3','N','Y');
 
+--Sequence is created to generate numbers for the PK conid
+CREATE SEQUENCE seqconid
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--Insert values into the consent form table
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', '10-JAN-2018', '13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'G', 'N', '20-FEB-2018', '23-MAY-2018', TO_DATE('15:30', 'HH24:MI'), 'N', 6, 31, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', '10-OCT-2017', '18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 7, 34, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', '26-JAN-2018', '15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
+
 --Teh code below creates the sequence for the social development ID
 CREATE SEQUENCE socialdevseq
 START WITH 1
@@ -807,40 +843,9 @@ INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students 
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
 
---Sequence is created to generate numbers for the PK conid
-CREATE SEQUENCE seqconid
-START WITH 1
-INCREMENT BY 1
-NOCACHE;
 
---Insert values into the consent form
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CA', 15, '05-JAN-2018', '06-JAN-2018', 
-'15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CK', 15, '15-FEB-2018', '16-FEB-2018',
-'20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CA', 50, '05-DEC-2017', '06-DEC-2017', 
-'08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CK', 15, '10-JAN-2018', '11-JAN-2018', 
-'13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'G', 'N', '', '', '', '', 
-'23-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 6, 31, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', 'SS', 50, '10-OCT-2017', '11-OCT-2017', 
-'18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 7, 34, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', 'MO', 15, '26-JAN-2018', '27-JAN-2018', 
-'15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CK', 30, '15-SEP-2017', '16-SEP-2017', 
-'20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CK', 30, '15-SEP-2017', '16-SEP-2017', 
-'20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
+
+
 
 --The code below creates the sequence for school services.
 drop sequence sevicesseq;
