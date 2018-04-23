@@ -38,6 +38,7 @@ DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
 DROP SEQUENCE seqaddressid;
+DROP SEQUENCE seqphoneid;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -156,13 +157,14 @@ CREATE TABLE phone (
   phoneid NUMBER (6) NOT NULL,
   pnumber NUMBER (10) NOT NULL,
   ptype  CHAR (1) NOT NULL,
-  CONSTRAINT phone_ptype_cc CHECK ((ptype='M') OR (ptype='H') OR (ptype = 'W')),
+  CONSTRAINT phone_ptype_cc CHECK ((ptype='C') OR (ptype='H')),
   CONSTRAINT phone_phoneid_pk PRIMARY KEY (phoneid));
 
 --The code below creates the Personphone table which is the associative table that connects phone and person where phonid and personid are the primary and foreign keys
 CREATE TABLE person_phone (
-  personid NUMBER (6) NOT NULL,
-  phoneid NUMBER (6) NOT NULL, 
+  phoneid NUMBER (6) NOT NULL,
+  personid NUMBER (6) NOT NULL, 
+  CONSTRAINT person_phone_pk PRIMARY KEY (phoneid, personid),
   CONSTRAINT personphone_personid_fk FOREIGN KEY (personid) REFERENCES person (personid),
   CONSTRAINT personphone_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
 
@@ -545,3 +547,61 @@ INSERT INTO person_address VALUES (16,10);
 INSERT INTO person_address VALUES (16,41);
 INSERT INTO person_address VALUES (16,42);
 INSERT INTO person_address VALUES (17,43);
+
+--Sequence created to generate numbers for phoneid
+CREATE SEQUENCE seqphoneid
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--Insert Statements for table phone
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158586969, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158500058, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9207455845, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7156870214, 'H');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9207405560, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9207405562, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7159854562, 'H');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9208431497, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9208580058, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158884566, 'H');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7154200001, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 9208584848, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6128556566, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155147185, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155147186, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 4145158978, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158975654, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155148008, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155148052, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155996212, 'H');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155643234, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158974454, 'H');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6128556969, 'C');
+
+--Insert Statements for table person_phone
+INSERT INTO person_phone VALUES (2,19);
+INSERT INTO person_phone VALUES (3,20);
+INSERT INTO person_phone VALUES (4,21);
+INSERT INTO person_phone VALUES (5,22);
+INSERT INTO person_phone VALUES (5,23);
+INSERT INTO person_phone VALUES (6,24);
+INSERT INTO person_phone VALUES (7,25);
+INSERT INTO person_phone VALUES (8,26);
+INSERT INTO person_phone VALUES (9,27);
+INSERT INTO person_phone VALUES (10,28);
+INSERT INTO person_phone VALUES (11,29);
+INSERT INTO person_phone VALUES (11,30);
+INSERT INTO person_phone VALUES (12,31);
+INSERT INTO person_phone VALUES (13,32);
+INSERT INTO person_phone VALUES (14,33);
+INSERT INTO person_phone VALUES (15,34);
+INSERT INTO person_phone VALUES (16,35);
+INSERT INTO person_phone VALUES (17,36);
+INSERT INTO person_phone VALUES (18,37);
+INSERT INTO person_phone VALUES (19,38);
+INSERT INTO person_phone VALUES (20,39);
+INSERT INTO person_phone VALUES (21,40);
+INSERT INTO person_phone VALUES (22,41);
+INSERT INTO person_phone VALUES (23,42);
+INSERT INTO person_phone VALUES (24,43);
