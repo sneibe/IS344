@@ -318,7 +318,7 @@ CREATE TABLE consentform (
     dateenteredpay DATE NOT NULL,
     orienschedule DATE NOT NULL,
     orientationtime DATE NOT NULL,
-    completedorient DATE NOT NULL,
+    completedorient CHAR(1) NOT NULL,
     memberid NUMBER (6) NOT NULL,
     authorizedindid NUMBER (6),
     staffid NUMBER (6) NOT NULL,
@@ -437,6 +437,8 @@ INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL,
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Hailey', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Mike', 'M');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke', 'F');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kapping', 'Mitchell');
+INSERT INTO person (Personid, lname, fname) VALUES(seqpersonid.NEXTVAL, 'Carter', 'Matthew');
 
 
 
@@ -787,3 +789,38 @@ NOCACHE;
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students very agressive',3);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
+
+--Sequence is created to generate numbers for the PK conid
+CREATE SEQUENCE seqconid
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--Insert values into the consent form
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CA', 15, '05-JAN-2018', '06-JAN-2018', 
+'15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CK', 15, '15-FEB-2018', '16-FEB-2018',
+'20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CA', 50, '05-DEC-2017', '06-DEC-2017', 
+'08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', 'CK', 15, '10-JAN-2018', '11-JAN-2018', 
+'13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'G', 'N', '', '', '', '', 
+'23-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 6, 31, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', 'SS', 50, '10-OCT-2017', '11-OCT-2017', 
+'18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 7, 34, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'R', 'Y', 'MO', 15, '26-JAN-2018', '27-JAN-2018', 
+'15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CK', 30, '15-SEP-2017', '16-SEP-2017', 
+'20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
+INSERT INTO consentform
+VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CK', 30, '15-SEP-2017', '16-SEP-2017', 
+'20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
