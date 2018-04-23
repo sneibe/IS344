@@ -1,4 +1,3 @@
-
 --Stacey Ibe, Alison Von Haden, Molly Brewer, Brandon Simonis, Jamie Berger
 --IS 344: Group Project 
 --Dr.Jean Pratt
@@ -35,7 +34,7 @@ DROP TABLE medication CASCADE CONSTRAINTS;
 DROP TABLE healthcondition CASCADE CONSTRAINTS;
 DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
-DROP TABLE dobirth CASCADE CONSTRAINTS;
+
 
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
@@ -43,6 +42,9 @@ DROP SEQUENCE seqaddressid;
 DROP SEQUENCE seqphoneid;
 DROP SEQUENCE seqord_id;
 DROP SEQUENCE dobirthseq;
+DROP SEQUENCE academicinformationseq;
+DROP SEQUENCE socialdevseq;
+
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -154,7 +156,7 @@ CREATE TABLE academic_info (
   CONSTRAINT g_statis_cc CHECK (g_satis IN ('Y', 'N')),
   CONSTRAINT held_back_cc CHECK (held_back IN ('Y', 'N')),
   CONSTRAINT academic_info_pk PRIMARY KEY (academicid),
-  CONSTRAINT academic_info_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
+  CONSTRAINT academic_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
 
 --The code below creates the Phone table where phoneid is the primary key. 
 --Check constraint for ptype: 'M'= Mobile, 'H'= Home, 'W' = Work
@@ -542,7 +544,7 @@ INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Hudson Street', 'Eau Clair
 --Insert statements for person_address
 INSERT INTO person_address VALUES (2,2);
 INSERT INTO person_address VALUES (2,19);
-INSERT INTO person_address VALUES (2,19);
+INSERT INTO person_address VALUES (2,20);
 INSERT INTO person_address VALUES (3,21);
 INSERT INTO person_address VALUES (4,3);
 INSERT INTO person_address VALUES (4,22);
@@ -694,11 +696,57 @@ INCREMENT BY 1
 NOCACHE;
 
 --The table below creates the date of birth ID 
-INSERT INTO dobirth VALUES (2, '21-OCT-04');
-INSERT INTO dobirth VALUES (3, '31-AUG-05');
-INSERT INTO dobirth VALUES (4, '31-AUG-05');
-INSERT INTO dobirth VALUES (5, '05-OCT-02');
-INSERT INTO dobirth VALUES (6, '04-JUL-06');
-INSERT INTO dobirth VALUES (7, '05-MAR-15');
-INSERT INTO dobirth VALUES (8, '13-APR-13');
-INSERT INTO dobirth VALUES (9, '12-JAN-05');
+INSERT INTO dobirth VALUES (1, '21-OCT-04');
+INSERT INTO dobirth VALUES (2, '31-AUG-05');
+INSERT INTO dobirth VALUES (3, '31-JU-05');
+INSERT INTO dobirth VALUES (4, '05-OCT-02'); 
+INSERT INTO dobirth VALUES (5, '04-JUL-06');
+INSERT INTO dobirth VALUES (6, '05-MAR-15');
+INSERT INTO dobirth VALUES (7, '13-APR-13');
+INSERT INTO dobirth VALUES (8, '12-JAN-05');
+
+--the code below creates the sequence for Academic Information. 
+CREATE SEQUENCE academicinformationseq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--The code below are the insert statements for Academic Information
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,2,'FR','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'5','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'5','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'SO','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'5K','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'7','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'2','Y','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'3','N','Y');
+
+
+--The code below are the insers statement for Homework table
+INSERT INTO hw VALUES (2,'Geometry and history');
+INSERT INTO hw VALUES (3,'Math and reading Harry Potter');
+INSERT INTO hw VALUES (4,'Help with Science of rocks');
+INSERT INTO hw VALUES (5,'Statistics and writing');
+INSERT INTO hw VALUES (6,'Reading chapter books');
+INSERT INTO hw VALUES (7,'Writing');
+INSERT INTO hw VALUES (8,'Social Studies');
+INSERT INTO hw VALUES (9,'Alebgra');
+
+
+--The code below are the insers statement for Truancy Table
+INSERT INTO truancy VALUES (3,'Fighting with students');
+INSERT INTO truancy  VALUES (5,'Skipping class');
+INSERT INTO truancy  VALUES (9,'Bullying');
+
+--Teh code below creates the sequence for the social development ID
+CREATE SEQUENCE socialdevseq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--The code below are the insert statements for the Social Devlopment Table
+--Check constraint for socialdevtype: 
+--'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
+INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students very agressive',3);
+INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
+INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
