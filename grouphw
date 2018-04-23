@@ -1,3 +1,4 @@
+
 --Stacey Ibe, Alison Von Haden, Molly Brewer, Brandon Simonis, Jamie Berger
 --IS 344: Group Project 
 --Dr.Jean Pratt
@@ -34,12 +35,14 @@ DROP TABLE medication CASCADE CONSTRAINTS;
 DROP TABLE healthcondition CASCADE CONSTRAINTS;
 DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
+DROP TABLE dobirth CASCADE CONSTRAINTS;
 
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
 DROP SEQUENCE seqaddressid;
 DROP SEQUENCE seqphoneid;
 DROP SEQUENCE seqord_id;
+DROP SEQUENCE dobirthseq;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -143,13 +146,14 @@ CREATE TABLE truancy (
 --The code below creates the table for academic_info where membrerid is the primary key and foreign key
 --Since we update this each year we will update the students grades and if their parents are satisfied each year
 CREATE TABLE academic_info (
+  academicid NUMBER (6) NOT NULL,
   memberid NUMBER (6) NOT NULL,
   grade   VARCHAR2 (35) NOT NULL,
   g_satis CHAR (1) NOT NULL,
   held_back CHAR (1) NOT NULL,
   CONSTRAINT g_statis_cc CHECK (g_satis IN ('Y', 'N')),
   CONSTRAINT held_back_cc CHECK (held_back IN ('Y', 'N')),
-  CONSTRAINT academic_info_pk PRIMARY KEY (memberid),
+  CONSTRAINT academic_info_pk PRIMARY KEY (academicid),
   CONSTRAINT academic_info_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
 
 --The code below creates the Phone table where phoneid is the primary key. 
@@ -462,6 +466,7 @@ INSERT INTO email VALUES (38, 's.berk36@gmail.com');
 INSERT INTO email VALUES (39, 'tim.berkley@gmail.com');
 INSERT INTO email VALUES (40, 'shannon.berkley2@gmail.com');
 INSERT INTO email VALUES (43, 'bvarian3459@outlook.com');
+
 --Insert statements for teacher
 INSERT INTO teacher VALUES (2,11,'FR', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
 INSERT INTO teacher VALUES (2,15,'8', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
@@ -646,6 +651,7 @@ INSERT INTO org VALUES (seqord_id.NEXTVAL, 'Memorial High School', 7158526600);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'South Middle School', 7158525200);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'LakeShore Elementary School', 7158523400);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'Manz Elementary School', 7158523900);
+
 --Insert statements for table person_org
 INSERT INTO person_org VALUES (19, 2);
 INSERT INTO person_org VALUES (26, 2);
@@ -680,3 +686,19 @@ INSERT INTO person_org VALUES (14, 12);
 INSERT INTO person_org VALUES (16, 12);
 INSERT INTO person_org VALUES (17, 12);
 INSERT INTO person_org VALUES (18, 13);
+
+--the code below creates the sequence for Date of Birth ID. 
+CREATE SEQUENCE dobirthseq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--The table below creates the date of birth ID 
+INSERT INTO dobirth VALUES (2, '21-OCT-04');
+INSERT INTO dobirth VALUES (3, '31-AUG-05');
+INSERT INTO dobirth VALUES (4, '31-AUG-05');
+INSERT INTO dobirth VALUES (5, '05-OCT-02');
+INSERT INTO dobirth VALUES (6, '04-JUL-06');
+INSERT INTO dobirth VALUES (7, '05-MAR-15');
+INSERT INTO dobirth VALUES (8, '13-APR-13');
+INSERT INTO dobirth VALUES (9, '12-JAN-05');
