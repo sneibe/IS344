@@ -752,3 +752,32 @@ NOCACHE;
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students very agressive',3);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
+
+--DROP SEQUENCES
+DROP SEQUENCE seqfamid;
+
+--Sequence created to generate numbers for famid
+CREATE SEQUENCE seqfamid
+START WITH 1
+INCREMENT BY 1;
+
+--Insert statement for Familyinfo
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 70000, 'B', 'N', DEFAULT); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 4, 1000000, 'B', 'N', 'Army');
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 35000, 'M', 'Y', DEFAULT); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 55000, 'B', 'Y', DEFAULT);
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 45000, 'F', 'Y', 'Navy'); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 30000, 'R', 'Y', 'Marine'); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 49000, 'B', 'Y', DEFAULT); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army'); 
+ 
+--The table below creates the table for mbr
+INSERT INTO mbr VALUES (2, 'C', 2, 2);
+INSERT INTO mbr VALUES (3, 'AA', 3, 3);
+INSERT INTO mbr VALUES (4, 'AP', 3, 4);
+INSERT INTO mbr VALUES (5
+INSERT INTO mbr VALUES (6
+INSERT INTO mbr VALUES (7
+INSERT INTO mbr VALUES (8
+INSERT INTO mbr VALUES (9
+INSERT INTO mbr VALUES (10
