@@ -895,9 +895,9 @@ INSERT INTO services_used VALUES (10, 2);
 
 
 --The table below creates allergry descriptions that members provide.
-INSERT INTO allergy (1, tree nuts, peanuts);
-INSERT INTO allergy (5, peanuts);
-INSERT INTO allergy (9, pollen);
+INSERT INTO allergy (2, 'tree nuts, peanuts');
+INSERT INTO allergy (5, 'peanuts');
+INSERT INTO allergy (9, 'pollen');
 
 --the code below creates the sequence for Medication ID. 
 CREATE SEQUENCE medicationid_
