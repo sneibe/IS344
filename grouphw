@@ -392,7 +392,7 @@ INSERT INTO person (personid, lname, fname, mname) VALUES (seqpersonid.NEXTVAL, 
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J', 'M');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N', 'M');
 INSERT INTO person (personid, lname, fname, gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire', 'F');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Ben', 'R', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Ben', 'R', 'M');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'England', 'Ben');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kay', 'Mary');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Strong', 'Derek');
@@ -426,10 +426,7 @@ INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL,
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Hailey', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Mike', 'M');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Brett', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Syd', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Devon', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Schupp', 'Max', 'M');
+
 
 
 --Insert statements for email
@@ -483,10 +480,10 @@ INSERT INTO authorized_individual VALUES (40,8, 'Aunt', 'N', 'Y', 'Y','N');
 INSERT INTO authorized_individual VALUES (41,9, 'Grandmother', 'Y', 'Y', 'Y','Y');
 INSERT INTO authorized_individual VALUES (42,9, 'Grandfather', 'N', 'Y', 'Y','Y');
 INSERT INTO authorized_individual VALUES (43,9, 'Family Friend', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (44,10, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (45,10, 'Mother', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (46,10, 'Cousin', 'N', 'N', 'Y','N');
-INSERT INTO authorized_individual VALUES (47,10, 'Father', 'N', 'Y', 'Y','N');
+INSERT INTO authorized_individual VALUES (41,10, 'Grandmother', 'Y', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (42,10, 'Grandfather', 'N', 'Y', 'Y','Y');
+INSERT INTO authorized_individual VALUES (43,10, 'Family Friend', 'N', 'N', 'Y','N');
+
 
 --Sequence is created to generate numbers for the PK addressid
 CREATE SEQUENCE seqaddressid
@@ -495,16 +492,22 @@ CREATE SEQUENCE seqaddressid
   NOCACHE;
 
 --Insert Statments for address
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Kay Street', 'Eau Claire',DEFAULT, '54703-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, '5th Street', 'Chippewa Falls',DEFAULT, ' 54729');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Keith Street', 'Eau Claire',DEFAULT, '54703-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Lake Sreet', 'Eau Claire',DEFAULT, '54701-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, '4th Sreet', 'Eau Claire',DEFAULT, '54701-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Stanley Street', 'Stanley',DEFAULT, '54768');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Hastings', 'Eau Claire',DEFAULT, '54701-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, '5th', 'Eau Claire',DEFAULT, '54701-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Kim Street', 'Eau Claire',DEFAULT, '54703-6362');
-
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Kay Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '505 5th Street', 'Chippewa Falls',DEFAULT, ' 54729');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '800 Keith Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '900 Lake Sreet', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '122 4th Sreet', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '150 Stanley Street', 'Stanley',DEFAULT, '54768');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '600 Hastings', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '700 5th', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '500 Kim Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '200 Birch Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '434 North Lane', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '400 Galloway Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '440 North Shore Drive', 'Seymour',DEFAULT, '54702-6363');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '808 14th Street', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '1244 State Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Hudson Street', 'Eau Claire',DEFAULT, '54703-6362');
 
 
 --Insert statements for person_address
@@ -528,5 +531,17 @@ INSERT INTO person_address VALUES (9,6);
 INSERT INTO person_address VALUES (9,31);
 INSERT INTO person_address VALUES (10,32);
 INSERT INTO person_address VALUES (10,33);
-
-
+INSERT INTO person_address VALUES (11,7);
+INSERT INTO person_address VALUES (11,34);
+INSERT INTO person_address VALUES (12,35);
+INSERT INTO person_address VALUES (13,36);
+INSERT INTO person_address VALUES (14,8);
+INSERT INTO person_address VALUES (14,37);
+INSERT INTO person_address VALUES (14,38);
+INSERT INTO person_address VALUES (15,39);
+INSERT INTO person_address VALUES (15,40);
+INSERT INTO person_address VALUES (16,9);
+INSERT INTO person_address VALUES (16,10);
+INSERT INTO person_address VALUES (16,41);
+INSERT INTO person_address VALUES (16,42);
+INSERT INTO person_address VALUES (17,43);
