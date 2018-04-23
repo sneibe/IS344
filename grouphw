@@ -958,4 +958,13 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
-
+--This table creates the member medical history.
+INSERT INTO medical_history VALUES (2, '11-NOV-2017', 'Y', 'N');
+INSERT INTO medical_history VALUES (3, '19-AUG-2017', 'Y', 'Y');
+INSERT INTO medical_history VALUES (4, '08-JUL-2017', 'N', 'N');
+INSERT INTO medical_history VALUES (5, '07-JAN-2018', 'Y', 'Y');
+INSERT INTO medical_history VALUES (6, '24-MAY-2017', 'Y', 'N');
+INSERT INTO medical_history VALUES (7, '29-SEP-2017', 'Y', 'N');
+INSERT INTO medical_history VALUES (8, '01-NOV-2017', 'Y', 'Y');
+INSERT INTO medical_history VALUES (9, '25-JAN-2017', 'Y', 'N');
+INSERT INTO medical_history VALUES (10, '14-APR-2017', 'Y', 'N');
