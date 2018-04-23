@@ -698,14 +698,14 @@ INCREMENT BY 1
 NOCACHE;
 
 --The table below creates the date of birth ID 
-INSERT INTO dobirth VALUES (1, '21-OCT-04');
-INSERT INTO dobirth VALUES (2, '31-AUG-05');
-INSERT INTO dobirth VALUES (3, '31-JU-05');
-INSERT INTO dobirth VALUES (4, '05-OCT-02'); 
-INSERT INTO dobirth VALUES (5, '04-JUL-06');
-INSERT INTO dobirth VALUES (6, '05-MAR-15');
-INSERT INTO dobirth VALUES (7, '13-APR-13');
-INSERT INTO dobirth VALUES (8, '12-JAN-05');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '21-OCT-04');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '31-AUG-05');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '04-JUL-05');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-OCT-02'); 
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '04-JUL-06');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-MAR-15');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '13-APR-13');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '12-JAN-05');
 
 --the code below creates the sequence for Academic Information. 
 CREATE SEQUENCE academicinformationseq
