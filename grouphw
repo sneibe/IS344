@@ -439,6 +439,28 @@ INSERT INTO email VALUES (6, 'mbrewer4@yahoo.com');
 INSERT INTO email VALUES (8, 'eberkley@gmail.com');
 INSERT INTO email VALUES (9, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (10, 'bschupp12@yahoo.com');
+INSERT INTO email VALUES (19, 'ajohnson@yahoo.com');
+INSERT INTO email VALUES (20, 'hjohnson@outlook.com');
+INSERT INTO email VALUES (21, 'mjohnson55@microsoft.com');
+INSERT INTO email VALUES (22, 'daniel.simonis@saceredheart.org');
+INSERT INTO email VALUES (23, 'sandy.simonis@gmail.com');
+INSERT INTO email VALUES (24, 'dsimonis2@gmail.com');
+INSERT INTO email VALUES (25, 'ksimonis69@yahoo.com');
+INSERT INTO email VALUES (26, 'molly.ibe333@yahoo.com');
+INSERT INTO email VALUES (27, 'brookeibe99@gmail.com');
+INSERT INTO email VALUES (28, 'joe.ibe.football@gmail.com');
+INSERT INTO email VALUES (29, 'ejohnson3@outlook.com');
+INSERT INTO email VALUES (30, 'fjohnson@outlook.com');
+INSERT INTO email VALUES (32, 'sbrewer89@yahoo.com');
+INSERT INTO email VALUES (33, 'stbrewer90@yahoo.com');
+INSERT INTO email VALUES (34, 'nsimon@gmail.com');
+INSERT INTO email VALUES (35, 'kimban9@yahoo.com');
+INSERT INTO email VALUES (36, 'rbraun@microsoft.com');
+INSERT INTO email VALUES (37, 't.berk@yahoo.com');
+INSERT INTO email VALUES (38, 's.berk36@gmail.com');
+INSERT INTO email VALUES (39, 'tim.berkley@gmail.com');
+INSERT INTO email VALUES (40, 'shannon.berkley2@gmail.com');
+INSERT INTO email VALUES (43, 'bvarian3459@outlook.com');
 
 --Insert statements for teacher
 INSERT INTO teacher VALUES (2,11,'FR', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
