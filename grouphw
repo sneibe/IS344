@@ -1,6 +1,6 @@
---Stacey Ibe, Alison Von Haden, Molly Brewer, Brandon Simonis, Jamie Berger
---IS 344: Group Project 
---Dr.Jean Pratt
+--Group 3
+--Group HW
+--Jean Pratt
 --May 4,2018
 
 --Drop tables plus cascade constraints
@@ -45,9 +45,8 @@ DROP SEQUENCE dobirthseq;
 DROP SEQUENCE academicinformationseq;
 DROP SEQUENCE socialdevseq;
 DROP SEQUENCE seqconid;
-DROP SEQUENCE sevicesseq;
-DROP SEQUENCE healthconid_;
-DROP SEQUENCE medicationid_;
+DROP SEQUENCE seqhealthcondid;
+DROP SEQUENCE seqmedicationid;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -396,7 +395,7 @@ CREATE SEQUENCE seqpersonid
   NOCACHE;
 
 --Intert statements for table person 
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'O');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Brandon', 'D', 'M');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Stacey', 'H', 'F');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Riley');
@@ -413,9 +412,9 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ott', 
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Adam');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Moriah');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Hank', 'Aron');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Aaron', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Hayley', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Mary', 'F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Aaron','M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Hayley','F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Mary','F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Danny', 'M');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Sandy', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'David', 'M');
@@ -440,20 +439,20 @@ INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL,
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke', 'F');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kapping', 'Mitchell');
 INSERT INTO person (Personid, lname, fname) VALUES(seqpersonid.NEXTVAL, 'Carter', 'Matthew');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kelley', 'Aaron', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wians', 'Andy', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Gust', 'Leisha', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Bauer', 'Sharon', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Lake', 'Kendal', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Gunderson', 'James', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Smith', 'Jake', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Anderson', 'Jess', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Culver', 'Kyle', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Holtz', 'Liz', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Glor', 'Grace', 'F');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Anderson', 'Nick', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kann', 'Ryan', 'M');
-INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton', 'Jen', 'F');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kelley', 'Aaron');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wians', 'Andy');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Gust', 'Leisha');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Bauer', 'Sharon');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Lake', 'Kendal');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Gunderson', 'James');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Smith', 'Jake');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Anderson', 'Jess');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Culver', 'Kyle');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Holtz', 'Liz');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Glor', 'Grace');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Anderson', 'Nick');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kann', 'Ryan');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton', 'Jen');
 
 
 
@@ -841,6 +840,7 @@ VALUES (seqconid.NEXTVAL, 'N', 'Y', 'CK', 30, '15-SEP-2017', '16-SEP-2017',
 '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
 --The code below creates the sequence for school services.
+drop sequence sevicesseq;
 CREATE SEQUENCE sevicesseq
 START WITH 1
 INCREMENT BY 1
@@ -900,58 +900,57 @@ INSERT INTO allergy VALUES (5, 'peanuts');
 INSERT INTO allergy VALUES (9, 'pollen');
 
 --the code below creates the sequence for Medication ID. 
-CREATE SEQUENCE medicationid_
+CREATE SEQUENCE seqmedicationid
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
 --The table below creates the medication ID
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Sumatriptan');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Clonazepam');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Albuterol');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Adderall');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Zoloft');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Ziprasidone');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Warfarin');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Fosamax');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Analgesics');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Leukeran');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Celexa');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Metformin');
-INSERT INTO medication VALUES (medicationid_.NEXTVAL, 'Tylenol');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Sumatriptan');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Clonazepam');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Albuterol');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Adderall');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Zoloft');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Ziprasidone');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Warfarin');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Fosamax');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Analgesics');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Leukeran');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Celexa');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Metformin');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Tylenol');
 
 --the code below creates the sequence for Medication ID. 
-CREATE SEQUENCE healthcondid_
+CREATE SEQUENCE seqhealthcondid
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Anxiety');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Asthma');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Attention deficit hyperactive disorder');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Autism');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Bi-polar');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Bleeding disorder');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Bone condition');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Joint condition');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Cancer');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Depression');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Diabetes');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Ear infection');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Eating disorder');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Epilepsy');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Seizures');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Blackouts');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Gastrointestinal disorder');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Bowel disorder');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Migraines');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Headaches');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Hearing disability');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Heart disease');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Hepatitis');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'High blood pressure');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Low blood pressure');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Kidney disease');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Mental problems');
-INSERT INTO healthcondition VALUES (healthcondid_.NEXTVAL, 'Emotional problems');
-
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Anxiety');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Asthma');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Attention deficit hyperactive disorder');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Autism');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bi-polar');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bleeding disorder');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bone condition');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Joint condition');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Cancer');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Depression');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Diabetes');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Ear infection');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Eating disorder');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Epilepsy');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Seizures');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Blackouts');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Gastrointestinal disorder');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bowel disorder');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Migraines');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Headaches');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hearing disability');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Heart disease');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hepatitis');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'High blood pressure');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Low blood pressure');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
+INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
