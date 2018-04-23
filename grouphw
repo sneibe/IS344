@@ -34,7 +34,7 @@ DROP TABLE medication CASCADE CONSTRAINTS;
 DROP TABLE healthcondition CASCADE CONSTRAINTS;
 DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
-
+DROP TABLE paymentinfo CASCADE CONSTRAINTS;
 
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
@@ -47,7 +47,6 @@ DROP SEQUENCE socialdevseq;
 DROP SEQUENCE seqconid;
 DROP SEQUENCE seqhealthcondid;
 DROP SEQUENCE seqmedicationid;
-DROP SEQUENCE attendance_;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -763,13 +762,16 @@ INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army');
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
 INSERT INTO mbr VALUES (2, 'AA', 2,3 );
 INSERT INTO mbr VALUES (3, 'C', 3, 3);
-INSERT INTO mbr VALUES (4, 'AP', 3, 4);
+INSERT INTO mbr VALUES (4, 'ME', 3, 4);
 INSERT INTO mbr VALUES (5, 'C',4,5);
 INSERT INTO mbr VALUES (6, 'AP',5,6);
 INSERT INTO mbr VALUES (7,'AI',6,6);
 INSERT INTO mbr VALUES (8,'O',7,7);
 INSERT INTO mbr VALUES (9, 'C',8,7);
-INSERT INTO mbr VALUES (10,'AA',9,8);
+INSERT INTO mbr VALUES (10,'HP',9,8);
+
+--Insert statements for table o_ethnicity
+Insert into O_ETHNICITY values (8, 'Jamaican');
 
 --The code below are the insers statement for Truancy Table
 INSERT INTO truancy VALUES (3,'Fighting with students');
@@ -883,16 +885,10 @@ INSERT INTO services_provided VALUES (13, 8);
 --The table below creates the services used by each member.
 INSERT INTO services_used VALUES (2, 2);
 INSERT INTO services_used VALUES (2, 3);
-INSERT INTO services_used VALUES (4, 3);
-INSERT INTO services_used VALUES (4, 4);
 INSERT INTO services_used VALUES (5, 5);
 INSERT INTO services_used VALUES (6, 6);
 INSERT INTO services_used VALUES (6, 7);
-INSERT INTO services_used VALUES (6, 8);
-INSERT INTO services_used VALUES (8, 3);
-INSERT INTO services_used VALUES (8, 4);
 INSERT INTO services_used VALUES (9, 6);
-INSERT INTO services_used VALUES (10, 2);
 
 
 --The table below creates allergry descriptions that members provide.
@@ -927,6 +923,7 @@ START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
+--The code below inserts the value statements for Health Condiiton
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Anxiety');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Asthma');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Attention deficit hyperactive disorder');
@@ -956,31 +953,4 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
---Insert statements for table o_ethnicity
-Insert into O_ETHNICITY values (8, 'Jamaican');
-
---The code below creates the sequence for attendance. 
-CREATE SEQUENCE attendance_
-START WITH 1
-INCREMENT BY 1
-NOCACHE;
-
---This table creates the attendance for members.
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018', 6);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 2);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 3);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 4);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018', 6);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 7);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018', 9);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 10);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 2);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018', 3);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 4);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 5);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018', 9);
-INSERT INTO attendance VALUES (attendance_.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 10);
 
