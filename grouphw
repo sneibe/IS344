@@ -801,6 +801,8 @@ INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'5','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'SO','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'5K','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'7','Y','N');
+
+
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'2','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'3','N','Y');
 
@@ -829,6 +831,24 @@ INSERT INTO consentform
 VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
 INSERT INTO consentform
 VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
+
+--Insert values into the paymentinfo table
+INSERT INTO paymentinfo
+VALUES (2, 'CA', '15', '05-JAN-2018', '05-JAN-2018');
+INSERT INTO paymentinfo
+VALUES (3, 'CK', '15', '15-FEB-2018', '15-FEB-2018');
+INSERT INTO paymentinfo
+VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
+INSERT INTO paymentinfo
+VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
+INSERT INTO paymentinfo
+VALUES (7, 'CK', '15', '10-OCT-2017', '10-OCT-2017');
+INSERT INTO paymentinfo
+VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
+INSERT INTO paymentinfo
+VALUES (9, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
+INSERT INTO paymentinfo
+VALUES (10, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
 
 --Teh code below creates the sequence for the social development ID
 CREATE SEQUENCE socialdevseq
