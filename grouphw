@@ -34,7 +34,6 @@ DROP TABLE medication CASCADE CONSTRAINTS;
 DROP TABLE healthcondition CASCADE CONSTRAINTS;
 DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
-DROP TABLE paymentinfo CASCADE CONSTRAINTS;
 
 
 --Drop statments for Sequences
@@ -354,9 +353,9 @@ CONSTRAINT medication_medid_pk PRIMARY KEY (medicationid));
 CREATE TABLE healthcondition (
     healthcondid NUMBER (6) NOT NULL,
     healthcondname VARCHAR2 (39) NOT NULL, 
-    CONSTRAINT healthcondname_CC CHECK (healthcondname IN ('Anxiety', 'Asthma','Attention deficiet hyperactive disorder',
-        'Autism', 'Bi-polar', 'Bleeding disorder' , 'Bone coniditon','Joint condiiton', 'Cancer','Depression','Diabetes', 'Ear infection',
-        'Eating disorder', 'Epliepsy','seizures','Blackouts', 'Gastrointestinal disorder', 'Bowel disorder', 'Migraines', 'Headaches',
+    CONSTRAINT healthcondname_CC CHECK (healthcondname IN ('Anxiety', 'Asthma','Attention deficit hyperactive disorder',
+        'Autism', 'Bi-polar', 'Bleeding disorder' , 'Bone condition','Joint condition', 'Cancer','Depression','Diabetes', 'Ear infection',
+        'Eating disorder', 'Epilepsy','Seizures','Blackouts', 'Gastrointestinal disorder', 'Bowel disorder', 'Migraines', 'Headaches',
         'Hearing disability', 'Heart disease', 'Hepatitis', 'High blood pressure', 'Low blood pressure', 'Kidney disease', 'Mental problems',
         'Emotional problems')),
     CONSTRAINT healthcon_healthcondid_pk PRIMARY KEY (healthcondid));
@@ -896,9 +895,9 @@ INSERT INTO services_used VALUES (10, 2);
 
 
 --The table below creates allergry descriptions that members provide.
-INSERT INTO allergy (2, 'tree nuts, peanuts');
-INSERT INTO allergy (5, 'peanuts');
-INSERT INTO allergy (9, 'pollen');
+INSERT INTO allergy (1, tree nuts, peanuts);
+INSERT INTO allergy (5, peanuts);
+INSERT INTO allergy (9, pollen);
 
 --the code below creates the sequence for Medication ID. 
 CREATE SEQUENCE medicationid_
