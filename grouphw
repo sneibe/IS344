@@ -968,3 +968,42 @@ INSERT INTO medical_history VALUES (7, '29-SEP-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (8, '01-NOV-2017', 'Y', 'Y');
 INSERT INTO medical_history VALUES (9, '25-JAN-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (10, '14-APR-2017', 'Y', 'N');
+
+
+ --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
+ SET pagesize 5000;
+ SET linesize 1000;
+
+--Select all queries for each table in the database
+SELECT * FROM academic_info;
+SELECT * FROM address;
+SELECT * FROM allergy;
+SELECT * FROM attendance;
+SELECT * FROM authorized_individual;
+SELECT * FROM consentform;
+SELECT * FROM dobirth;
+SELECT * FROM email;
+SELECT * FROM familyinfo;
+SELECT * FROM healthcondition;
+SELECT * FROM hw;
+SELECT * FROM mbr;
+SELECT * FROM mbrmedinfo;
+SELECT * FROM medical_history;
+SELECT * FROM medication;
+SELECT * FROM medstaff;
+SELECT * FROM memberreleaseform;
+SELECT * FROM o_ethnicity;
+SELECT * FROM org;
+SELECT * FROM paymentinfo;
+SELECT * FROM person;
+SELECT * FROM person_address;
+SELECT * FROM person_org;
+SELECT * FROM person_phone;
+SELECT * FROM phone;
+SELECT * FROM services;
+SELECT * FROM services_provided;
+SELECT * FROM services_used;
+SELECT * FROM socialdev;
+SELECT * FROM teacher;
+SELECT * FROM truancy;
+
