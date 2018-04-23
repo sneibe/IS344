@@ -954,3 +954,6 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Low blood pressure
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
+
+--Insert statements for table o_ethnicity
+Insert into O_ETHNICITY values (8, 'Jamaican');
