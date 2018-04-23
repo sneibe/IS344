@@ -44,7 +44,9 @@ DROP SEQUENCE seqord_id;
 DROP SEQUENCE dobirthseq;
 DROP SEQUENCE academicinformationseq;
 DROP SEQUENCE socialdevseq;
-
+DROP SEQUENCE seqconid;
+DROP SEQUENCE healthconid_;
+DROP SEQUENCE medicationid_;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
