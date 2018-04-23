@@ -37,6 +37,7 @@ DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
 
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
+DROP SEQUENCE seqaddressid;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -486,3 +487,46 @@ INSERT INTO authorized_individual VALUES (44,10, 'Father', 'Y', 'Y', 'Y','Y');
 INSERT INTO authorized_individual VALUES (45,10, 'Mother', 'N', 'Y', 'Y','Y');
 INSERT INTO authorized_individual VALUES (46,10, 'Cousin', 'N', 'N', 'Y','N');
 INSERT INTO authorized_individual VALUES (47,10, 'Father', 'N', 'Y', 'Y','N');
+
+--Sequence is created to generate numbers for the PK addressid
+CREATE SEQUENCE seqaddressid
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+
+--Insert Statments for address
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Kay Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '5th Street', 'Chippewa Falls',DEFAULT, ' 54729');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Keith Street', 'Eau Claire',DEFAULT, '54703-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Lake Sreet', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '4th Sreet', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Stanley Street', 'Stanley',DEFAULT, '54768');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Hastings', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '5th', 'Eau Claire',DEFAULT, '54701-6362');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, 'Kim Street', 'Eau Claire',DEFAULT, '54703-6362');
+
+
+
+--Insert statements for person_address
+INSERT INTO person_address VALUES (2,2);
+INSERT INTO person_address VALUES (2,19);
+INSERT INTO person_address VALUES (2,19);
+INSERT INTO person_address VALUES (3,21);
+INSERT INTO person_address VALUES (4,3);
+INSERT INTO person_address VALUES (4,22);
+INSERT INTO person_address VALUES (4,23);
+INSERT INTO person_address VALUES (4,25);
+INSERT INTO person_address VALUES (5,24);
+INSERT INTO person_address VALUES (6,4);
+INSERT INTO person_address VALUES (6,26);
+INSERT INTO person_address VALUES (7,27);
+INSERT INTO person_address VALUES (7,28);
+INSERT INTO person_address VALUES (8,5);
+INSERT INTO person_address VALUES (8,29);
+INSERT INTO person_address VALUES (8,30);
+INSERT INTO person_address VALUES (9,6);
+INSERT INTO person_address VALUES (9,31);
+INSERT INTO person_address VALUES (10,32);
+INSERT INTO person_address VALUES (10,33);
+
+
