@@ -166,7 +166,7 @@ CREATE TABLE phone (
   phoneid NUMBER (6) NOT NULL,
   pnumber NUMBER (10) NOT NULL,
   ptype  CHAR (1) NOT NULL,
-  CONSTRAINT phone_ptype_cc CHECK ((ptype='C') OR (ptype='H')),
+  CONSTRAINT phone_ptype_cc CHECK ((ptype='C') OR (ptype='H') OR (ptype='W')),
   CONSTRAINT phone_phoneid_pk PRIMARY KEY (phoneid));
 
 --The code below creates the Personphone table which is the associative table that connects phone and person where phonid and personid are the primary and foreign keys
@@ -635,6 +635,21 @@ INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155996212, 'H');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155643234, 'C');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158974454, 'H');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6128556969, 'C');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7152349860, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6123959734, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7159873410, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6128863304, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7154378921, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7157831084, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6129932964, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158675432, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158354521, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7158342367, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7155670938, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7153460984, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6122348934, 'W');
+INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6127652348, 'W');
+
 
 --Insert Statements for table person_phone
 INSERT INTO person_phone VALUES (2,19);
@@ -662,6 +677,20 @@ INSERT INTO person_phone VALUES (21,40);
 INSERT INTO person_phone VALUES (22,41);
 INSERT INTO person_phone VALUES (23,42);
 INSERT INTO person_phone VALUES (24,43);
+INSERT INTO person_phone VALUES (25,46);
+INSERT INTO person_phone VALUES (26,47);
+INSERT INTO person_phone VALUES (27,48);
+INSERT INTO person_phone VALUES (28,49);
+INSERT INTO person_phone VALUES (29,50);
+INSERT INTO person_phone VALUES (30,51);
+INSERT INTO person_phone VALUES (31,52);
+INSERT INTO person_phone VALUES (32,53);
+INSERT INTO person_phone VALUES (33,54);
+INSERT INTO person_phone VALUES (34,55);
+INSERT INTO person_phone VALUES (35,56);
+INSERT INTO person_phone VALUES (36,57);
+INSERT INTO person_phone VALUES (37,58);
+INSERT INTO person_phone VALUES (38,59);
 
 
 --Sequence created to generat numbers for org_id
@@ -682,6 +711,7 @@ INSERT INTO org VALUES (seqord_id.NEXTVAL, 'Memorial High School', 7158526600);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'South Middle School', 7158525200);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'LakeShore Elementary School', 7158523400);
 INSERT INTO org VALUES (seqord_id.NEXTVAL, 'Manz Elementary School', 7158523900);
+INSERT INTO org VALUES (seqord_id.NEXTVAL, 'Mayo Clinic Hospital', 7158324591);
 
 --Insert statements for table person_org
 INSERT INTO person_org VALUES (19, 2);
@@ -717,6 +747,21 @@ INSERT INTO person_org VALUES (14, 12);
 INSERT INTO person_org VALUES (16, 12);
 INSERT INTO person_org VALUES (17, 12);
 INSERT INTO person_org VALUES (18, 13);
+INSERT INTO person_org VALUES (46, 5);
+INSERT INTO person_org VALUES (47, 5);
+INSERT INTO person_org VALUES (48, 14);
+INSERT INTO person_org VALUES (49, 5);
+INSERT INTO person_org VALUES (50, 14);
+INSERT INTO person_org VALUES (51, 5);
+INSERT INTO person_org VALUES (52, 5);
+INSERT INTO person_org VALUES (53, 5);
+INSERT INTO person_org VALUES (54, 14);
+INSERT INTO person_org VALUES (55, 5);
+INSERT INTO person_org VALUES (56, 14);
+INSERT INTO person_org VALUES (57, 14);
+INSERT INTO person_org VALUES (58, 5);
+INSERT INTO person_org VALUES (59, 14);
+
 
 --the code below creates the sequence for Date of Birth ID. 
 CREATE SEQUENCE dobirthseq
@@ -988,6 +1033,23 @@ INSERT INTO medical_history VALUES (7, '29-SEP-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (8, '01-NOV-2017', 'Y', 'Y');
 INSERT INTO medical_history VALUES (9, '25-JAN-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (10, '14-APR-2017', 'Y', 'N');
+
+--The code below inserts the value statements for Medical Staff
+INSERT INTO MEDSTAFF VALUES (46,2,'P');
+INSERT INTO MEDSTAFF VALUES (47,3,'P');
+INSERT INTO MEDSTAFF VALUES (48,4,'P');
+INSERT INTO MEDSTAFF VALUES (49,5,'P');
+INSERT INTO MEDSTAFF VALUES (50,6,'P');
+INSERT INTO MEDSTAFF VALUES (51,7,'P');
+INSERT INTO MEDSTAFF VALUES (52,8,'P');
+INSERT INTO MEDSTAFF VALUES (53,9,'P');
+INSERT INTO MEDSTAFF VALUES (53,10,'P');
+INSERT INTO MEDSTAFF VALUES (54,2,'D');
+INSERT INTO MEDSTAFF VALUES (55,4,'D');
+INSERT INTO MEDSTAFF VALUES (56,6,'D');
+INSERT INTO MEDSTAFF VALUES (57,9,'D');
+INSERT INTO MEDSTAFF VALUES (58,8,'D');
+INSERT INTO MEDSTAFF VALUES (59,7,'D');
 
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
