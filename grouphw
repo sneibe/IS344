@@ -472,15 +472,14 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kann',
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton', 'Jen');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'The Counter', 'Over');
 
-
 --Insert statements for email
 INSERT INTO email VALUES (2, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (3, 'bsimonis59@gmail.com');
 INSERT INTO email VALUES (5, 'rjohnson@yahoo.com');
-INSERT INTO email VALUES (6, 'mbrewer4@yahoo.com');
+INSERT INTO email VALUES (6, 'mzhang4@yahoo.com');
 INSERT INTO email VALUES (8, 'eberkley@gmail.com');
-INSERT INTO email VALUES (9, 'mjohnson@gmail.com');
-INSERT INTO email VALUES (10, 'bschupp12@yahoo.com');
+INSERT INTO email VALUES (9, 'cwentzel@gmail.com');
+INSERT INTO email VALUES (10, 'josewent@yahoo.com');
 INSERT INTO email VALUES (19, 'ajohnson@yahoo.com');
 INSERT INTO email VALUES (20, 'hjohnson@outlook.com');
 INSERT INTO email VALUES (21, 'mjohnson55@microsoft.com');
@@ -493,8 +492,8 @@ INSERT INTO email VALUES (27, 'brookeibe99@gmail.com');
 INSERT INTO email VALUES (28, 'joe.ibe.football@gmail.com');
 INSERT INTO email VALUES (29, 'ejohnson3@outlook.com');
 INSERT INTO email VALUES (30, 'fjohnson@outlook.com');
-INSERT INTO email VALUES (32, 'sbrewer89@yahoo.com');
-INSERT INTO email VALUES (33, 'stbrewer90@yahoo.com');
+INSERT INTO email VALUES (32, 'szhang89@yahoo.com');
+INSERT INTO email VALUES (33, 'chenz190@yahoo.com');
 INSERT INTO email VALUES (34, 'nsimon@gmail.com');
 INSERT INTO email VALUES (35, 'kimban9@yahoo.com');
 INSERT INTO email VALUES (36, 'rbraun@microsoft.com');
