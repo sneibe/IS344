@@ -47,6 +47,7 @@ DROP SEQUENCE socialdevseq;
 DROP SEQUENCE seqconid;
 DROP SEQUENCE seqhealthcondid;
 DROP SEQUENCE seqmedicationid;
+DROP SEQUENCE mbrrlsfrm_seq;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -846,10 +847,9 @@ INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'5','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'SO','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'5K','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'7','Y','N');
-
-
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'2','Y','N');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'3','N','Y');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,10,'5','N','N');
 
 --Sequence is created to generate numbers for the PK conid
 CREATE SEQUENCE seqconid
@@ -1050,6 +1050,23 @@ INSERT INTO MEDSTAFF VALUES (56,6,'D');
 INSERT INTO MEDSTAFF VALUES (57,9,'D');
 INSERT INTO MEDSTAFF VALUES (58,8,'D');
 INSERT INTO MEDSTAFF VALUES (59,7,'D');
+
+--The code below creates the sequence for member release form id. 
+CREATE SEQUENCE mbrrlsfrm_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--This table creates the member realse form.
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'A', 'Y', '18-AUG-2017', '18-AUG-2017', 2, 19);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '22-AUG-2017', '22-AUG-2017', 3, 22);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '01-SEP-2017', '01-SEP-2017', 4, 26);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'A', 'Y', '13-SEP-2017', '13-SEP-2017', 5, 29);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '28-AUG-2017', '28-AUG-2017', 6, 31);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'N', 'Y', 'Y', 'Y', 'U', 'Y', '18-AUG-2017', '18-AUG-2017', 7, 34);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '15-SEP-2017', '15-SEP-2017', 8, 38);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 9, 41);
+INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
