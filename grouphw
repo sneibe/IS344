@@ -469,7 +469,7 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Glor',
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Anderson', 'Nick');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kann', 'Ryan');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton', 'Jen');
-
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'The Counter', 'Over');
 
 
 --Insert statements for email
@@ -1073,6 +1073,13 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 9, 41);
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
+--The code below inserts the values into the Member Medical Info Table
+INSERT INTO mbrmedinfo VALUES (3,2,20,46,'2 Pills','Mouth',TO_DATE('13:00','HH24:MI'),'Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (3,8,7,46,'2 Pills','Mouth',TO_DATE('13:30','HH24:MI'),'Prevents blood clots');
+INSERT INTO mbrmedinfo VALUES (5,7,6,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For bi-polar');
+INSERT INTO mbrmedinfo VALUES (8,5,4,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
+INSERT INTO mbrmedinfo VALUES (6,14,13,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
+
 
 --Select all queries for each table in the database
 SELECT * FROM academic_info;
@@ -1107,3 +1114,6 @@ SELECT * FROM socialdev;
 SELECT * FROM teacher;
 SELECT * FROM truancy;
 
+
+
+ 
