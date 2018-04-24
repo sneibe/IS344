@@ -410,16 +410,17 @@ CREATE SEQUENCE seqpersonid
   INCREMENT BY 1
   NOCACHE;
 
+
 --Intert statements for table person 
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'O');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Brandon', 'D', 'M');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Stacey', 'H', 'F');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Riley');
-INSERT INTO person (personid, lname, fname, mname) VALUES (seqpersonid.NEXTVAL, 'Brewer', 'Molly', 'J');
+INSERT INTO person (personid, lname, fname, mname) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Moli', 'J');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J', 'M');
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N', 'M');
 INSERT INTO person (personid, lname, fname, gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire', 'F');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Ben', 'R', 'M');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Jose', 'R', 'M');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'England', 'Ben');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kay', 'Mary');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Strong', 'Derek');
@@ -440,9 +441,9 @@ INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL,
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Joe', 'M');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Emily', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Frank', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Brewer', 'Sam', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Brewer', 'Samuel', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Brewer', 'Stacey', 'F');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Qian', 'M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Samuel', 'M');
+INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Chen', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simon', 'Nick', 'M');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Van Roy', 'Kim', 'F');
 INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Braun', 'Ryan', 'M');
