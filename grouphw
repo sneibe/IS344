@@ -3,6 +3,11 @@
 --Jean Pratt
 --May 4,2018
 
+
+ --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
+ SET pagesize 5000;
+ SET linesize 1000;
+
 --Drop tables plus cascade constraints
 DROP TABLE person CASCADE CONSTRAINTS;
 DROP TABLE email CASCADE CONSTRAINTS;
@@ -1068,10 +1073,6 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 9, 41);
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
-
- --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
- SET pagesize 5000;
- SET linesize 1000;
 
 --Select all queries for each table in the database
 SELECT * FROM academic_info;
