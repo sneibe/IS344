@@ -183,10 +183,11 @@ CREATE TABLE truancy (
 --Since we update this each year we will update the students grades and if their parents are satisfied each year
 CREATE TABLE academic_info (
   academicid NUMBER (6) NOT NULL,
-  memberid NUMBER (6) NOT NULL,
-  grade   VARCHAR2 (35) NOT NULL,
-  g_satis CHAR (1) NOT NULL,
-  held_back CHAR (1) NOT NULL,
+  memberid   NUMBER (6) NOT NULL,
+  grade      VARCHAR2 (35) NOT NULL,
+  g_satis    CHAR (1) NOT NULL,
+  held_back  CHAR (1) NOT NULL,
+  schoolyear VARCHAR2 (2) NOT NULL,
   CONSTRAINT g_statis_cc CHECK (g_satis IN ('Y', 'N')),
   CONSTRAINT held_back_cc CHECK (held_back IN ('Y', 'N')),
   CONSTRAINT academic_info_pk PRIMARY KEY (academicid),
@@ -717,13 +718,13 @@ START WITH 1
 INCREMENT BY 1;
 
 --Insert statement for Familyinfo
-INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 70000, 'B', 'N', DEFAULT); 
-INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 4, 1000000, 'B', 'N', 'Army');
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 50000, 'B', 'N', DEFAULT); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 4, 27000, 'B', 'N', 'Army');
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 35000, 'M', 'Y', DEFAULT); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 55000, 'B', 'Y', DEFAULT);
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 45000, 'F', 'Y', 'Navy'); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 30000, 'R', 'Y', 'Marine'); 
-INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 49000, 'B', 'Y', DEFAULT); 
+INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 40000, 'B', 'Y', DEFAULT); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army'); 
  
 
@@ -756,15 +757,15 @@ INCREMENT BY 1
 NOCACHE;
 
 --The code below are the insert statements for Academic Information
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,2,'FR','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'5','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'5','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'SO','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'5K','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'7','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'2','Y','N');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'3','N','Y');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,10,'5','N','N');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,2,'Does well in classes, gets As and Bs','Y','N','FR');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'Grades are bad,Failing most classes','Y','N','5');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'A,B,C grades, not failing','Y','N','5');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'Very bad, needs help with all classes','Y','N','SO');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'Great! All As','Y','N','5K');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,7,'Phenonemal  Student, All As','Y','N','7');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'Needs help with reading','Y','N','2');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'Practice Speech','N','Y','3');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,10,'Needs assistance with Math and Science','N','N','5');
 
 --Sequence is created to generate numbers for the PK conid
 CREATE SEQUENCE seqconid
