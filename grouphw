@@ -184,7 +184,7 @@ CREATE TABLE truancy (
 CREATE TABLE academic_info (
   academicid NUMBER (6) NOT NULL,
   memberid   NUMBER (6) NOT NULL,
-  grade      VARCHAR2 (35) NOT NULL,
+  grade      VARCHAR2 (50) NOT NULL,
   g_satis    CHAR (1) NOT NULL,
   held_back  CHAR (1) NOT NULL,
   schoolyear VARCHAR2 (2) NOT NULL,
@@ -340,7 +340,7 @@ CREATE TABLE paymentinfo (
 
 --The code below creates the table for Social Development wheresocialdevid is the primary key and the memberid is the foreign key
 --Check constraint for socialdevtype: 'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
-CREATE TABLE SocialDev (
+CREATE TABLE socialdev (
     socialdevid NUMBER (6) NOT NULL,
     socialdevtype VARCHAR2 (25) NOT NULL,
     socialdevdesc VARCHAR2 (50) NOT NULL,
@@ -758,7 +758,7 @@ NOCACHE;
 
 --The code below are the insert statements for Academic Information
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,2,'Does well in classes, gets As and Bs','Y','N','FR');
-INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'Grades are bad,Failing most classes','Y','N','5');
+INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'Grades are bad,Failing most classes','N','N','5');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'A,B,C grades, not failing','Y','N','5');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,5,'Very bad, needs help with all classes','Y','N','SO');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,6,'Great! All As','Y','N','5K');
