@@ -13,9 +13,7 @@ DROP TABLE person CASCADE CONSTRAINTS;
 DROP TABLE email CASCADE CONSTRAINTS;
 DROP TABLE teacher CASCADE CONSTRAINTS;
 DROP TABLE address CASCADE CONSTRAINTS;
-DROP TABLE person_address CASCADE CONSTRAINTS; 
 DROP TABLE phone CASCADE CONSTRAINTS;    
-DROP TABLE person_phone CASCADE CONSTRAINTS; 
 DROP TABLE org CASCADE CONSTRAINTS;
 DROP TABLE person_org CASCADE CONSTRAINTS;
 DROP TABLE mbr CASCADE CONSTRAINTS;
@@ -73,25 +71,6 @@ CREATE TABLE email (
   CONSTRAINT email_fk FOREIGN KEY (personid) REFERENCES person (personid));
 
   
---The code below creates table for Authorized Individual where authorizedindid and memberid are the primary and foreign keys
---Check constraints are for emergency contact, authorized to pick up, head of the house hold and edit account information
---These constraints are all yes or no questions,so 'Y'= yes and n= 'N'
-
-CREATE TABLE authorized_individual (
-  authorizedindid NUMBER(6) NOT NULL,
-  memberid        NUMBER(6) NOT NULL,
-  relationship    VARCHAR2(35) NOT NULL,
-  headofhouse     CHAR(1) NOT NULL,
-  emg_cont        CHAR(1) NOT NULL,
-  auth_pickup     CHAR(1) NOT NULL,
-  edit_acct_info  CHAR(1) NOT NULL,
-  CONSTRAINT authorized_emg_cont_cc CHECK (emg_cont IN ('Y', 'N')),
-  CONSTRAINT authorized_individual_cc CHECK (auth_pickup IN ('Y', 'N')),
-  CONSTRAINT authorized_headofhouse_cc CHECK (headofhouse IN ('Y', 'N')),
-  CONSTRAINT authorized_edit_acct_info_cc CHECK (edit_acct_info IN ('Y', 'N')),
-  CONSTRAINT authorizedmemberid_pk PRIMARY KEY (authorizedindid, memberid),
-  CONSTRAINT authorizedindid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
-  CONSTRAINT authorizedmemberid_fk FOREIGN KEY (memberid) REFERENCES person (personid));
 
 --The code below creates table for Date of Birth where birthid is the primary key
 CREATE TABLE dobirth (
@@ -114,6 +93,24 @@ CREATE TABLE familyinfo (
   CONSTRAINT free_lunch_cc CHECK (free_lunch IN ('Y','N')),
   CONSTRAINT familyinfo_pk PRIMARY KEY (famid));
   
+--The code below creates the Phone table where phoneid is the primary key. 
+--Check constraint for ptype: 'M'= Mobile, 'H'= Home, 'W' = Work
+CREATE TABLE phone (
+  phoneid NUMBER (6) NOT NULL,
+  pnumber NUMBER (10) NOT NULL,
+  ptype  CHAR (1) NOT NULL,
+  CONSTRAINT phone_ptype_cc CHECK ((ptype='C') OR (ptype='H') OR (ptype='W')),
+  CONSTRAINT phone_phoneid_pk PRIMARY KEY (phoneid));
+
+--The code below creates the Address table where addrid is the primary key
+CREATE TABLE address (
+  addrid NUMBER (6) NOT NULL,
+  strt VARCHAR2 (35) NOT NULL,
+  city VARCHAR2 (35) NOT NULL,
+  ste CHAR (2) DEFAULT 'WI' NOT NULL,
+  zipcode VARCHAR2 (10) NOT NULL,
+  CONSTRAINT addr_addrid1_pk PRIMARY KEY(addrid));
+  
 --The code below creates table for Member where memberid is the primary key
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
@@ -127,6 +124,30 @@ CREATE TABLE mbr (
   CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
   CONSTRAINT mbr_birthid_fk FOREIGN KEY (birthid) REFERENCES dobirth (birthid),
   CONSTRAINT mbr_famid_fk FOREIGN KEY (famid) REFERENCES familyinfo (famid));
+  
+--The code below creates table for Authorized Individual where authorizedindid and memberid are the primary and foreign keys
+--Check constraints are for emergency contact, authorized to pick up, head of the house hold and edit account information
+--These constraints are all yes or no questions,so 'Y'= yes and n= 'N'
+
+CREATE TABLE authorized_individual (
+  authorizedindid NUMBER(6) NOT NULL,
+  memberid        NUMBER(6) NOT NULL,
+  relationship    VARCHAR2(35) NOT NULL,
+  headofhouse     CHAR(1) NOT NULL,
+  emg_cont        CHAR(1) NOT NULL,
+  auth_pickup     CHAR(1) NOT NULL,
+  edit_acct_info  CHAR(1) NOT NULL,
+  addrid          NUMBER (6) NOT NULL,
+  phoneid         NUMBER (6) NOT NULL,
+  CONSTRAINT authorized_emg_cont_cc CHECK (emg_cont IN ('Y', 'N')),
+  CONSTRAINT authorized_individual_cc CHECK (auth_pickup IN ('Y', 'N')),
+  CONSTRAINT authorized_headofhouse_cc CHECK (headofhouse IN ('Y', 'N')),
+  CONSTRAINT authorized_edit_acct_info_cc CHECK (edit_acct_info IN ('Y', 'N')),
+  CONSTRAINT authorizedmemberid_pk PRIMARY KEY (authorizedindid, memberid),
+  CONSTRAINT authorizedindid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
+  CONSTRAINT authorizedmemberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
+  CONSTRAINT authroziedid_addr_fk FOREIGN KEY (addrid) REFERENCES address (addrid),
+  CONSTRAINT authorizedmemberid_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
   
 --The code below creates the table for other ethnicity where memberid is the primary key and foreign key in the table
 CREATE TABLE o_ethnicity (
@@ -166,40 +187,6 @@ CREATE TABLE academic_info (
   CONSTRAINT academic_info_pk PRIMARY KEY (academicid),
   CONSTRAINT academic_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid)); 
 
---The code below creates the Phone table where phoneid is the primary key. 
---Check constraint for ptype: 'M'= Mobile, 'H'= Home, 'W' = Work
-CREATE TABLE phone (
-  phoneid NUMBER (6) NOT NULL,
-  pnumber NUMBER (10) NOT NULL,
-  ptype  CHAR (1) NOT NULL,
-  CONSTRAINT phone_ptype_cc CHECK ((ptype='C') OR (ptype='H') OR (ptype='W')),
-  CONSTRAINT phone_phoneid_pk PRIMARY KEY (phoneid));
-
---The code below creates the Personphone table which is the associative table that connects phone and person where phonid and personid are the primary and foreign keys
-CREATE TABLE person_phone (
-  phoneid NUMBER (6) NOT NULL,
-  personid NUMBER (6) NOT NULL, 
-  CONSTRAINT person_phone_pk PRIMARY KEY (phoneid, personid),
-  CONSTRAINT personphone_personid_fk FOREIGN KEY (personid) REFERENCES person (personid),
-  CONSTRAINT personphone_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
-
---The code below creates the Address table where addrid is the primary key
-CREATE TABLE address (
-  addrid NUMBER (6) NOT NULL,
-  strt VARCHAR2 (35) NOT NULL,
-  city VARCHAR2 (35) NOT NULL,
-  ste CHAR (2) DEFAULT 'WI' NOT NULL,
-  zipcode VARCHAR2 (10) NOT NULL,
-  CONSTRAINT addr_addrid1_pk PRIMARY KEY(addrid));
-
---The code below creates the Personaddress table which is the associative table that connects address and person 
---Where addrid and personid are the primary and foreign keys
-CREATE TABLE person_address (
-  addrid NUMBER (6) NOT NULL, 
-  personid NUMBER (6) NOT NULL,
-  CONSTRAINT personaddr_peraddr1_pk PRIMARY KEY (addrid,personid),
-  CONSTRAINT personaddr_personid4_fk FOREIGN KEY (personid) REFERENCES person (personid),
-  CONSTRAINT personaddr_addrid6_fk FOREIGN KEY (addrid) REFERENCES address (addrid));
   
 -- The code below creates the table for Organization where org_id is the primary key
 CREATE TABLE org (
@@ -379,13 +366,15 @@ CREATE TABLE healthcondition (
 --The code below creates the table for Medical Staff where medstaffid and memberid are the primary and foreign keys
 --Check constraint for job type: 'P' = Physician, 'D' = Doctor
 CREATE TABLE medstaff (
-    medstaffid NUMBER (6) NOT NULL,
-    memberid NUMBER (6) NOT NULL,
-    jobtype CHAR (1) NOT NULL,
+    medstaffid  NUMBER (6) NOT NULL,
+    memberid    NUMBER (6) NOT NULL,
+    jobtype     CHAR (1) NOT NULL,
+    phoneid     NUMBER (6) NOT NULL,
     CONSTRAINT jobtype_cc CHECK (jobtype IN('P', 'D')),
     CONSTRAINT medstaff_medstaffid__pk PRIMARY KEY (medstaffid,memberid),
     CONSTRAINT medstaff_staffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid),
-    CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+    CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
+    CONSTRAINT medstaff_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
     
 --The code below creates the table for Member Medical Informaton where memberid, medicationid, healthcondid, medstaffid are the primary and foreign keys
 --We use VARCHAR2 (25) for amnt_medication (amount of medication to take) so that the person can identify the units. For example take 2 pills or 3 teaspons 
@@ -409,7 +398,6 @@ CREATE SEQUENCE seqpersonid
   START WITH 1
   INCREMENT BY 1
   NOCACHE;
-
 
 --Intert statements for table person 
 INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'O');
@@ -472,6 +460,7 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kann',
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton', 'Jen');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'The Counter', 'Over');
 
+
 --Insert statements for email
 INSERT INTO email VALUES (2, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (3, 'bsimonis59@gmail.com');
@@ -519,36 +508,6 @@ INSERT INTO teacher VALUES (9,18,'3', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018',
 INSERT INTO teacher VALUES (10,15,'7', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
 INSERT INTO teacher VALUES (10,12,'6', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
 
---Insert statements for authorized individual
-INSERT INTO authorized_individual VALUES (19,2, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (20,2, 'Mother', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (21,2, 'Aunt', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (22,3, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (23,3, 'Mother', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (24,3, 'Uncle', 'N', 'Y', 'N','N');
-INSERT INTO authorized_individual VALUES (25,3, 'Brother', 'N', 'N', 'Y','N');
-INSERT INTO authorized_individual VALUES (26,4, 'Mother', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (27,4, 'Aunt', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (28,4, 'Uncle', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (29,5, 'Mother', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (30,5, 'Father', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (31,6, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (32,6, 'Uncle', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (33,6, 'Aunt', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (34,7, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (35,7, 'Family Friend', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (36,7, 'Cousin', 'N', 'Y', 'N','N');
-INSERT INTO authorized_individual VALUES (37,8, 'Father', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (38,8, 'Mother', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (39,8, 'Uncle', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (40,8, 'Aunt', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (41,9, 'Grandmother', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (42,9, 'Grandfather', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (43,9, 'Family Friend', 'N', 'Y', 'Y','N');
-INSERT INTO authorized_individual VALUES (41,10, 'Grandmother', 'Y', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (42,10, 'Grandfather', 'N', 'Y', 'Y','Y');
-INSERT INTO authorized_individual VALUES (43,10, 'Family Friend', 'N', 'N', 'Y','N');
-
 
 --Sequence is created to generate numbers for the PK addressid
 CREATE SEQUENCE seqaddressid
@@ -575,41 +534,6 @@ INSERT INTO address VALUES(seqaddressid.NEXTVAL, '1244 State Street', 'Eau Clair
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Hudson Street', 'Eau Claire',DEFAULT, '54703-6362');
 
 
---Insert statements for person_address
-INSERT INTO person_address VALUES (2,2);
-INSERT INTO person_address VALUES (2,19);
-INSERT INTO person_address VALUES (2,20);
-INSERT INTO person_address VALUES (3,21);
-INSERT INTO person_address VALUES (4,3);
-INSERT INTO person_address VALUES (4,22);
-INSERT INTO person_address VALUES (4,23);
-INSERT INTO person_address VALUES (4,25);
-INSERT INTO person_address VALUES (5,24);
-INSERT INTO person_address VALUES (6,4);
-INSERT INTO person_address VALUES (6,26);
-INSERT INTO person_address VALUES (7,27);
-INSERT INTO person_address VALUES (7,28);
-INSERT INTO person_address VALUES (8,5);
-INSERT INTO person_address VALUES (8,29);
-INSERT INTO person_address VALUES (8,30);
-INSERT INTO person_address VALUES (9,6);
-INSERT INTO person_address VALUES (9,31);
-INSERT INTO person_address VALUES (10,32);
-INSERT INTO person_address VALUES (10,33);
-INSERT INTO person_address VALUES (11,7);
-INSERT INTO person_address VALUES (11,34);
-INSERT INTO person_address VALUES (12,35);
-INSERT INTO person_address VALUES (13,36);
-INSERT INTO person_address VALUES (14,8);
-INSERT INTO person_address VALUES (14,37);
-INSERT INTO person_address VALUES (14,38);
-INSERT INTO person_address VALUES (15,39);
-INSERT INTO person_address VALUES (15,40);
-INSERT INTO person_address VALUES (16,9);
-INSERT INTO person_address VALUES (16,10);
-INSERT INTO person_address VALUES (16,41);
-INSERT INTO person_address VALUES (16,42);
-INSERT INTO person_address VALUES (17,43);
 
 --Sequence created to generate numbers for phoneid
 CREATE SEQUENCE seqphoneid
@@ -656,47 +580,35 @@ INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 7153460984, 'W');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6122348934, 'W');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6127652348, 'W');
 
-
---Insert Statements for table person_phone
-INSERT INTO person_phone VALUES (2,19);
-INSERT INTO person_phone VALUES (3,20);
-INSERT INTO person_phone VALUES (4,21);
-INSERT INTO person_phone VALUES (5,22);
-INSERT INTO person_phone VALUES (5,23);
-INSERT INTO person_phone VALUES (6,24);
-INSERT INTO person_phone VALUES (7,25);
-INSERT INTO person_phone VALUES (8,26);
-INSERT INTO person_phone VALUES (9,27);
-INSERT INTO person_phone VALUES (10,28);
-INSERT INTO person_phone VALUES (11,29);
-INSERT INTO person_phone VALUES (11,30);
-INSERT INTO person_phone VALUES (12,31);
-INSERT INTO person_phone VALUES (13,32);
-INSERT INTO person_phone VALUES (14,33);
-INSERT INTO person_phone VALUES (15,34);
-INSERT INTO person_phone VALUES (16,35);
-INSERT INTO person_phone VALUES (17,36);
-INSERT INTO person_phone VALUES (18,37);
-INSERT INTO person_phone VALUES (19,38);
-INSERT INTO person_phone VALUES (20,39);
-INSERT INTO person_phone VALUES (21,40);
-INSERT INTO person_phone VALUES (22,41);
-INSERT INTO person_phone VALUES (23,42);
-INSERT INTO person_phone VALUES (24,43);
-INSERT INTO person_phone VALUES (25,46);
-INSERT INTO person_phone VALUES (26,47);
-INSERT INTO person_phone VALUES (27,48);
-INSERT INTO person_phone VALUES (28,49);
-INSERT INTO person_phone VALUES (29,50);
-INSERT INTO person_phone VALUES (30,51);
-INSERT INTO person_phone VALUES (31,52);
-INSERT INTO person_phone VALUES (32,53);
-INSERT INTO person_phone VALUES (33,54);
-INSERT INTO person_phone VALUES (34,55);
-INSERT INTO person_phone VALUES (35,56);
-INSERT INTO person_phone VALUES (36,57);
-INSERT INTO person_phone VALUES (37,58);
-INSERT INTO person_phone VALUES (38,59);
+--Insert statements for authorized individual (AuthorizedID,MbrID,Relship,Y,Y,Y,Y,Addrid,PhoneId)
+INSERT INTO authorized_individual VALUES (19,2, 'Father', 'Y', 'Y', 'Y','Y',2,2);
+INSERT INTO authorized_individual VALUES (20,2, 'Mother', 'N', 'Y', 'Y','Y',2,3);
+INSERT INTO authorized_individual VALUES (21,2, 'Aunt', 'N', 'Y', 'Y','N',3,4);
+INSERT INTO authorized_individual VALUES (22,3, 'Father', 'Y', 'Y', 'Y','Y',4,5);
+INSERT INTO authorized_individual VALUES (23,3, 'Mother', 'N', 'Y', 'Y','Y',4,5);
+INSERT INTO authorized_individual VALUES (24,3, 'Uncle', 'N', 'Y', 'N','N',5,6);
+INSERT INTO authorized_individual VALUES (25,3, 'Brother', 'N', 'N', 'Y','N',4,7);
+INSERT INTO authorized_individual VALUES (26,4, 'Mother', 'Y', 'Y', 'Y','Y',6,8);
+INSERT INTO authorized_individual VALUES (27,4, 'Aunt', 'N', 'Y', 'Y','Y',7,9);
+INSERT INTO authorized_individual VALUES (28,4, 'Uncle', 'N', 'Y', 'Y','N',7,10);
+INSERT INTO authorized_individual VALUES (29,5, 'Mother', 'Y', 'Y', 'Y','Y',8,11);
+INSERT INTO authorized_individual VALUES (30,5, 'Father', 'N', 'Y', 'Y','Y',8,11);
+INSERT INTO authorized_individual VALUES (31,6, 'Father', 'Y', 'Y', 'Y','Y',9,12);
+INSERT INTO authorized_individual VALUES (32,6, 'Uncle', 'N', 'Y', 'Y','Y',10,13);
+INSERT INTO authorized_individual VALUES (33,6, 'Aunt', 'N', 'Y', 'Y','N',10,14);
+INSERT INTO authorized_individual VALUES (34,7, 'Father', 'Y', 'Y', 'Y','Y',11,15);
+INSERT INTO authorized_individual VALUES (35,7, 'Family Friend', 'N', 'Y', 'Y','N',12,16);
+INSERT INTO authorized_individual VALUES (36,7, 'Cousin', 'N', 'Y', 'N','N',13,17);
+INSERT INTO authorized_individual VALUES (37,8, 'Father', 'Y', 'Y', 'Y','Y',14,18);
+INSERT INTO authorized_individual VALUES (38,8, 'Mother', 'N', 'Y', 'Y','Y',14,19);
+INSERT INTO authorized_individual VALUES (39,8, 'Uncle', 'N', 'Y', 'Y','N',15,20);
+INSERT INTO authorized_individual VALUES (40,8, 'Aunt', 'N', 'Y', 'Y','N',15,21);
+INSERT INTO authorized_individual VALUES (41,9, 'Grandmother', 'Y', 'Y', 'Y','Y',16,22);
+INSERT INTO authorized_individual VALUES (42,9, 'Grandfather', 'N', 'Y', 'Y','Y',16,23);
+INSERT INTO authorized_individual VALUES (43,9, 'Family Friend', 'N', 'Y', 'Y','N',17,24);
+INSERT INTO authorized_individual VALUES (41,10, 'Grandmother', 'Y', 'Y', 'Y','Y',16,22);
+INSERT INTO authorized_individual VALUES (42,10, 'Grandfather', 'N', 'Y', 'Y','Y',16,23);
+INSERT INTO authorized_individual VALUES (43,10, 'Family Friend', 'N', 'N', 'Y','N',17,24);
 
 
 --Sequence created to generat numbers for org_id
@@ -1040,21 +952,21 @@ INSERT INTO medical_history VALUES (9, '25-JAN-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (10, '14-APR-2017', 'Y', 'N');
 
 --The code below inserts the value statements for Medical Staff
-INSERT INTO MEDSTAFF VALUES (46,2,'P');
-INSERT INTO MEDSTAFF VALUES (47,3,'P');
-INSERT INTO MEDSTAFF VALUES (48,4,'P');
-INSERT INTO MEDSTAFF VALUES (49,5,'P');
-INSERT INTO MEDSTAFF VALUES (50,6,'P');
-INSERT INTO MEDSTAFF VALUES (51,7,'P');
-INSERT INTO MEDSTAFF VALUES (52,8,'P');
-INSERT INTO MEDSTAFF VALUES (53,9,'P');
-INSERT INTO MEDSTAFF VALUES (53,10,'P');
-INSERT INTO MEDSTAFF VALUES (54,2,'D');
-INSERT INTO MEDSTAFF VALUES (55,4,'D');
-INSERT INTO MEDSTAFF VALUES (56,6,'D');
-INSERT INTO MEDSTAFF VALUES (57,9,'D');
-INSERT INTO MEDSTAFF VALUES (58,8,'D');
-INSERT INTO MEDSTAFF VALUES (59,7,'D');
+INSERT INTO MEDSTAFF VALUES (46,2,'P',25);
+INSERT INTO MEDSTAFF VALUES (47,3,'P',26);
+INSERT INTO MEDSTAFF VALUES (48,4,'P',27);
+INSERT INTO MEDSTAFF VALUES (49,5,'P',28);
+INSERT INTO MEDSTAFF VALUES (50,6,'P',29);
+INSERT INTO MEDSTAFF VALUES (51,7,'P',30);
+INSERT INTO MEDSTAFF VALUES (52,8,'P',31);
+INSERT INTO MEDSTAFF VALUES (53,9,'P',32);
+INSERT INTO MEDSTAFF VALUES (53,10,'P',32);
+INSERT INTO MEDSTAFF VALUES (54,2,'D',33);
+INSERT INTO MEDSTAFF VALUES (55,4,'D',34);
+INSERT INTO MEDSTAFF VALUES (56,6,'D',35);
+INSERT INTO MEDSTAFF VALUES (57,9,'D',36);
+INSERT INTO MEDSTAFF VALUES (58,8,'D',37);
+INSERT INTO MEDSTAFF VALUES (59,7,'D',38);
 
 --The code below creates the sequence for member release form id. 
 CREATE SEQUENCE mbrrlsfrm_seq
@@ -1076,7 +988,7 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 --The code below inserts the values into the Member Medical Info Table
 INSERT INTO mbrmedinfo VALUES (3,2,20,46,'2 Pills','Mouth',TO_DATE('13:00','HH24:MI'),'Helps with Severe Migraines');
 INSERT INTO mbrmedinfo VALUES (3,8,7,46,'2 Pills','Mouth',TO_DATE('13:30','HH24:MI'),'Prevents blood clots');
-INSERT INTO mbrmedinfo VALUES (5,7,6,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For bi-polar');
+INSERT INTO mbrmedinfo VALUES (5,7,6,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
 INSERT INTO mbrmedinfo VALUES (8,5,4,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
 INSERT INTO mbrmedinfo VALUES (6,14,13,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
 
@@ -1103,9 +1015,7 @@ SELECT * FROM o_ethnicity;
 SELECT * FROM org;
 SELECT * FROM paymentinfo;
 SELECT * FROM person;
-SELECT * FROM person_address;
 SELECT * FROM person_org;
-SELECT * FROM person_phone;
 SELECT * FROM phone;
 SELECT * FROM services;
 SELECT * FROM services_provided;
@@ -1113,7 +1023,3 @@ SELECT * FROM services_used;
 SELECT * FROM socialdev;
 SELECT * FROM teacher;
 SELECT * FROM truancy;
-
-
-
- 
