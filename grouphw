@@ -51,6 +51,8 @@ DROP SEQUENCE seqconid;
 DROP SEQUENCE seqhealthcondid;
 DROP SEQUENCE seqmedicationid;
 DROP SEQUENCE mbrrlsfrm_seq;
+DROP SEQUENCE sevicesseq;
+DROP SEQUENCE seqfamid;
 
 --The code below creates a table for Person where personid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
@@ -119,11 +121,14 @@ CREATE TABLE mbr (
   ethnicty    VARCHAR2 (2) NOT NULL,
   birthid     NUMBER(6) NOT NULL,
   famid       NUMBER(6) NOT NULL,
+  mbraddrid   NUMBER (6) NOT NULL,
   CONSTRAINT mbr_ethnicty_cc CHECK (ethnicty IN ('C', 'AA','AI','AP','HP','ME','O')),
   CONSTRAINT mbr_memberid_pk PRIMARY KEY (memberid),
   CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
   CONSTRAINT mbr_birthid_fk FOREIGN KEY (birthid) REFERENCES dobirth (birthid),
-  CONSTRAINT mbr_famid_fk FOREIGN KEY (famid) REFERENCES familyinfo (famid));
+  CONSTRAINT mbr_famid_fk FOREIGN KEY (famid) REFERENCES familyinfo (famid),
+  CONSTRAINT mbr_mbraddrid_fk FOREIGN KEY (mbraddrid) REFERENCES address (addrid));
+  
   
 --The code below creates table for Authorized Individual where authorizedindid and memberid are the primary and foreign keys
 --Check constraints are for emergency contact, authorized to pick up, head of the house hold and edit account information
@@ -137,8 +142,8 @@ CREATE TABLE authorized_individual (
   emg_cont        CHAR(1) NOT NULL,
   auth_pickup     CHAR(1) NOT NULL,
   edit_acct_info  CHAR(1) NOT NULL,
-  addrid          NUMBER (6) NOT NULL,
-  phoneid         NUMBER (6) NOT NULL,
+  authaddrid          NUMBER (6) NOT NULL,
+  authphoneid         NUMBER (6) NOT NULL,
   CONSTRAINT authorized_emg_cont_cc CHECK (emg_cont IN ('Y', 'N')),
   CONSTRAINT authorized_individual_cc CHECK (auth_pickup IN ('Y', 'N')),
   CONSTRAINT authorized_headofhouse_cc CHECK (headofhouse IN ('Y', 'N')),
@@ -146,8 +151,8 @@ CREATE TABLE authorized_individual (
   CONSTRAINT authorizedmemberid_pk PRIMARY KEY (authorizedindid, memberid),
   CONSTRAINT authorizedindid_fk FOREIGN KEY (authorizedindid) REFERENCES person (personid),
   CONSTRAINT authorizedmemberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
-  CONSTRAINT authroziedid_addr_fk FOREIGN KEY (addrid) REFERENCES address (addrid),
-  CONSTRAINT authorizedmemberid_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
+  CONSTRAINT authroziedid_addr_fk FOREIGN KEY (authaddrid) REFERENCES address (addrid),
+  CONSTRAINT authorizedmemberid_phoneid_fk FOREIGN KEY (authphoneid) REFERENCES phone (phoneid));
   
 --The code below creates the table for other ethnicity where memberid is the primary key and foreign key in the table
 CREATE TABLE o_ethnicity (
@@ -297,7 +302,6 @@ CREATE TABLE allergy (
   CONSTRAINT allergy_pk PRIMARY KEY (memberid),
   CONSTRAINT allergy_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
   
-
 --The code below creates the table for Consent Form where conid is the primary key and foreign keys are memberid, authorizedindid and staffid
 --Check constraint for memberstatus: 'G'= Guest, 'N'= New Member,'R'= Returning Member
 --Check constraint for paymenttype: 'CA'= Cash, 'CK'= Check,'MO'= Money Order,'SS'= Scholarship
@@ -369,12 +373,12 @@ CREATE TABLE medstaff (
     medstaffid  NUMBER (6) NOT NULL,
     memberid    NUMBER (6) NOT NULL,
     jobtype     CHAR (1) NOT NULL,
-    phoneid     NUMBER (6) NOT NULL,
+    medphoneid     NUMBER (6) NOT NULL,
     CONSTRAINT jobtype_cc CHECK (jobtype IN('P', 'D')),
     CONSTRAINT medstaff_medstaffid__pk PRIMARY KEY (medstaffid,memberid),
     CONSTRAINT medstaff_staffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid),
     CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
-    CONSTRAINT medstaff_phoneid_fk FOREIGN KEY (phoneid) REFERENCES phone (phoneid));
+    CONSTRAINT medstaff_phoneid_fk FOREIGN KEY (medphoneid) REFERENCES phone (phoneid));
     
 --The code below creates the table for Member Medical Informaton where memberid, medicationid, healthcondid, medstaffid are the primary and foreign keys
 --We use VARCHAR2 (25) for amnt_medication (amount of medication to take) so that the person can identify the units. For example take 2 pills or 3 teaspons 
@@ -697,8 +701,6 @@ INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-MAR-15');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '13-APR-13');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '12-JAN-05');
 
-
-
 --The code below are the insers statement for Homework table
 INSERT INTO hw VALUES (2,'Geometry and history');
 INSERT INTO hw VALUES (3,'Math and reading Harry Potter');
@@ -708,10 +710,6 @@ INSERT INTO hw VALUES (6,'Reading chapter books');
 INSERT INTO hw VALUES (7,'Writing');
 INSERT INTO hw VALUES (8,'Social Studies');
 INSERT INTO hw VALUES (9,'Alebgra');
-
-
---DROP SEQUENCES
-DROP SEQUENCE seqfamid;
 
 --Sequence created to generate numbers for famid
 CREATE SEQUENCE seqfamid
@@ -733,15 +731,15 @@ INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army');
 --The table below creates the table for mbr
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
-INSERT INTO mbr VALUES (2, 'AA', 2,3 );
-INSERT INTO mbr VALUES (3, 'C', 3, 3);
-INSERT INTO mbr VALUES (4, 'ME', 3, 4);
-INSERT INTO mbr VALUES (5, 'C',4,5);
-INSERT INTO mbr VALUES (6, 'AP',5,6);
-INSERT INTO mbr VALUES (7,'AI',6,6);
-INSERT INTO mbr VALUES (8,'O',7,7);
-INSERT INTO mbr VALUES (9, 'C',8,7);
-INSERT INTO mbr VALUES (10,'HP',9,8);
+INSERT INTO mbr VALUES (2, 'AA', 2,3,2);
+INSERT INTO mbr VALUES (3, 'C', 3, 3,4);
+INSERT INTO mbr VALUES (4, 'ME', 3, 4,6);
+INSERT INTO mbr VALUES (5, 'C',4,5,8);
+INSERT INTO mbr VALUES (6, 'AP',5,6,9);
+INSERT INTO mbr VALUES (7,'AI',6,6,11);
+INSERT INTO mbr VALUES (8,'O',7,7,14);
+INSERT INTO mbr VALUES (9, 'C',8,7,16);
+INSERT INTO mbr VALUES (10,'HP',9,8,16);
 
 --Insert statements for table o_ethnicity
 Insert into O_ETHNICITY values (8, 'Jamaican');
@@ -825,12 +823,7 @@ INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students 
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
 
-
-
-
-
 --The code below creates the sequence for school services.
-drop sequence sevicesseq;
 CREATE SEQUENCE sevicesseq
 START WITH 1
 INCREMENT BY 1
@@ -1023,3 +1016,6 @@ SELECT * FROM services_used;
 SELECT * FROM socialdev;
 SELECT * FROM teacher;
 SELECT * FROM truancy;
+
+--What are the email addresses of each individual? 
+SELECT fname,lname,email_add AS "Email Address" FROM person INNER JOIN email USING (personid);
