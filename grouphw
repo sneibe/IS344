@@ -1131,3 +1131,19 @@ WHERE consentform.conid = paymentinfo.conid
 AND consentform.conid IN (Select conid from paymentinfo
 GROUP BY conid)
 ORDER BY consentform.conid;
+
+--Member:Academic Information
+--A member provides academic information.
+--Academic information belongs to one member.
+--I want to know the acedemic information from my members attending B&G Club
+SELECT GRADE AS "Grade", LNAME AS "Last Name", FNAME AS "First Name" FROM PERSON, MBR, ACADEMIC_INFO
+WHERE person.personid = mbr.memberid
+AND academic_info.memberid = mbr.memberid;
+
+--Member:Homework
+--A member may be assigned homework.
+--Homework is assigned to one member.
+--I want to see what homework has been assigned to our members
+SELECT HW_DESC AS "Homework", LNAME AS "Last Name", FNAME AS "First Name" FROM HW, MBR, PERSON
+WHERE person.personid = mbr.memberid
+AND HW.HW_ID = MBR.MEMBERID;
