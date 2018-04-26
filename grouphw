@@ -307,11 +307,10 @@ CREATE TABLE allergy (
   
 --The code below creates the table for Consent Form where conid is the primary key and foreign keys are memberid, authorizedindid and staffid
 --Check constraint for memberstatus: 'G'= Guest, 'N'= New Member,'R'= Returning Member
---Check constraint for paymenttype: 'CA'= Cash, 'CK'= Check,'MO'= Money Order,'SS'= Scholarship
+--Check constraint for completedorient: Y = Completed, N= Not completed
 CREATE TABLE consentform (
     conid NUMBER (6) NOT NULL,
     memberstatus CHAR(1) NOT NULL,
-    paid CHAR(1), 
     datedataentered DATE NOT NULL,
     orienschedule DATE NOT NULL,
     orientationtime DATE NOT NULL,
@@ -320,7 +319,6 @@ CREATE TABLE consentform (
     authorizedindid NUMBER (6),
     staffid NUMBER (6) NOT NULL,
     CONSTRAINT consentformmemberstatus_cc CHECK (memberstatus IN ('G', 'N','R')),
-    CONSTRAINT consentpay_cc CHECK (paid IN ('Y', 'N')),
     CONSTRAINT completedorient_cc CHECK (completedorient IN ('Y', 'N')),
     CONSTRAINT consentform_conid_pk PRIMARY KEY (conid),
     CONSTRAINT consentform1_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
@@ -777,23 +775,23 @@ NOCACHE;
 
 --Insert values into the consent form table
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
+VALUES (seqconid.NEXTVAL, 'R', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
+VALUES (seqconid.NEXTVAL, 'R', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
+VALUES (seqconid.NEXTVAL, 'N', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', '10-JAN-2018', '13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
+VALUES (seqconid.NEXTVAL, 'R', '10-JAN-2018', '13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'G', 'N', '20-FEB-2018', '23-MAY-2018', TO_DATE('15:30', 'HH24:MI'), 'N', 6, 31, 45);
+VALUES (seqconid.NEXTVAL, 'G', '20-FEB-2018', '23-MAY-2018', TO_DATE('15:30', 'HH24:MI'), 'N', 7, 34, 45);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', '10-OCT-2017', '18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 7, 34, 45);
+VALUES (seqconid.NEXTVAL, 'R', '10-OCT-2017', '18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 6, 31, 45);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', 'Y', '26-JAN-2018', '15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
+VALUES (seqconid.NEXTVAL, 'R', '26-JAN-2018', '15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
+VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
 INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', 'Y', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
+VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
 --Insert values into the paymentinfo table
 INSERT INTO paymentinfo
@@ -1019,6 +1017,7 @@ SELECT * FROM services_used;
 SELECT * FROM socialdev;
 SELECT * FROM teacher;
 SELECT * FROM truancy;
+
 
 --The Queries below are for the business rules
 
