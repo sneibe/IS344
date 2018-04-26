@@ -1056,9 +1056,67 @@ ORDER BY lname,fname;
 
 --The query below querys the relation for business rule 25, member:medical history
 
---Which members are receiving counseling? Provide their first and last name
-SELECT fname, lname FROM person, mbr, medical_history
- WHERE person.personid = mbr.memberid AND
- mbr.memberid = medical_history.memberid 
- AND rec_counseling =  'Y' 
+
+--The query below queries the relation for business rule 25, member:medical history:
+--A member provides their medical history. 
+--Each medical history is provided by one member. 
+--Which members are receiving counseling? Provide their first, middle(if they have one) and last name
+SELECT fname AS "First Name", mname as "Middle Initial", lname as "Last Name" FROM person, mbr, medical_history
+WHERE person.personid = mbr.memberid AND
+mbr.memberid = medical_history.memberid 
+AND rec_counseling =  'Y' 
 ORDER BY lname, fname;
+
+--The query below queries the relation for business rule 26,Person:Person 
+--A person may provide one or more medical staff people(doctor or physician).
+--Each medical staff person is provided by one person.
+--Which physician(s) were provided by two or more members? Please provide the physcians first and last name of the physician(s) and the name of the members
+-- who provided the physician.
+-- Which members have the same physician please provide me with the member's first, middle, and last name, and the physician's first and last name
+
+SELECT med.fname AS "Physician's First Name", med.lname AS "Physician's Last Name", mem.fname AS "Member's First Name",
+mem.mname AS "Member's Middle Name", mem.lname AS "Member's Last Name" FROM person med, person mem, medstaff
+WHERE med.personid = medstaff.MEDSTAFFID
+AND mem.personid = medstaff.memberid
+AND jobtype = 'P'
+and med.personid IN (SELECT (medstaffid) FROM medstaff
+GROUP BY medstaffid
+HAVING COUNT (memberid) >=2) 
+ORDER BY mem.lname, mem.fname;
+
+
+--The query below queries the relation for business rule 27 Medical Staff:Phone
+--A medical staff person provides one phone number.
+--Each phone number belongs to one or more medical staff people. 
+--Provide me all the phone numbers of the doctors that we have in our system. Please provide the doctor's first and last name
+SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
+FROM medstaff, phone, person
+WHERE medstaff.medphoneid = phone.phoneid 
+AND person.personid= medstaff.medstaffid
+AND jobtype = 'D'
+ORDER BY LNAME, FNAME;
+
+
+--The query below queries the relation for business rule 28 Member:Medication:Health Condition:Medical Staff  
+--A member can take one or more medications that may be prescribed by one or more doctors to treat one or more health conditions.
+--A health condition may be treated by one or more medications that may be prescribed by one or more doctors for one or more members.
+--Each medication can be prescribed by one or more doctors to treat one or more health conditions that is taken by one or more members.
+--A doctor may prescribe one or more medications to treat one or more health conditions for one or more members.
+
+
+
+--The query below querys the relation for business rule 29 Consent Form:Payment Information
+--A consent form may need payment information.
+--Each payment information belongs to one consent form.
+--Provide me with all the consent forms that do not have payment information, please provide the consent formid and the member id.
+
+SELECT consentform.conid, consentform.memberid from consentform
+WHERE consentform.conid NOT IN (Select conid from paymentinfo
+Group by conid);
+
+--Provide me with all the consent forms that have payment information please provide me with the consent form id, member id, and the payment information.
+SELECT consentform.conid, memberid, paymenttype, paymentamnt, daterecievedpay, dateenteredpay from consentform, paymentinfo
+WHERE consentform.conid = paymentinfo.conid
+AND consentform.conid IN (Select conid from paymentinfo
+GROUP BY conid)
+ORDER BY conid;
