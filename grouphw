@@ -55,14 +55,11 @@ DROP SEQUENCE sevicesseq;
 DROP SEQUENCE seqfamid;
 
 --The code below creates a table for Person where personid is the primary key
---Constraint for gender; M= Male, F= Female, O= Other
 CREATE TABLE person(
   personid NUMBER(6) NOT NULL,
   lname    VARCHAR2(35) NOT NULL,
   fname    VARCHAR2(35) NOT NULL,
   mname    VARCHAR2 (35),
-  gender   CHAR(1),
-  CONSTRAINT persongender_cc CHECK (gender IN ('M','F','O')),
   CONSTRAINT personid_pk PRIMARY KEY (personid));
   
 --The code below creates a table for Email where personid is the primary key and foreign key
@@ -114,14 +111,17 @@ CREATE TABLE address (
   CONSTRAINT addr_addrid1_pk PRIMARY KEY(addrid));
   
 --The code below creates table for Member where memberid is the primary key
+--Constraint for gender; M= Male, F= Female, O= Other
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
 CREATE TABLE mbr (
   memberid    NUMBER (6) NOT NULL,
+  gender      CHAR(1),
   ethnicty    VARCHAR2 (2) NOT NULL,
   birthid     NUMBER(6) NOT NULL,
   famid       NUMBER(6) NOT NULL,
   mbraddrid   NUMBER (6) NOT NULL,
+  CONSTRAINT membergender_cc CHECK (gender IN ('M','F','O')),
   CONSTRAINT mbr_ethnicty_cc CHECK (ethnicty IN ('C', 'AA','AI','AP','HP','ME','O')),
   CONSTRAINT mbr_memberid_pk PRIMARY KEY (memberid),
   CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
@@ -131,12 +131,13 @@ CREATE TABLE mbr (
   
   
 --The code below creates table for Authorized Individual where authorizedindid and memberid are the primary and foreign keys
+--Constraint for gender; M= Male, F= Female, O= Other
 --Check constraints are for emergency contact, authorized to pick up, head of the house hold and edit account information
 --These constraints are all yes or no questions,so 'Y'= yes and n= 'N'
-
 CREATE TABLE authorized_individual (
   authorizedindid NUMBER(6) NOT NULL,
   memberid        NUMBER(6) NOT NULL,
+  gender          CHAR(1),
   relationship    VARCHAR2(35) NOT NULL,
   headofhouse     CHAR(1) NOT NULL,
   emg_cont        CHAR(1) NOT NULL,
@@ -144,6 +145,7 @@ CREATE TABLE authorized_individual (
   edit_acct_info  CHAR(1) NOT NULL,
   authaddrid          NUMBER (6) NOT NULL,
   authphoneid         NUMBER (6) NOT NULL,
+  CONSTRAINT authorizedindgender_cc CHECK (gender IN ('M','F','O')),
   CONSTRAINT authorized_emg_cont_cc CHECK (emg_cont IN ('Y', 'N')),
   CONSTRAINT authorized_individual_cc CHECK (auth_pickup IN ('Y', 'N')),
   CONSTRAINT authorized_headofhouse_cc CHECK (headofhouse IN ('Y', 'N')),
@@ -405,15 +407,15 @@ CREATE SEQUENCE seqpersonid
   NOCACHE;
 
 --Intert statements for table person 
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D', 'O');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Brandon', 'D', 'M');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Stacey', 'H', 'F');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Montrell', 'D');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Brandon', 'D');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Stacey', 'H');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Riley');
-INSERT INTO person (personid, lname, fname, mname) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Moli', 'J');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J', 'M');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N', 'M');
-INSERT INTO person (personid, lname, fname, gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire', 'F');
-INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Jose', 'R', 'M');
+INSERT INTO person  VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Moli', 'J');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Simon', 'Jamie', 'J');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Ethan', 'N');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Claire');
+INSERT INTO person VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Jose', 'R');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'England', 'Ben');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kay', 'Mary');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Strong', 'Derek');
@@ -422,31 +424,31 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ott', 
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Adam');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Derks', 'Moriah');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Hank', 'Aron');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Aaron','M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Hayley','F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Mary','F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Danny', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Sandy', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'David', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Kyle', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Molly', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Brooke', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Joe', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Emily', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Frank', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Qian', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Samuel', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Chen', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Simon', 'Nick', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Van Roy', 'Kim', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Braun', 'Ryan', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Tom', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Sue', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Tim', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Shannon', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Hailey', 'F');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Mike', 'M');
-INSERT INTO person (personid, lname, fname, Gender) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke', 'F');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Aaron');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Hayley');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Mary');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Danny');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Sandy');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'David');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Simonis', 'Kyle');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Molly');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Brooke');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Ibe', 'Joe');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Emily');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Johnson', 'Frank');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Qian');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Samuel');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Zhang', 'Chen');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Simon', 'Nick');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Van Roy', 'Kim');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Braun', 'Ryan');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Tom');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Sue');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Tim');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Berkley', 'Shannon');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Hailey');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Mike');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kapping', 'Mitchell');
 INSERT INTO person (Personid, lname, fname) VALUES(seqpersonid.NEXTVAL, 'Carter', 'Matthew');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kelley', 'Aaron');
@@ -586,34 +588,34 @@ INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6122348934, 'W');
 INSERT INTO phone VALUES (seqphoneid.NEXTVAL, 6127652348, 'W');
 
 --Insert statements for authorized individual (AuthorizedID,MbrID,Relship,Y,Y,Y,Y,Addrid,PhoneId)
-INSERT INTO authorized_individual VALUES (19,2, 'Father', 'Y', 'Y', 'Y','Y',2,2);
-INSERT INTO authorized_individual VALUES (20,2, 'Mother', 'N', 'Y', 'Y','Y',2,3);
-INSERT INTO authorized_individual VALUES (21,2, 'Aunt', 'N', 'Y', 'Y','N',3,4);
-INSERT INTO authorized_individual VALUES (22,3, 'Father', 'Y', 'Y', 'Y','Y',4,5);
-INSERT INTO authorized_individual VALUES (23,3, 'Mother', 'N', 'Y', 'Y','Y',4,5);
-INSERT INTO authorized_individual VALUES (24,3, 'Uncle', 'N', 'Y', 'N','N',5,6);
-INSERT INTO authorized_individual VALUES (25,3, 'Brother', 'N', 'N', 'Y','N',4,7);
-INSERT INTO authorized_individual VALUES (26,4, 'Mother', 'Y', 'Y', 'Y','Y',6,8);
-INSERT INTO authorized_individual VALUES (27,4, 'Aunt', 'N', 'Y', 'Y','Y',7,9);
-INSERT INTO authorized_individual VALUES (28,4, 'Uncle', 'N', 'Y', 'Y','N',7,10);
-INSERT INTO authorized_individual VALUES (29,5, 'Mother', 'Y', 'Y', 'Y','Y',8,11);
-INSERT INTO authorized_individual VALUES (30,5, 'Father', 'N', 'Y', 'Y','Y',8,11);
-INSERT INTO authorized_individual VALUES (31,6, 'Father', 'Y', 'Y', 'Y','Y',9,12);
-INSERT INTO authorized_individual VALUES (32,6, 'Uncle', 'N', 'Y', 'Y','Y',10,13);
-INSERT INTO authorized_individual VALUES (33,6, 'Aunt', 'N', 'Y', 'Y','N',10,14);
-INSERT INTO authorized_individual VALUES (34,7, 'Father', 'Y', 'Y', 'Y','Y',11,15);
-INSERT INTO authorized_individual VALUES (35,7, 'Family Friend', 'N', 'Y', 'Y','N',12,16);
-INSERT INTO authorized_individual VALUES (36,7, 'Cousin', 'N', 'Y', 'N','N',13,17);
-INSERT INTO authorized_individual VALUES (37,8, 'Father', 'Y', 'Y', 'Y','Y',14,18);
-INSERT INTO authorized_individual VALUES (38,8, 'Mother', 'N', 'Y', 'Y','Y',14,19);
-INSERT INTO authorized_individual VALUES (39,8, 'Uncle', 'N', 'Y', 'Y','N',15,20);
-INSERT INTO authorized_individual VALUES (40,8, 'Aunt', 'N', 'Y', 'Y','N',15,21);
-INSERT INTO authorized_individual VALUES (41,9, 'Grandmother', 'Y', 'Y', 'Y','Y',16,22);
-INSERT INTO authorized_individual VALUES (42,9, 'Grandfather', 'N', 'Y', 'Y','Y',16,23);
-INSERT INTO authorized_individual VALUES (43,9, 'Family Friend', 'N', 'Y', 'Y','N',17,24);
-INSERT INTO authorized_individual VALUES (41,10, 'Grandmother', 'Y', 'Y', 'Y','Y',16,22);
-INSERT INTO authorized_individual VALUES (42,10, 'Grandfather', 'N', 'Y', 'Y','Y',16,23);
-INSERT INTO authorized_individual VALUES (43,10, 'Family Friend', 'N', 'N', 'Y','N',17,24);
+INSERT INTO authorized_individual VALUES (19,2,'M', 'Father', 'Y', 'Y', 'Y','Y',2,2);
+INSERT INTO authorized_individual VALUES (20,2, 'F', 'Mother', 'N', 'Y', 'Y','Y',2,3);
+INSERT INTO authorized_individual VALUES (21,2, 'F', 'Aunt', 'N', 'Y', 'Y','N',3,4);
+INSERT INTO authorized_individual VALUES (22,3, 'M','Father', 'Y', 'Y', 'Y','Y',4,5);
+INSERT INTO authorized_individual VALUES (23,3, 'F','Mother', 'N','Y', 'Y', 'Y',4,5);
+INSERT INTO authorized_individual VALUES (24,3, 'M','Uncle', 'N', 'Y', 'N','N',5,6);
+INSERT INTO authorized_individual VALUES (25,3, 'M','Brother', 'N', 'N', 'Y', 'N',4,7);
+INSERT INTO authorized_individual VALUES (26,4, 'F','Mother', 'Y', 'Y', 'Y','Y',6,8);
+INSERT INTO authorized_individual VALUES (27,4, 'F','Aunt', 'N', 'Y', 'Y','Y',7,9);
+INSERT INTO authorized_individual VALUES (28,4, 'M','Uncle', 'N', 'Y', 'Y','N',7,10);
+INSERT INTO authorized_individual VALUES (29,5, 'F','Mother', 'Y', 'Y', 'Y','Y',8,11);
+INSERT INTO authorized_individual VALUES (30,5, 'M', 'Father', 'N', 'Y', 'Y','Y',8,11);
+INSERT INTO authorized_individual VALUES (31,6, 'M','Father', 'Y', 'Y', 'Y','Y',9,12);
+INSERT INTO authorized_individual VALUES (32,6, 'M','Uncle', 'N', 'Y', 'Y','Y',10,13);
+INSERT INTO authorized_individual VALUES (33,6, 'F', 'Aunt', 'N', 'Y', 'Y','N',10,14);
+INSERT INTO authorized_individual VALUES (34,7, 'M','Father', 'Y', 'Y', 'Y','Y',11,15);
+INSERT INTO authorized_individual VALUES (35,7, 'M','Uncle', 'N', 'Y', 'Y','N',12,16);
+INSERT INTO authorized_individual VALUES (36,7, 'M', 'Cousin', 'N', 'Y', 'N','N',13,17);
+INSERT INTO authorized_individual VALUES (37,8, 'M', 'Father', 'Y', 'Y', 'Y','Y',14,18);
+INSERT INTO authorized_individual VALUES (38,8, 'F','Mother', 'N', 'Y', 'Y','Y',14,19);
+INSERT INTO authorized_individual VALUES (39,8, 'M','Uncle', 'N', 'Y', 'Y','N',15,20);
+INSERT INTO authorized_individual VALUES (40,8, 'F','Aunt', 'N', 'Y', 'Y','N',15,21);
+INSERT INTO authorized_individual VALUES (41,9, 'F','Grandmother', 'Y', 'Y', 'Y','Y',16,22);
+INSERT INTO authorized_individual VALUES (42,9, 'M','Grandfather', 'N', 'Y', 'Y','Y',16,23);
+INSERT INTO authorized_individual VALUES (43,9, 'F','Family Friend', 'N', 'Y', 'Y','N',17,24);
+INSERT INTO authorized_individual VALUES (41,10, 'F','Grandmother', 'Y', 'Y', 'Y','Y',16,22);
+INSERT INTO authorized_individual VALUES (42,10, 'M','Grandfather', 'N', 'Y', 'Y','Y',16,23);
+INSERT INTO authorized_individual VALUES (43,10, 'F','Family Friend', 'N', 'N', 'Y','N',17,24);
 
 
 --Sequence created to generat numbers for org_id
@@ -732,15 +734,15 @@ INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army');
 --The table below creates the table for mbr
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
-INSERT INTO mbr VALUES (2, 'AA', 2,3,2);
-INSERT INTO mbr VALUES (3, 'C', 3, 3,4);
-INSERT INTO mbr VALUES (4, 'ME', 3, 4,6);
-INSERT INTO mbr VALUES (5, 'C',4,5,8);
-INSERT INTO mbr VALUES (6, 'AP',5,6,9);
-INSERT INTO mbr VALUES (7,'AI',6,6,11);
-INSERT INTO mbr VALUES (8,'O',7,7,14);
-INSERT INTO mbr VALUES (9, 'C',8,7,16);
-INSERT INTO mbr VALUES (10,'HP',9,8,16);
+INSERT INTO mbr VALUES (2,'M', 'AA', 2,3,2);
+INSERT INTO mbr VALUES (3, 'M','C', 3, 3,4);
+INSERT INTO mbr VALUES (4, 'F','ME', 3, 4,6);
+INSERT INTO mbr VALUES (5, 'M','C',4,5,8);
+INSERT INTO mbr VALUES (6, 'F','AP',5,6,9);
+INSERT INTO mbr VALUES (7, 'M','AI',6,6,11);
+INSERT INTO mbr VALUES (8, 'M','O',7,7,14);
+INSERT INTO mbr VALUES (9, 'F','C',8,7,16);
+INSERT INTO mbr VALUES (10,'M','HP',9,8,16);
 
 --Insert statements for table o_ethnicity
 Insert into O_ETHNICITY values (8, 'Jamaican');
@@ -1020,3 +1022,13 @@ SELECT * FROM truancy;
 
 --What are the email addresses of each individual? 
 SELECT fname,lname,email_add AS "Email Address" FROM person INNER JOIN email USING (personid);
+
+
+--The query below querys the relation for business rule 25, member:medical history
+
+--Which members are receiving counseling? Provide their first and last name
+SELECT fname, lname FROM person, mbr, medical_history
+ WHERE person.personid = mbr.memberid AND
+ mbr.memberid = medical_history.memberid 
+ AND rec_counseling =  'Y' 
+ORDER BY lname, fname;
