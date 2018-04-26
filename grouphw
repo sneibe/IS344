@@ -1110,13 +1110,16 @@ ORDER BY LNAME, FNAME;
 --Each payment information belongs to one consent form.
 --Provide me with all the consent forms that do not have payment information, please provide the consent formid and the member id.
 
-SELECT consentform.conid, consentform.memberid from consentform
+SELECT consentform.conid AS "Form ID", consentform.memberid AS "Member ID" from consentform
 WHERE consentform.conid NOT IN (Select conid from paymentinfo
-Group by conid);
+Group by conid)
+ORDER BY conid;
 
 --Provide me with all the consent forms that have payment information please provide me with the consent form id, member id, and the payment information.
-SELECT consentform.conid, memberid, paymenttype, paymentamnt, daterecievedpay, dateenteredpay from consentform, paymentinfo
+--The "T" stands for payment type
+SELECT consentform.conid AS "Form ID", memberid AS "Member Id", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
+daterecievedpay AS "Date Received", dateenteredpay AS "Date Entered" from consentform, paymentinfo
 WHERE consentform.conid = paymentinfo.conid
 AND consentform.conid IN (Select conid from paymentinfo
 GROUP BY conid)
-ORDER BY conid;
+ORDER BY consentform.conid;
