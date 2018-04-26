@@ -986,6 +986,9 @@ INSERT INTO mbrmedinfo VALUES (5,7,6,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:M
 INSERT INTO mbrmedinfo VALUES (8,5,4,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
 INSERT INTO mbrmedinfo VALUES (6,14,13,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
 
+ --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
+ SET pagesize 5000;
+ SET linesize 1000;
 
 --Select all queries for each table in the database
 SELECT * FROM academic_info;
