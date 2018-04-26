@@ -1020,9 +1020,40 @@ SELECT * FROM socialdev;
 SELECT * FROM teacher;
 SELECT * FROM truancy;
 
---What are the email addresses of each individual? 
-SELECT fname,lname,email_add AS "Email Address" FROM person INNER JOIN email USING (personid);
+--The Queries below are for the business rules
 
+--PERSON:MBR
+SELECT fname AS "First Name",lname AS "Last Name" FROM person,mbr 
+WHERE person.personid = mbr.memberid;
+
+--Authorized Individual:Address
+SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode"
+FROM person,authorized_individual,address
+WHERE person.personid = authorized_individual.authorizedindid
+AND address.addrid = authorized_individual.authaddrid;
+
+--Member:Address
+SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode" 
+FROM person,mbr,address
+WHERE person.personid = mbr.memberid
+AND address.addrid = mbr.mbraddrid;
+
+--Authorized Individual:Phone
+SELECT fname AS "First Name",lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
+FROM person,authorized_individual,phone
+WHERE person.personid = authorized_individual.authorizedindid
+AND phone.phoneid = authorized_individual.authphoneid;
+
+--Medical Staff Person:Phone
+SELECT fname AS "First Name",lname AS "Last Name",jobtype AS "Title",pnumber AS "Phone Number",ptype AS "Phone Type" 
+FROM person,medstaff,phone
+WHERE person.personid = medstaff.medstaffid
+AND phone.phoneid = medstaff.medphoneid;
+
+--Person:Person (Teacher)
+SELECT fname,lname FROM person,teacher
+WHERE person.personid = teacher.teacherid
+ORDER BY lname,fname;
 
 --The query below querys the relation for business rule 25, member:medical history
 
