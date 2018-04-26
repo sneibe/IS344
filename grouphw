@@ -4,10 +4,6 @@
 --May 4,2018
 
 
- --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
- SET pagesize 5000;
- SET linesize 1000;
-
 --Drop tables plus cascade constraints
 DROP TABLE person CASCADE CONSTRAINTS;
 DROP TABLE email CASCADE CONSTRAINTS;
