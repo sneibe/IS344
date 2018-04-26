@@ -53,6 +53,7 @@ DROP SEQUENCE seqmedicationid;
 DROP SEQUENCE mbrrlsfrm_seq;
 DROP SEQUENCE sevicesseq;
 DROP SEQUENCE seqfamid;
+DROP SEQUENCE attendanceseq;
 
 --The code below creates a table for Person where personid is the primary key
 CREATE TABLE person(
@@ -767,6 +768,32 @@ INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'Needs help w
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'Practice Speech','N','Y','3');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,10,'Needs assistance with Math and Science','N','N','5');
 
+--The code below creates the sequence for attendance. 
+CREATE SEQUENCE attendanceseq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+--This table creates the attendance for members.
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018', 6);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 2);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 3);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 4);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018', 6);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 7);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018', 9);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 10);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 2);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018', 3);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 4);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 5);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018', 9);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 10);
+
+
 --Sequence is created to generate numbers for the PK conid
 CREATE SEQUENCE seqconid
 START WITH 1
@@ -1150,3 +1177,58 @@ AND academic_info.memberid = mbr.memberid;
 SELECT HW_DESC AS "Homework", LNAME AS "Last Name", FNAME AS "First Name" FROM HW, MBR, PERSON
 WHERE person.personid = mbr.memberid
 AND HW.HW_ID = MBR.MEMBERID;
+
+--Person:Organization 
+--A person may be a part of one or more organizations. 
+--Each organization contains one or more people. 
+ --Who works at Menards?
+SELECT fname AS "First Name", lname AS "Last Name" FROM person, person_org, org
+WHERE person.personid = person_org.personid
+AND person_org.org_id = org.org_id
+AND org_name = 'Menards';
+
+--Organization:Services 
+--An organization may provide one or more services. 
+--Each service is provided by one or more organizations. 
+--Which schools offer speech?
+SELECT org_name AS "School Name" FROM org, services, services_provided
+WHERE servicename = 'Speech'
+AND services.servicesid = services_provided.servicesid
+AND org.org_id = services_provided.schoolid;
+ 
+--Member:Services 
+--A member may use one or more services. 
+--Each service may be used by one or more member. 
+ --Which of our members are in the learning disability service at their school?
+SELECT fname AS "First Name", lname AS "Last Name" FROM person, mbr, services_used, services
+WHERE servicename = 'Learning Disability'
+AND person.personid = mbr.memberid
+AND services_used.servicesid = services.servicesid
+AND services_used.memberid = mbr.memberid;
+
+--Member:Date of Birth 
+--A member provides one date of birth. 
+--Each date of birth belongs to one or more members. 
+--We want to start celebrating birthdays each month for our members, get me a list of our members and their birth dates.
+SELECT fname AS "First Name", lname AS "Last Name", dob AS "Birthday" FROM person, mbr, dobirth
+WHERE person.personid = mbr.memberid
+AND mbr.birthid = dobirth.birthid;
+ 
+--Member:Other Ethnicity
+--A member may identify as another ethnicity.
+--Each other ethnicity identifies one member.
+--Do any of our members identify with another ethnicity? 
+SELECT fname AS "First Name", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = o_ethnicity.memberid;
+ 
+--Member:Family Information 
+--A member provides their family information. 
+--Each family information belongs to one or more members. 
+--How big is Ethan Berkley family? 
+SELECT famsize FROM person, mbr, familyinfo
+WHERE person.personid = mbr.memberid
+AND mbr.famid = familyinfo.famid
+AND fname = 'Ethan'
+AND lname = 'Berkley';
+
