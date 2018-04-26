@@ -1019,25 +1019,36 @@ SELECT * FROM teacher;
 SELECT * FROM truancy;
 
 
---The Queries below are for the business rules
+--The Queries below are for our Business Rules, displaying that each relationship can be queriable. 
 
---PERSON:MBR
+--Person:Member
+--A person may be a member.
+--Each member is a person.
+--Please provide me with the first name and last names of our members at the B&G Club of Chippewa Valley.
 SELECT fname AS "First Name",lname AS "Last Name" FROM person,mbr 
 WHERE person.personid = mbr.memberid;
 
 --Authorized Individual:Address
+--An authorized individual provides one address.
+--Each address may belong to one or more authorized individuals.
+--I need to send out the year schedule with activities to all the authorized individuals, please provide me with their names and address.
 SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode"
 FROM person,authorized_individual,address
 WHERE person.personid = authorized_individual.authorizedindid
 AND address.addrid = authorized_individual.authaddrid;
 
 --Member:Address
+--A member provides one address.
+--Each address may belong to one or more members.
+--Our members receive news letters on what is happening in the club for the month, please provide me with their name and what their address.
 SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode" 
 FROM person,mbr,address
 WHERE person.personid = mbr.memberid
 AND address.addrid = mbr.mbraddrid;
 
 --Authorized Individual:Phone
+--An authorized individual provides one phone number.
+--Each phone may belong to one or more authorized individual.
 SELECT fname AS "First Name",lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
 FROM person,authorized_individual,phone
 WHERE person.personid = authorized_individual.authorizedindid
@@ -1054,10 +1065,7 @@ SELECT fname,lname FROM person,teacher
 WHERE person.personid = teacher.teacherid
 ORDER BY lname,fname;
 
---The query below querys the relation for business rule 25, member:medical history
-
-
---The query below queries the relation for business rule 25, member:medical history:
+--Member:Medical history:
 --A member provides their medical history. 
 --Each medical history is provided by one member. 
 --Which members are receiving counseling? Provide their first, middle(if they have one) and last name
@@ -1067,7 +1075,7 @@ mbr.memberid = medical_history.memberid
 AND rec_counseling =  'Y' 
 ORDER BY lname, fname;
 
---The query below queries the relation for business rule 26,Person:Person 
+--Person:Person 
 --A person may provide one or more medical staff people(doctor or physician).
 --Each medical staff person is provided by one person.
 --Which physician(s) were provided by two or more members? Please provide the physcians first and last name of the physician(s) and the name of the members
@@ -1085,7 +1093,7 @@ HAVING COUNT (memberid) >=2)
 ORDER BY mem.lname, mem.fname;
 
 
---The query below queries the relation for business rule 27 Medical Staff:Phone
+--Medical Staff:Phone
 --A medical staff person provides one phone number.
 --Each phone number belongs to one or more medical staff people. 
 --Provide me all the phone numbers of the doctors that we have in our system. Please provide the doctor's first and last name
@@ -1097,7 +1105,7 @@ AND jobtype = 'D'
 ORDER BY LNAME, FNAME;
 
 
---The query below queries the relation for business rule 28 Member:Medication:Health Condition:Medical Staff  
+--Medication:Health Condition:Medical Staff  
 --A member can take one or more medications that may be prescribed by one or more doctors to treat one or more health conditions.
 --A health condition may be treated by one or more medications that may be prescribed by one or more doctors for one or more members.
 --Each medication can be prescribed by one or more doctors to treat one or more health conditions that is taken by one or more members.
@@ -1105,7 +1113,7 @@ ORDER BY LNAME, FNAME;
 
 
 
---The query below querys the relation for business rule 29 Consent Form:Payment Information
+--Consent Form:Payment Information
 --A consent form may need payment information.
 --Each payment information belongs to one consent form.
 --Provide me with all the consent forms that do not have payment information, please provide the consent formid and the member id.
