@@ -1061,9 +1061,9 @@ WHERE person.personid = medstaff.medstaffid
 AND phone.phoneid = medstaff.medphoneid;
 
 --Person:Person (Teacher)
-SELECT fname,lname FROM person,teacher
-WHERE person.personid = teacher.teacherid
-ORDER BY lname,fname;
+SELECT DISTINCT (teacherid), fname,lname FROM person, teacher
+Where person.personid = teacher.teacherid
+ORDER BY lname;
 
 --Member:Medical history:
 --A member provides their medical history. 
