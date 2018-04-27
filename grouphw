@@ -1228,3 +1228,77 @@ AND mbr.famid = familyinfo.famid
 AND fname = 'Ethan'
 AND lname = 'Berkley';
 
+--Person:Email 
+--A person may provide one email address. 
+--Each email address belongs to one person. 
+--I would like to email out our event flyer. Please provide me with the names and email addresses of everyone on file.
+SELECT fname AS "First Name", lname AS "Last Name", email_add AS "Email Address" FROM person INNER JOIN email USING (personid)
+ORDER BY lname, fname;
+
+--Person:Person 
+--A person may be an authorized individual for one or more people.
+--Each person may provide one or more authorized individuals.
+--Provide me with a list of all members and their authorized individuals who are the "head of the house".
+SELECT aut.fname AS "Authorized Ind's First Name", aut.lname AS "Authorized Ind's Last Name", 
+per.fname AS "Person's First Name",
+per.lname AS "Person's Last Name" 
+FROM person aut, person per, AUTHORIZED_INDIVIDUAL
+WHERE aut.personid = AUTHORIZED_INDIVIDUAL.AUTHORIZEDINDID
+AND per.personid = AUTHORIZED_INDIVIDUAL.memberid
+AND headofhouse = 'Y'
+AND aut.personid IN (SELECT (AUTHORIZEDINDID) FROM AUTHORIZED_INDIVIDUAL
+GROUP BY AUTHORIZEDINDID)
+ORDER BY aut.lname, aut.fname;
+
+--Person:Consent Form 
+--A person may sign one or more consent forms. 
+--Each consent form is signed by one person. 
+--A staff member enters in one or more consent forms. 
+--Each consent form is entered by one staff member. 
+--Provide me with the name of the authorized individuals that have signed a consent form.
+SELECT DISTINCT (personid), fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
+WHERE person.PERSONID = authorized_individual.AUTHORIZEDINDID
+AND authorized_individual.AUTHORIZEDINDID = consentform.AUTHORIZEDINDID
+ORDER BY lname, fname;
+
+--Provide me with the name of club members and the staff member that entered in their consent form.
+SELECT stf.fname AS "Staff Member's First Name", stf.lname AS "Staff Member's Last Name", 
+per.fname AS "Member's First Name",
+per.lname AS "Member's Last Name"
+FROM person stf, person per, mbr, consentform
+WHERE stf.personid = consentform.staffid
+AND per.personid = mbr.memberid
+AND mbr.memberid = consentform.conid
+ORDER BY stf.lname, stf.fname, per.lname, per.fname;
+
+--Member:Consent Form 
+--A member provides one consent form. 
+--Each consent form is provided by one member.
+--Provide me a list of the names of our members and their current status at the club.
+SELECT fname AS "First Name", lname AS "Last Name", memberstatus AS "S"
+FROM person, mbr, consentform
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = conid
+ORDER BY lname, fname; 
+ 
+--Person:Member Release 
+--A person may fill out one or more member release forms. 
+--Each member release form is filled out by one person. 
+--Provide me with the members name and the date that their authorized individual
+--signed their member release form.
+SELECT DISTINCT(personid), fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
+FROM person, memberreleaseform, authorized_individual
+WHERE person.personid = memberreleaseform.release_form_id
+AND memberreleaseform.authorizedindid = authorized_individual.authorizedindid
+ORDER BY lname, fname;
+
+--Member:Member Release 
+--A member provides one member release form. 
+--Each member release form  belongs to one member. 
+--Provide me with the names of the members that have permission to access computers.
+SELECT fname AS "First Name", lname AS "Last Name", computer_access
+FROM person, mbr, memberreleaseform
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = memberreleaseform.release_form_id
+AND computer_access = 'Y'
+ORDER BY lname, fname; 
