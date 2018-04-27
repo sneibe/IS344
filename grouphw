@@ -1221,7 +1221,8 @@ ORDER BY lname, fname;
 SELECT fname AS "First Name", lname AS "Last Name" FROM person, person_org, org
 WHERE person.personid = person_org.personid
 AND person_org.org_id = org.org_id
-AND org_name = 'Menards';
+AND org_name = 'Menards'
+ORDER BY lname, fname;
 
 --Organization:Services 
 --An organization may provide one or more services. 
@@ -1240,7 +1241,8 @@ SELECT fname AS "First Name", lname AS "Last Name" FROM person, mbr, services_us
 WHERE servicename = 'Learning Disability'
 AND person.personid = mbr.memberid
 AND services_used.servicesid = services.servicesid
-AND services_used.memberid = mbr.memberid;
+AND services_used.memberid = mbr.memberid
+ORDER BY lname, fname;
 
 --Member:Date of Birth 
 --A member provides one date of birth. 
@@ -1248,7 +1250,8 @@ AND services_used.memberid = mbr.memberid;
 --We want to start celebrating birthdays each month for our members, get me a list of our members and their birth dates.
 SELECT fname AS "First Name", lname AS "Last Name", dob AS "Birthday" FROM person, mbr, dobirth
 WHERE person.personid = mbr.memberid
-AND mbr.birthid = dobirth.birthid;
+AND mbr.birthid = dobirth.birthid
+ORDER BY lname, fname;
  
 --Member:Other Ethnicity
 --A member may identify as another ethnicity.
@@ -1256,7 +1259,8 @@ AND mbr.birthid = dobirth.birthid;
 --Do any of our members identify with another ethnicity? 
 SELECT fname AS "First Name", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
 WHERE person.personid = mbr.memberid
-AND mbr.memberid = o_ethnicity.memberid;
+AND mbr.memberid = o_ethnicity.memberid
+ORDER BY lname, fname;
  
 --Member:Family Information 
 --A member provides their family information. 
@@ -1266,7 +1270,8 @@ SELECT famsize FROM person, mbr, familyinfo
 WHERE person.personid = mbr.memberid
 AND mbr.famid = familyinfo.famid
 AND fname = 'Ethan'
-AND lname = 'Berkley';
+AND lname = 'Berkley'
+ORDER BY lname, fname;
 
 --Person:Email 
 --A person may provide one email address. 
