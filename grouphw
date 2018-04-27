@@ -1164,7 +1164,8 @@ ORDER BY consentform.conid;
 --I want to know the acedemic information from my members attending B&G Club
 SELECT GRADE AS "Grade", LNAME AS "Last Name", FNAME AS "First Name" FROM PERSON, MBR, ACADEMIC_INFO
 WHERE person.personid = mbr.memberid
-AND academic_info.memberid = mbr.memberid;
+AND academic_info.memberid = mbr.memberid
+ORDER BY lname, fname;
 
 --Member:Homework
 --A member may be assigned homework.
@@ -1172,7 +1173,46 @@ AND academic_info.memberid = mbr.memberid;
 --I want to see what homework has been assigned to our members
 SELECT HW_DESC AS "Homework", LNAME AS "Last Name", FNAME AS "First Name" FROM HW, MBR, PERSON
 WHERE person.personid = mbr.memberid
-AND HW.HW_ID = MBR.MEMBERID;
+AND HW.HW_ID = MBR.MEMBERID
+ORDER BY lname, fname;
+
+--Member:Social Development
+--A member may report one or more social development issues.
+--Each social development issue is reported by one member.
+--Give me a list of members with Social Development issues
+SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Development Issue" FROM person, mbr, socialdev
+WHERE person.personid = mbr.memberid
+AND socialdev.socialdevid = mbr.memberid
+ORDER BY lname, fname;
+
+--Member:Attendance
+--A member may attend our club one or more times.
+--Each attendance time belongs to one member.
+--Provide me with the check in/check out time and the date for Montrell Johnson
+SELECT fname AS "First Name", lname AS "Last Name", TO_CHAR(check_in, 'HH:MI AM') AS "Chk In", TO_CHAR(check_out, 'HH:MI AM') AS "Chk Out", ch_in_out_day AS "Date" FROM person,mbr,attendance
+WHERE attendance.memberid = mbr.memberid
+AND person.personid = mbr.memberid
+AND fname = 'Montrell'
+AND lname = 'Johnson'
+ORDER BY lname, fname;
+
+--Member:Allergy
+--A member may provide an allergy description.
+--Each allergy description is provided by one member.
+--Give me a list of members who have allergies and provide me with those allergies
+SELECT fname AS "First Name", lname AS "Last Name", all_desc AS "Allergy Description" FROM person,mbr,allergy
+WHERE person.personid = mbr.memberid
+AND allergy.memberid = mbr.memberid
+ORDER BY lname, fname;
+
+--Member:Truancy
+--A member may be involved in truancy issues.
+--Each truancy issue is associated with one member.
+--Give me a list members with Truancy and their issue descriptions 
+SELECT fname AS "First Name", lname AS "Last Name", truancy_desc AS "Truancy Description" FROM person, mbr, truancy
+WHERE person.personid = mbr.memberid
+AND truancy.memberid = mbr.memberid
+ORDER BY lname, fname;
 
 --Person:Organization 
 --A person may be a part of one or more organizations. 
