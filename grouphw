@@ -844,7 +844,7 @@ NOCACHE;
 --Check constraint for socialdevtype: 
 --'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Fighting with students very agressive',3);
-INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divroced',5);
+INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'FS','Parents getting divorced',5);
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,'LI','Bullies other students',9);
 
 --The code below creates the sequence for school services.
@@ -1347,3 +1347,66 @@ WHERE person.personid = mbr.memberid
 AND mbr.memberid = memberreleaseform.release_form_id
 AND computer_access = 'Y'
 ORDER BY lname, fname; 
+
+
+
+--Additional Managerial Requests:
+
+--How many members qualify for free lunch?
+--SQL Commands: COUNT, WHERE, AND, ORDER BY
+SELECT COUNT(free_lunch) AS "Qualify for Free Lunch" FROM person, mbr, familyinfo 
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = familyinfo.famid
+AND free_lunch = 'Y'
+ORDER BY lname, fname;
+
+
+--Which members got scholarships and qualify for free lunch?
+--SQL Commands: WHERE, AND, ORDER BY
+SELECT lname AS "Last Name", fname AS "First Name", paymenttype, free_lunch FROM person, mbr, paymentinfo, familyinfo
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = paymentinfo.conid
+AND paymentinfo.conid = familyinfo.famid
+AND paymenttype = 'SS'
+AND free_lunch = 'Y'
+ORDER BY lname, fname;
+
+
+--Which members have an allergy?
+--SQL Commands: WHERE, AND, ORDER BY
+SELECT lname AS "Last Name", fname AS "First Name", all_desc AS "Allergy Description"
+FROM person, mbr, allergy
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = allergy.memberid
+ORDER BY lname, fname;
+
+
+--Provide me with the members who have the best and worst attendance for the month of March. 
+--Provide in the output the member's name and list their attendance hours for the month of March.
+--SQL Commands: WHERE, AND, GROUP BY, HAVING SUM, MAX, SUM, OR, MIN, ORDER BY
+SELECT lname AS "Last Name", fname AS "First Name", SUM(ROUND(((check_out - check_in)*24),2)) AS "Attendance Hours"
+FROM person, mbr, attendance
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = attendance.memberid
+GROUP BY lname, fname
+HAVING SUM(ROUND(((check_out - check_in)*24),2)) = (
+    SELECT MAX(SUM(ROUND(((check_out -check_in)*24),2))) FROM attendance
+    WHERE ch_in_out_day > '28-FEB-2018'
+    GROUP BY (memberid))
+OR SUM(ROUND(((check_out - check_in)*24),2)) = (
+    SELECT MIN(SUM(ROUND(((check_out - check_in)*24),2))) FROM attendance
+    WHERE ch_in_out_day > '28-FEB-2018'
+    GROUP BY (memberid))
+ORDER BY "Attendance Hours" DESC, lname, fname;
+
+
+--Which members have social devlopment issues, what are their grades, and 
+--are their parents satisfied?
+--SQL Commands: WHERE, AND, ORDER BY
+SELECT lname AS "Last Name", fname AS "First Name", socialdevdesc AS "Social Development Description", 
+grade AS "Grade's Description", g_satis AS "S"
+FROM person, mbr, socialdev, academic_info 
+WHERE person.personid = mbr.memberid
+AND mbr.memberid = socialdev.socialdevid
+AND socialdev.socialdevid = academic_info.academicid
+ORDER BY lname, fname;
