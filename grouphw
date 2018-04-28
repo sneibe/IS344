@@ -826,7 +826,7 @@ VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
 INSERT INTO paymentinfo
 VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
 INSERT INTO paymentinfo
-VALUES (7, 'CK', '15', '10-OCT-2017', '10-OCT-2017');
+VALUES (7, 'SS', '15', '10-OCT-2017', '10-OCT-2017');
 INSERT INTO paymentinfo
 VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
 INSERT INTO paymentinfo
