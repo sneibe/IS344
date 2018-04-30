@@ -1378,7 +1378,7 @@ ORDER BY lname, fname;
 
 
 
---Additional Managerial Requests:
+--SQL Commands:
 
 --How many members qualify for free lunch?
 --SQL Commands: COUNT, WHERE, AND, ORDER BY
@@ -1411,7 +1411,7 @@ ORDER BY lname, fname;
 
 --Provide me with the members who have the best and worst attendance for the month of March. 
 --Provide in the output the member's name and list their attendance hours for the month of March.
---SQL Commands: WHERE, AND, GROUP BY, HAVING SUM, MAX, SUM, OR, MIN, ORDER BY
+--SQL Commands: WHERE, AND, GROUP BY, HAVING SUM, MAX, SUM, OR, MIN, ORDER BY, Subqueries(at least two)
 SELECT lname AS "Last Name", fname AS "First Name", SUM(ROUND(((check_out - check_in)*24),2)) AS "Attendance Hours"
 FROM person, mbr, attendance
 WHERE person.personid = mbr.memberid
@@ -1468,3 +1468,18 @@ GROUP BY paymenttype;
 --SQL Commands: RIGHT JOIN, WHERE
 SELECT COUNT(memberid) AS "Members" FROM attendance RIGHT JOIN  mbr USING (memberid)
 WHERE ch_in_out_day = '06-MAR-2018'; 
+
+--I would like to know which members live with either their mother, father, or both. Please provide me the names of the members and their relationship.
+--SQL Commands: WHERE, AND, NOT IN
+SELECT lname AS "Last Name", fname AS "First Name", liveswith FROM person, mbr, familyinfo
+WHERE person.personid = mbr.memberid
+AND familyinfo.famid = mbr.famid
+AND liveswith NOT IN ('GB', 'G', 'R', 'FP');
+
+--Mary Kay from LakeShore Elementary School left me a message informing me that their bus is running late.
+--Please provide me the school's phone number so I can give them a call back.
+--SQL Commands: WHERE, AND, INNER JOIN
+SELECT lname AS "Last Name", fname AS "First Name", org_name AS "Organization Name", fd_phone AS "Phone Number" FROM person INNER JOIN person_org USING (personid) INNER JOIN org USING (org_id)
+WHERE org_name = 'LakeShore Elementary School'
+AND fname = 'Mary'
+AND lname = 'Kay';
