@@ -1162,8 +1162,9 @@ AND address.addrid = mbr.mbraddrid;
 --Each phone may belong to one or more authorized individual.
 --Please provide the phone number and name of each authorized individual.
 SELECT fname AS "First Name",lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
-FROM person,authorized_individual,phone
+FROM person,authorized_individual,phone,person_phone
 WHERE person.personid = authorized_individual.authorizedindid
+AND person.personid = person_phone.personid
 AND phone.phoneid = authorized_individual.authphoneid;
 
 --Medical Staff Person:Phone
