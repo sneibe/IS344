@@ -1434,3 +1434,10 @@ FROM person, mbr, socialdev, academic_info
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = socialdev.socialdevid
 AND socialdev.socialdevid = academic_info.academicid;
+
+--Jose Wentzel won an award for being such a helpful member! Please provide me with his email address so we can forward the certificate to him to print out.
+--SQL Commands: 1:1 Relationships
+SELECT fname AS "First Name", lname AS "Last Name", email_add AS "Email" FROM email, person
+WHERE person.personid = email.personid
+AND fname = 'Jose'
+AND lname = 'Wentzel';
