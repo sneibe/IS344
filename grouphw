@@ -747,6 +747,14 @@ INSERT INTO person_org VALUES (56, 14);
 INSERT INTO person_org VALUES (57, 14);
 INSERT INTO person_org VALUES (58, 5);
 INSERT INTO person_org VALUES (59, 14);
+INSERT INTO person_org VALUES (2, 14);
+INSERT INTO person_org VALUES (3 ,14);
+INSERT INTO person_org VALUES (4, 5);
+INSERT INTO person_org VALUES (5, 5);
+INSERT INTO person_org VALUES (6, 14);
+INSERT INTO person_org VALUES (7, 5);
+INSERT INTO person_org VALUES (8, 5);
+INSERT INTO person_org VALUES (9, 14);
 
 
 --the code below creates the sequence for Date of Birth ID. 
