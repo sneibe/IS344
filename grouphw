@@ -398,7 +398,7 @@ CREATE TABLE mbrmedinfo (
     medstaffid NUMBER (6) NOT NULL,
     amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
-    time_medication DATE NOT NULL, 
+    time_medication VARCHAR2 (25) NOT NULL, 
     reason_medication VARCHAR (50) NOT NULL,
     CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,medstaffid),
     CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
@@ -1019,15 +1019,15 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 --The code below inserts the values into the Member Medical Info Table
-INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth',TO_DATE('15:00','HH24:MI'),'Helps with Severe Migraines');
-INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth',TO_DATE('16:30','HH24:MI'),'For anxiety');
-INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth',TO_DATE('15:30','HH24:MI'),'For bipolar disease');
-INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth',TO_DATE('16:00','HH24:MI'),'For mild migraines');
-INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth',TO_DATE('15:30','HH24:MI'),'For depression');
-INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth',TO_DATE('16:30','HH24:MI'),'For emotional problems/social anexity');
-INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth',TO_DATE('17:30','HH24:MI'),'For Bipolar problems');
-INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth',TO_DATE('16:30','HH24:MI'),'For anxiety');
-INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth',TO_DATE('8:30','HH24:MI'),'Keeps attention');
+INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','15:00','Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','16:30','For anxiety');
+INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','15:30','For bipolar disease');
+INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth','16:00','For mild migraines');
+INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth','15:30','For depression');
+INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth','16:30','For emotional problems/social anexity');
+INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth','17:30','For Bipolar problems');
+INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth','16:30','For anxiety');
+INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth','8:30','Keeps attention');
 
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
