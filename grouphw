@@ -1440,7 +1440,7 @@ AND socialdev.socialdevid = academic_info.academicid;
 
 --I know various members take medication, Please provide me a list of all the members who take medications.
 --After that, please provide me a list of JUST Jamie Simons' medication information, I know he takes quite a few of them. 
---SQL Commands: VIEW,WHERE,AND 
+--SQL Commands: VIEW,WHERE,AND, TO_CHAR 
 CREATE OR REPLACE VIEW member_medications AS 
     SELECT memberid,fname,lname,medname,amnt_medication,how_medication,time_medication 
     FROM person,medication,mbrmedinfo
