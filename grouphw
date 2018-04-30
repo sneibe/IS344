@@ -396,7 +396,7 @@ CREATE TABLE mbrmedinfo (
     amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
     time_medication DATE NOT NULL, 
-    reason_medication VARCHAR (35) NOT NULL,
+    reason_medication VARCHAR (50) NOT NULL,
     CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,medstaffid),
     CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
     CONSTRAINT mbrmedinfo_medid_fk FOREIGN KEY (medicationid) REFERENCES medication (medicationid),
@@ -916,17 +916,11 @@ NOCACHE;
 --The table below creates the medication ID
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Sumatriptan');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Clonazepam');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Albuterol');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Adderall');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Zoloft');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Ziprasidone');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Warfarin');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Fosamax');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Analgesics');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Leukeran');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Celexa');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Metformin');
-INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Tylenol');
+INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Dr. Kings Natural Medicine Anxiety And Nervousness');
 
 --the code below creates the sequence for Medication ID. 
 CREATE SEQUENCE seqhealthcondid
@@ -966,10 +960,16 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems
 
 --The code below inserts the value statements for Health Condiiton
 INSERT INTO mbr_health_condition VALUES (20, 3);
-INSERT INTO mbr_health_condition VALUES (7, 3);
+INSERT INTO mbr_health_condition VALUES (21, 4);
+INSERT INTO mbr_health_condition VALUES (2, 4);
 INSERT INTO mbr_health_condition VALUES (6, 5);
+INSERT INTO mbr_health_condition VALUES (20, 6);
+INSERT INTO mbr_health_condition VALUES (29, 7);
+INSERT INTO mbr_health_condition VALUES (11, 7);
+INSERT INTO mbr_health_condition VALUES (6, 7);
 INSERT INTO mbr_health_condition VALUES (4, 8);
-INSERT INTO mbr_health_condition VALUES (13, 6);
+
+
 --The code below inserts the value statements for member medical history.
 INSERT INTO medical_history VALUES (2, '11-NOV-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (3, '19-AUG-2017', 'Y', 'Y');
@@ -1016,11 +1016,16 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 --The code below inserts the values into the Member Medical Info Table
-INSERT INTO mbrmedinfo VALUES (3,2,46,'2 Pills','Mouth',TO_DATE('13:00','HH24:MI'),'Helps with Severe Migraines');
-INSERT INTO mbrmedinfo VALUES (3,8,46,'2 Pills','Mouth',TO_DATE('13:30','HH24:MI'),'Prevents blood clots');
-INSERT INTO mbrmedinfo VALUES (5,7,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
-INSERT INTO mbrmedinfo VALUES (8,5,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
-INSERT INTO mbrmedinfo VALUES (6,14,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
+INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth',TO_DATE('15:00','HH24:MI'),'Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth',TO_DATE('16:30','HH24:MI'),'For anxiety');
+INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth',TO_DATE('15:30','HH24:MI'),'For bipolar disease');
+INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth',TO_DATE('16:00','HH24:MI'),'For mild migraines');
+INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth',TO_DATE('15:30','HH24:MI'),'For depression');
+INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth',TO_DATE('16:30','HH24:MI'),'For emotional problems/social anexity');
+INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth',TO_DATE('17:30','HH24:MI'),'For Bipolar problems');
+INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth',TO_DATE('16:30','HH24:MI'),'For anxiety');
+INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth',TO_DATE('8:30','HH24:MI'),'Keeps attention');
+
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
  SET pagesize 5000;
