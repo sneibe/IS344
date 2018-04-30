@@ -1454,17 +1454,19 @@ AS "Amount to take", how_medication AS "How to be taken", TO_CHAR(time_medicatio
 FROM member_medications 
 WHERE memberid = 7;
 
---What is the average time our membes spend at our club?
+--What is the average time our members spend at our club?
 --SQL Commands: AVG
 SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) AS "Average Time" FROM attendance
 GROUP BY attendance_id;
 
---We are trying to figure out waht is our most popular form of payment. How much money have we collected from each payment type when collecting our membership fees?
+--We are trying to figure out what our most popular form of payment is. 
+--How much money have we collected from each payment type when collecting our membership fees?
 --SQL Commands: TO_CHAR, GROUP BY, DISTINCT
 SELECT DISTINCT TO_CHAR(SUM(paymentamnt), '$999,999,999') AS "Total", paymenttype AS "Type" FROM paymentinfo
 GROUP BY paymenttype;
 
---One of our workers will be gone next Tuesday. We want to make sure that we still have enough workers for our members. How many members weere here last Tuesday?
+--One of our workers will be gone next Tuesday. We want to make sure that we still have enough workers for our members. 
+--How many members weere here last Tuesday?
 --SQL Commands: RIGHT JOIN, WHERE
 SELECT COUNT(memberid) AS "Members" FROM attendance RIGHT JOIN  mbr USING (memberid)
 WHERE ch_in_out_day = '06-MAR-2018'; 
@@ -1483,3 +1485,13 @@ SELECT lname AS "Last Name", fname AS "First Name", org_name AS "Organization Na
 WHERE org_name = 'LakeShore Elementary School'
 AND fname = 'Mary'
 AND lname = 'Kay';
+
+--We need to make sure all of our members have gotten their immunizatin shots. 
+--Do we have any members who have not received it?
+--SQL Commands: LEFT JOIN, WHERE 
+SELECT memberid FROM medical_history LEFT JOIN mbr USING (memberid)
+WHERE immunizations = 'N';
+
+--This select statement finds the names of the member id's who don't have their immunization shots.
+SELECT fname, lname FROM person
+WHERE personid = 4;
