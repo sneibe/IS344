@@ -5,7 +5,6 @@
 
 
 --Drop tables plus cascade constraints
-DROP TABLE person CASCADE CONSTRAINTS;
 DROP TABLE email CASCADE CONSTRAINTS;
 DROP TABLE teacher CASCADE CONSTRAINTS;
 DROP TABLE address CASCADE CONSTRAINTS;
@@ -31,9 +30,11 @@ DROP TABLE socialdev CASCADE CONSTRAINTS;
 DROP TABLE medical_history CASCADE CONSTRAINTS;
 DROP TABLE medication CASCADE CONSTRAINTS;
 DROP TABLE healthcondition CASCADE CONSTRAINTS;
+DROP TABLE mbr_health_condition CASCADE CONSTRAINTS;
 DROP TABLE medstaff CASCADE CONSTRAINTS;
 DROP TABLE mbrmedinfo CASCADE CONSTRAINTS;
 DROP TABLE paymentinfo CASCADE CONSTRAINTS;
+DROP TABLE person CASCADE CONSTRAINTS;
 
 --Drop statments for Sequences
 DROP SEQUENCE seqpersonid;
@@ -364,6 +365,14 @@ CREATE TABLE healthcondition (
         'Hearing disability', 'Heart disease', 'Hepatitis', 'High blood pressure', 'Low blood pressure', 'Kidney disease', 'Mental problems',
         'Emotional problems')),
     CONSTRAINT healthcon_healthcondid_pk PRIMARY KEY (healthcondid));
+    
+--The code below creates the table for Member Health Condition where healthcondid and memberid are the primary and foreign keys.
+CREATE TABLE mbr_health_condition (
+  healthcondid NUMBER (6) NOT NULL,
+  memberid NUMBER (6) NOT NULL,
+  CONSTRAINT mbr_health_condition_pk PRIMARY KEY (healthcondid, memberid),
+  CONSTRAINT mbr_health_conditionid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
+  CONSTRAINT mbr_health_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
 --The code below creates the table for Medical Staff where medstaffid and memberid are the primary and foreign keys
 --Check constraint for job type: 'P' = Physician, 'D' = Doctor
@@ -378,21 +387,19 @@ CREATE TABLE medstaff (
     CONSTRAINT medstaff_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
     CONSTRAINT medstaff_phoneid_fk FOREIGN KEY (medphoneid) REFERENCES phone (phoneid));
     
---The code below creates the table for Member Medical Informaton where memberid, medicationid, healthcondid, medstaffid are the primary and foreign keys
---We use VARCHAR2 (25) for amnt_medication (amount of medication to take) so that the person can identify the units. For example take 2 pills or 3 teaspons 
+--The code below creates the table for Member Medical Informaton where memberid, medicationid and medstaffid are the primary and foreign keys
+--We use VARCHAR2 (25) for amnt_medication (amount of medication to take) so that the person can identify the units. For example take 2 pills or 3 teaspons
 CREATE TABLE mbrmedinfo (
     memberid NUMBER (6) NOT NULL, 
     medicationid NUMBER (6) NOT NULL,
-    healthcondid NUMBER (6) NOT NULL,
     medstaffid NUMBER (6) NOT NULL,
     amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
     time_medication DATE NOT NULL, 
     reason_medication VARCHAR (35) NOT NULL,
-    CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,healthcondid,medstaffid),
+    CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,medstaffid),
     CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
     CONSTRAINT mbrmedinfo_medid_fk FOREIGN KEY (medicationid) REFERENCES medication (medicationid),
-    CONSTRAINT mbrmedinfo_healthcondid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
     CONSTRAINT mbrmedinfo_medstaffid_fk FOREIGN KEY (medstaffid) REFERENCES person (personid));
        
 --Sequence is created to generate numbers for the PK personid
@@ -957,7 +964,13 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
---This table creates the member medical history.
+--The code below inserts the value statements for Health Condiiton
+INSERT INTO mbr_health_condition VALUES (20, 3);
+INSERT INTO mbr_health_condition VALUES (7, 3);
+INSERT INTO mbr_health_condition VALUES (6, 5);
+INSERT INTO mbr_health_condition VALUES (4, 8);
+INSERT INTO mbr_health_condition VALUES (13, 6);
+--The code below inserts the value statements for member medical history.
 INSERT INTO medical_history VALUES (2, '11-NOV-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (3, '19-AUG-2017', 'Y', 'Y');
 INSERT INTO medical_history VALUES (4, '08-JUL-2017', 'N', 'N');
@@ -1003,11 +1016,11 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 --The code below inserts the values into the Member Medical Info Table
-INSERT INTO mbrmedinfo VALUES (3,2,20,46,'2 Pills','Mouth',TO_DATE('13:00','HH24:MI'),'Helps with Severe Migraines');
-INSERT INTO mbrmedinfo VALUES (3,8,7,46,'2 Pills','Mouth',TO_DATE('13:30','HH24:MI'),'Prevents blood clots');
-INSERT INTO mbrmedinfo VALUES (5,7,6,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
-INSERT INTO mbrmedinfo VALUES (8,5,4,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
-INSERT INTO mbrmedinfo VALUES (6,14,13,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
+INSERT INTO mbrmedinfo VALUES (3,2,46,'2 Pills','Mouth',TO_DATE('13:00','HH24:MI'),'Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (3,8,46,'2 Pills','Mouth',TO_DATE('13:30','HH24:MI'),'Prevents blood clots');
+INSERT INTO mbrmedinfo VALUES (5,7,55,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
+INSERT INTO mbrmedinfo VALUES (8,5,50,'1 Pill','Mouth',TO_DATE('14:30','HH24:MI'),'Keeps attention');
+INSERT INTO mbrmedinfo VALUES (6,14,60,'1 Pill','Mouth',TO_DATE('14:00','HH24:MI'),'For ear infection');
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
  SET pagesize 5000;
@@ -1024,6 +1037,7 @@ SELECT * FROM dobirth;
 SELECT * FROM email;
 SELECT * FROM familyinfo;
 SELECT * FROM healthcondition;
+SELECT * FROM mbr_health_condition;
 SELECT * FROM hw;
 SELECT * FROM mbr;
 SELECT * FROM mbrmedinfo;
@@ -1408,5 +1422,4 @@ grade AS "Grade's Description", g_satis AS "S"
 FROM person, mbr, socialdev, academic_info 
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = socialdev.socialdevid
-AND socialdev.socialdevid = academic_info.academicid
-ORDER BY lname, fname;
+AND socialdev.socialdevid = academic_info.academicid;
