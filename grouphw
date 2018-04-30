@@ -350,7 +350,7 @@ CREATE TABLE socialdev (
 --The code below creates the table for Medication where medicationid is the primary key
 CREATE TABLE medication (
     medicationid NUMBER (6) NOT NULL,
-    medname VARCHAR2 (35) NOT NULL,
+    medname VARCHAR2 (50) NOT NULL,
 CONSTRAINT medication_medid_pk PRIMARY KEY (medicationid));
 
 --The code below creates the table for Health Condition where helathcondid is the primary key
