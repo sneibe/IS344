@@ -113,17 +113,13 @@ CREATE TABLE address (
   
 --The code below creates table for Member where memberid is the primary key
 --Constraint for gender; M= Male, F= Female, O= Other
---Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
---'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
 CREATE TABLE mbr (
   memberid    NUMBER (6) NOT NULL,
   gender      CHAR(1),
-  ethnicty    VARCHAR2 (2) NOT NULL,
   birthid     NUMBER(6) NOT NULL,
   famid       NUMBER(6) NOT NULL,
   mbraddrid   NUMBER (6) NOT NULL,
   CONSTRAINT membergender_cc CHECK (gender IN ('M','F','O')),
-  CONSTRAINT mbr_ethnicty_cc CHECK (ethnicty IN ('C', 'AA','AI','AP','HP','ME','O')),
   CONSTRAINT mbr_memberid_pk PRIMARY KEY (memberid),
   CONSTRAINT mbr_memberid_fk FOREIGN KEY (memberid) REFERENCES person (personid),
   CONSTRAINT mbr_birthid_fk FOREIGN KEY (birthid) REFERENCES dobirth (birthid),
@@ -157,12 +153,23 @@ CREATE TABLE authorized_individual (
   CONSTRAINT authroziedid_addr_fk FOREIGN KEY (authaddrid) REFERENCES address (addrid),
   CONSTRAINT authorizedmemberid_phoneid_fk FOREIGN KEY (authphoneid) REFERENCES phone (phoneid));
   
---The code below creates the table for other ethnicity where memberid is the primary key and foreign key in the table
-CREATE TABLE o_ethnicity (
-  memberid  NUMBER (6) NOT NULL,
-  ethnicity_desc  VARCHAR2(35) NOT NULL,
-  CONSTRAINT o_ethnicity_pk PRIMARY KEY (memberid), 
-  CONSTRAINT o_ethnicity_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+--The code below creates the table for ethnicity where ethnicityid is the primary key in the table
+--Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
+--'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
+CREATE TABLE ethnicity (
+  ethnicityid     NUMBER (6) NOT NULL,
+  ethnicity_type  VARCHAR2(35) NOT NULL,
+  CONSTRAINT ethnicity_type_cc CHECK (ethnicity_type IN ('C', 'AA','AI','AP','HP','ME','O')),
+  CONSTRAINT ethnicity_ethnicityid_pk PRIMARY KEY (ethnicityid));
+  
+--The code below creates the table for member_ethnicity where ethnicityid and memberid is the primary and foriegn keys in the table
+CREATE TABLE member_ethnicity (
+  ethnicityid     NUMBER (6) NOT NULL,
+  memberid        NUMBER (6) NOT NULL,
+  CONSTRAINT ethnicity_pk PRIMARY KEY (ethnicityid, memberid),
+  CONSTRAINT ethnicity_fk FOREIGN KEY (ethnicityid) REFERENCES ethnicity (ethnicityid),
+  CONSTRAINT memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
+
   
 --The code below creates the table for attendance where attendance_id is the primary key and
 --memberid is the foreign key
