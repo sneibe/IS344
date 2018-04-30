@@ -1438,7 +1438,7 @@ WHERE person.personid = mbr.memberid
 AND mbr.memberid = socialdev.socialdevid
 AND socialdev.socialdevid = academic_info.academicid;
 
---I know various members take medication, Please provide me a list of all the members who take medications.
+--I know various members take medication. Please provide me a list of all the members who take medications.
 --After that, please provide me a list of JUST Jamie Simons' medication information, I know he takes quite a few of them. 
 --SQL Commands: VIEW,WHERE,AND, TO_CHAR 
 CREATE OR REPLACE VIEW member_medications AS 
@@ -1454,3 +1454,17 @@ AS "Amount to take", how_medication AS "How to be taken", TO_CHAR(time_medicatio
 FROM member_medications 
 WHERE memberid = 7;
 
+--What is the average time our membes spend at our club?
+--SQL Commands: AVG
+SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) AS "Average Time" FROM attendance
+GROUP BY attendance_id;
+
+--We are trying to figure out waht is our most popular form of payment. How much money have we collected from each payment type when collecting our membership fees?
+--SQL Commands: TO_CHAR, GROUP BY, DISTINCT
+SELECT DISTINCT TO_CHAR(SUM(paymentamnt), '$999,999,999') AS "Total", paymenttype AS "Type" FROM paymentinfo
+GROUP BY paymenttype;
+
+--One of our workers will be gone next Tuesday. We want to make sure that we still have enough workers for our members. How many members weere here last Tuesday?
+--SQL Commands: RIGHT JOIN, WHERE
+SELECT COUNT(memberid) AS "Members" FROM attendance RIGHT JOIN  mbr USING (memberid)
+WHERE ch_in_out_day = '06-MAR-2018'; 
