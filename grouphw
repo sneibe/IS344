@@ -1064,51 +1064,57 @@ SELECT * FROM teacher;
 SELECT * FROM truancy;
 
 
---The Queries below are for our Business Rules, displaying that each relationship can be queriable. 
-
 --Person:Member
 --A person may be a member.
 --Each member is a person.
 --Please provide me with the first name and last names of our members at the B&G Club of Chippewa Valley.
-SELECT lname AS "Last Name", fname AS "First Name" FROM person,mbr 
-  WHERE person.personid = mbr.memberid;
+SELECT fname AS "First Name",lname AS "Last Name" FROM person,mbr 
+WHERE person.personid = mbr.memberid;
 
 --Authorized Individual:Address
 --An authorized individual provides one address.
 --Each address may belong to one or more authorized individuals.
 --I need to send out the year schedule with activities to all the authorized individuals, please provide me with their names and address.
-SELECT lname AS "Last Name", fname AS "First Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode"
-  FROM person,authorized_individual,address
-  WHERE person.personid = authorized_individual.authorizedindid
-  AND address.addrid = authorized_individual.authaddrid;
+SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode"
+FROM person,authorized_individual,address
+WHERE person.personid = authorized_individual.authorizedindid
+AND address.addrid = authorized_individual.authaddrid;
 
 --Member:Address
 --A member provides one address.
 --Each address may belong to one or more members.
 --Our members receive news letters on what is happening in the club for the month, please provide me with their name and what their address.
-SELECT lname AS "Last Name", fname AS "First Name",strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode" 
-  FROM person,mbr,address
-  WHERE person.personid = mbr.memberid
-  AND address.addrid = mbr.mbraddrid;
+SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode" 
+FROM person,mbr,address
+WHERE person.personid = mbr.memberid
+AND address.addrid = mbr.mbraddrid;
 
 --Authorized Individual:Phone
 --An authorized individual provides one phone number.
 --Each phone may belong to one or more authorized individual.
-SELECT lname AS "Last Name", fname AS "First Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
+--Please provide the phone number and name of each authorized individual.
+SELECT fname AS "First Name",lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
 FROM person,authorized_individual,phone
 WHERE person.personid = authorized_individual.authorizedindid
 AND phone.phoneid = authorized_individual.authphoneid;
 
 --Medical Staff Person:Phone
-SELECT lname AS "Last Name", fname AS "First Name",jobtype AS "Title",pnumber AS "Phone Number",ptype AS "Phone Type" 
+--A medical staff person provides one phone number.
+--Each phone may belong to one or more medical staff person. 
+--Please give me a phone number for all the physicians/doctor.  
+SELECT fname AS "First Name",lname AS "Last Name",jobtype AS "Title",pnumber AS "Phone Number",ptype AS "Phone Type" 
 FROM person,medstaff,phone
 WHERE person.personid = medstaff.medstaffid
 AND phone.phoneid = medstaff.medphoneid;
 
 --Person:Person (Teacher)
-SELECT DISTINCT (teacherid),lname AS "Last Name", fname AS "First Name" FROM person, teacher
-Where person.personid = teacher.teacherid
+--A person may be a teacher.
+--A teacher is a person.
+--Please provide me a list of all the teachers. 
+SELECT DISTINCT (teacherid), fname,lname FROM person, teacher
+WHERE person.personid = teacher.teacherid
 ORDER BY lname;
+
 
 --Member:Medical history:
 --A member provides their medical history. 
