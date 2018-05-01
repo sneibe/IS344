@@ -1216,10 +1216,6 @@ AND mbrmedinfo.memberid IN (SELECT memberid FROM mbrmedinfo
 GROUP BY memberid HAVING COUNT(medicationid) >1)
 ORDER BY mem.lname, mem.fname;
 
-
-
-
-
 --Consent Form:Payment Information
 --A consent form may need payment information.
 --Each payment information belongs to one consent form.
@@ -1346,14 +1342,15 @@ WHERE person.personid = mbr.memberid
 AND mbr.birthid = dobirth.birthid
 ORDER BY lname, fname;
  
---Member:Other Ethnicity
---A member may identify as another ethnicity.
---Each other ethnicity identifies one member.
---Do any of our members identify with another ethnicity? 
-SELECT fname AS "First Name", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
-WHERE person.personid = mbr.memberid
-AND mbr.memberid = o_ethnicity.memberid
-ORDER BY lname, fname;
+--Rule #16
+--Member:Ethnicity
+--A member provides one or more ethnicities.
+--Each ethnicity is provided by  one or more members.
+--How many members identify as not being caucasian 
+
+SELECT COUNT(DISTINCT(memberid)) AS "# of Members Not Caucasian" FROM mbr INNER JOIN member_ethnicity USING (memberid) 
+INNER JOIN ethnicity USING (ethnicityid)
+WHERE ethnicity_type <> 'C';
  
 --Member:Family Information 
 --A member provides their family information. 
