@@ -1570,3 +1570,18 @@ WHERE immunizations = 'N';
 --This select statement finds the names of the member id's who don't have their immunization shots.
 SELECT fname, lname FROM person
 WHERE personid = 4;
+
+--I want to make sure Riley Johnson has atleast one person as an authorized individual to pick them up after club hours. 
+--Please provide me a list with their Last name and First names.
+--SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname),WHERE,AND ORDER BY, 
+SELECT relationship AS "Relationship",aut.lname AS "Authorized Ind's Last Name", aut.fname AS "Authorized Ind's First Name", 
+per.lname AS "Person's Last Name",
+per.fname AS "Person's First Name"
+FROM person aut, person per, AUTHORIZED_INDIVIDUAL
+WHERE aut.personid = AUTHORIZED_INDIVIDUAL.AUTHORIZEDINDID
+AND per.personid = AUTHORIZED_INDIVIDUAL.memberid
+AND per.lname= 'Johnson'
+AND per.fname = 'Riley'
+AND auth_pickup = 'Y'
+ORDER BY aut.fname,aut.lname;
+
