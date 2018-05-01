@@ -1199,20 +1199,6 @@ GROUP BY medstaffid
 HAVING COUNT (memberid) >=2) 
 ORDER BY mem.lname, mem.fname;
 
-
---Medical Staff:Phone
---A medical staff person provides one phone number.
---Each phone number belongs to one or more medical staff people. 
---Provide me all the phone numbers of the doctors that we have in our system. Please provide the doctor's first and last name
-SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
-FROM medstaff, phone, person, person_phone
-WHERE person.personid = medstaff.medstaffid
-AND person.personid = person_phone.personid
-AND person_phone.phoneid = phone.phoneid
-AND jobtype = 'D'
-ORDER BY LNAME, FNAME;
-
-
 --Rule #26
 --Member:Medication:Medical Staff  
 --A member can take one or more medications that are prescribed by a doctor.
@@ -1590,3 +1576,13 @@ AND per.lname= 'Johnson'
 AND per.fname = 'Riley'
 AND auth_pickup = 'Y'
 ORDER BY aut.lname,aut.fname;
+
+
+--Provide me all the phone numbers of the doctors that we have in our system. Please provide the doctor's first and last name
+SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
+FROM medstaff, phone, person, person_phone
+WHERE person.personid = medstaff.medstaffid
+AND person.personid = person_phone.personid
+AND person_phone.phoneid = phone.phoneid
+AND jobtype = 'D'
+ORDER BY LNAME, FNAME;
