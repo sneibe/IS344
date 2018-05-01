@@ -905,14 +905,14 @@ INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-20
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
 --Insert values into the paymentinfo table
-INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '05-JAN-2018');
+INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '08-JAN-2018');
 INSERT INTO paymentinfo VALUES (3, 'CK', '15', '15-FEB-2018', '15-FEB-2018');
-INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
+INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '15-DEC-2017');
 INSERT INTO paymentinfo VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
-INSERT INTO paymentinfo VALUES (7, 'SS', '15', '10-OCT-2017', '10-OCT-2017');
-INSERT INTO paymentinfo VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
-INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
-INSERT INTO paymentinfo VALUES (10, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
+INSERT INTO paymentinfo VALUES (7, 'SS', '15', '10-OCT-2017', '11-OCT-2017');
+INSERT INTO paymentinfo VALUES (8, 'CA', '15', '26-JAN-2018', '28-JAN-2018');
+INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '30-SEP-2017');
+INSERT INTO paymentinfo VALUES (10, 'CK', '30', '30-SEP-2017', '30-SEP-2017');
 
 --Teh code below creates the sequence for the social development ID
 CREATE SEQUENCE socialdevseq
@@ -1226,16 +1226,33 @@ ORDER BY LNAME, FNAME;
 --Each payment information belongs to one consent form.
 --Provide me with all the consent forms that do not have payment information, please provide the consent formid and the member id.
 
-SELECT consentform.conid AS "Form ID", consentform.memberid AS "Member ID" from consentform
-WHERE consentform.conid NOT IN (Select conid from paymentinfo
+--Consent Form:Payment Information
+--A consent form may need payment information.
+--Each payment information belongs to one consent form.
+--Provide me with all the consent forms that do not have payment information, please provide the consent formid, the members name, the authorized
+--Individuals name and the authorized individuals phone number so we can contact them for payment.
+
+SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.lname AS " Member Last Name", mem.mname AS "Member Middle Initial",
+au.fname AS "Authorized Ind. First Name", au.lname AS "Authorized Ind. Last Name",TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') 
+AS "Auth. Phone #" 
+FROM consentform, mbr, person mem, person au, authorized_individual, person_phone, phone
+WHERE consentform.memberid = mbr.memberid AND mbr.memberid = mem.personid
+AND consentform.authorizedindid = authorized_individual.authorizedindid 
+AND authorized_individual.authorizedindid = au.personid
+AND au.personid = person_phone.personid
+AND person_phone.phoneid = phone.phoneid
+AND consentform.conid NOT IN (Select conid from paymentinfo
 Group by conid)
 ORDER BY conid;
 
---Provide me with all the consent forms that have payment information please provide me with the consent form id, member id, and the payment information.
+
+--Provide me with all the consent forms that have payment information please provide me with the consent form id, member names and the payment information.
 --The "T" stands for payment type
-SELECT consentform.conid AS "Form ID", memberid AS "Member Id", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
-daterecievedpay AS "Date Received", dateenteredpay AS "Date Entered" from consentform, paymentinfo
+SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
+TO_CHAR(daterecievedpay, 'MM/DD/YYYY') AS "Date Rec.", TO_CHAR (dateenteredpay, 'MM/DD/YYYY') AS "Date Enter" from consentform, paymentinfo, mbr, person
 WHERE consentform.conid = paymentinfo.conid
+AND consentform.memberid = mbr.memberid
+AND mbr.memberid = person.personid
 AND consentform.conid IN (Select conid from paymentinfo
 GROUP BY conid)
 ORDER BY consentform.conid;
