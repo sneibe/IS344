@@ -1003,44 +1003,23 @@ NOCACHE;
 
 --The code below inserts the value statements for Health Condiiton
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Anxiety');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Asthma');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Attention deficit hyperactive disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Autism');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bi-polar');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bleeding disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bone condition');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Joint condition');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Cancer');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Depression');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Diabetes');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Ear infection');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Eating disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Epilepsy');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Seizures');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Blackouts');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Gastrointestinal disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bowel disorder');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Migraines');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Headaches');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hearing disability');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Heart disease');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hepatitis');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'High blood pressure');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Low blood pressure');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
 --The code below inserts the value statements for Health Condiiton
-INSERT INTO mbr_health_condition VALUES (20, 3);
-INSERT INTO mbr_health_condition VALUES (21, 4);
+INSERT INTO mbr_health_condition VALUES (6, 3);
+INSERT INTO mbr_health_condition VALUES (7, 4);
 INSERT INTO mbr_health_condition VALUES (2, 4);
-INSERT INTO mbr_health_condition VALUES (6, 5);
-INSERT INTO mbr_health_condition VALUES (20, 6);
-INSERT INTO mbr_health_condition VALUES (29, 7);
-INSERT INTO mbr_health_condition VALUES (11, 7);
-INSERT INTO mbr_health_condition VALUES (6, 7);
-INSERT INTO mbr_health_condition VALUES (4, 8);
+INSERT INTO mbr_health_condition VALUES (4, 5);
+INSERT INTO mbr_health_condition VALUES (6, 6);
+INSERT INTO mbr_health_condition VALUES (8, 7);
+INSERT INTO mbr_health_condition VALUES (5, 7);
+INSERT INTO mbr_health_condition VALUES (4, 7);
+INSERT INTO mbr_health_condition VALUES (3, 8);
 
 
 --The code below inserts the value statements for member medical history.
@@ -1571,7 +1550,7 @@ WHERE immunizations = 'N';
 SELECT fname, lname FROM person
 WHERE personid = 4;
 
---I want to make sure Riley Johnson has atleast one person as an authorized individual to pick them up after club hours. 
+--I want to make sure Riley Johnson has at least one person as an authorized individual to pick them up after club hours. 
 --Please provide me a list with their Last name and First names.
 --SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname),WHERE,AND ORDER BY, 
 SELECT relationship AS "Relationship",aut.lname AS "Authorized Ind's Last Name", aut.fname AS "Authorized Ind's First Name", 
@@ -1583,5 +1562,4 @@ AND per.personid = AUTHORIZED_INDIVIDUAL.memberid
 AND per.lname= 'Johnson'
 AND per.fname = 'Riley'
 AND auth_pickup = 'Y'
-ORDER BY aut.fname,aut.lname;
-
+ORDER BY aut.lname,aut.fname;
