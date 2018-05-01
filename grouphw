@@ -415,7 +415,7 @@ CREATE TABLE mbrmedinfo (
     medstaffid NUMBER (6) NOT NULL,
     amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
-    time_medication VARCHAR2 (25) NOT NULL, 
+    time_medication VARCHAR2 (35) NOT NULL, 
     reason_medication VARCHAR (50) NOT NULL,
     CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,medstaffid),
     CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
@@ -1068,15 +1068,15 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 --The code below inserts the values into the Member Medical Info Table
-INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','15:00','Helps with Severe Migraines');
-INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','16:30','For anxiety');
-INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','15:30','For bipolar disease');
-INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth','16:00','For mild migraines');
-INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth','15:30','For depression');
-INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth','16:30','For emotional problems/social anexity');
-INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth','17:30','For Bipolar problems');
-INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth','16:30','For anxiety');
-INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth','8:30','Keeps attention');
+INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','As Needed','Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','4:30 PM','For anxiety');
+INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','3:30 PM','For bipolar disease');
+INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth','As needed','For mild migraines');
+INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth','Upon arrival','For depression');
+INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth','5:30 PM','For emotional problems/social anexity');
+INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth','5:30 PM','For Bipolar problems');
+INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth','4:00 PM','For anxiety');
+INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth','3:30 PM if not taken before arrival','Keeps attention');
 
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
@@ -1169,7 +1169,7 @@ AND person_phone.phoneid = phone.phoneid;
 --Please provide me a list of all the teachers. 
 SELECT DISTINCT (teacherid), fname AS "First Name",lname AS "Last Name" FROM person, teacher
 WHERE person.personid = teacher.teacherid
-ORDER BY lname;
+ORDER BY lname, fname;
 
 
 --Member:Medical history:
@@ -1213,18 +1213,26 @@ AND jobtype = 'D'
 ORDER BY LNAME, FNAME;
 
 
---Medication:Health Condition:Medical Staff  
---A member can take one or more medications that may be prescribed by one or more doctors to treat one or more health conditions.
---A health condition may be treated by one or more medications that may be prescribed by one or more doctors for one or more members.
---Each medication can be prescribed by one or more doctors to treat one or more health conditions that is taken by one or more members.
---A doctor may prescribe one or more medications to treat one or more health conditions for one or more members.
+--Rule #26
+--Member:Medication:Medical Staff  
+--A member can take one or more medications that are prescribed by a doctor.
+--Each medication is prescribed by one doctor and taken by one or more members.
+--Each doctor prescribes one or more medications to be taken by one or more members.
+--Please provide me with all members who take more than one medication. What medicationsdo they take at what time and which doctors perscribe them.
+SELECT mem.fname AS "Member First Name", mem.lname AS "Last Name", medname AS "Medication Name", time_medication AS "Time to Take", 
+doc.fname AS "Doctor Frist Name", doc.lname AS "Doctor Last Name" 
+FROM person mem, person doc, mbr, mbrmedinfo, medication, medstaff
+WHERE mbr.memberid = mbrmedinfo.memberid AND mbrmedinfo.medicationid = medication.medicationid
+AND mbrmedinfo.medstaffid = medstaff.medstaffid 
+AND mbr.memberid = mem.personid
+AND medstaff.medstaffid= doc.personid
+AND mbrmedinfo.memberid IN (SELECT memberid FROM mbrmedinfo
+GROUP BY memberid HAVING COUNT(medicationid) >1)
+ORDER BY mem.lname, mem.fname;
 
 
 
---Consent Form:Payment Information
---A consent form may need payment information.
---Each payment information belongs to one consent form.
---Provide me with all the consent forms that do not have payment information, please provide the consent formid and the member id.
+
 
 --Consent Form:Payment Information
 --A consent form may need payment information.
