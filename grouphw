@@ -1502,22 +1502,24 @@ CREATE OR REPLACE VIEW member_medications AS
     AND medication.medicationid = mbrmedinfo.medicationid;
 
 --The select statement below selects from the view above to determine Jamie Simons medication information.
+
 SELECT memberid AS "Member ID", fname AS "First Name", 
 lname AS "Last Name", medname AS "Medication Name", amnt_medication 
-AS "Amount to take", how_medication AS "How to be taken", TO_CHAR(time_medication, 'HH12:MI AM') AS "Time to be taken" 
+AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
 FROM member_medications 
-WHERE memberid = 7;
+WHERE member_medications.lname = 'Simon';
 
 --What is the average time our members spend at our club?
 --SQL Commands: AVG
-SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) AS "Average Time" FROM attendance
+SELECT TO_CHAR(AVG(SUM(ROUND(((check_out - check_in)*24), 2))), '999.99') AS "Average Time" FROM attendance
 GROUP BY attendance_id;
 
 --We are trying to figure out what our most popular form of payment is. 
 --How much money have we collected from each payment type when collecting our membership fees?
 --SQL Commands: TO_CHAR, GROUP BY, DISTINCT
-SELECT DISTINCT TO_CHAR(SUM(paymentamnt), '$999,999,999') AS "Total", paymenttype AS "Type" FROM paymentinfo
-GROUP BY paymenttype;
+SELECT DISTINCT  paymenttype AS "Type", TO_CHAR(SUM(paymentamnt), '$999,999,999') AS "Total" FROM paymentinfo
+GROUP BY  paymenttype 
+ORDER BY "Total",  paymenttype;
 
 --One of our workers will be gone next Tuesday. We want to make sure that we still have enough workers for our members. 
 --How many members weere here last Tuesday?
