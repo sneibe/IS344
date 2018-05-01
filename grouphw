@@ -1586,3 +1586,13 @@ AND person.personid = person_phone.personid
 AND person_phone.phoneid = phone.phoneid
 AND jobtype = 'D'
 ORDER BY LNAME, FNAME;
+
+--I want the name of the member who has orientation on September 15,2018. 
+--The club is preparing a welcome basket for them and I want 
+--to make sure my staff members will finish it by their date. 
+SELECT memberid,fname AS "Member First Name",lname AS "Member Last Name"
+FROM consentform,person
+WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY') 
+AND consentform.memberid = person.personid;
+
+
