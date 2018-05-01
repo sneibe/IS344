@@ -1579,6 +1579,7 @@ ORDER BY aut.lname,aut.fname;
 
 
 --Provide me all the phone numbers of the doctors that we have in our system. Please provide the doctor's first and last name
+--SQL Commands: TO_CHAR,WHERE,AND,ORDER BY
 SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
 FROM medstaff, phone, person, person_phone
 WHERE person.personid = medstaff.medstaffid
@@ -1590,6 +1591,7 @@ ORDER BY LNAME, FNAME;
 --I want the name of the member who has orientation on September 15,2018. 
 --The club is preparing a welcome basket for them and I want 
 --to make sure my staff members will finish it by their date. 
+--SQL COMMANDS: TO_DATE,WHERE,AND
 SELECT memberid,fname AS "Member First Name",lname AS "Member Last Name"
 FROM consentform,person
 WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY') 
