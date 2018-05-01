@@ -1465,13 +1465,15 @@ AND free_lunch = 'Y'
 ORDER BY lname, fname;
 
 
---Which members have an allergy?
---SQL Commands: WHERE, AND, ORDER BY
+--Which members have an allergy that involves peanuts?
+--SQL Commands: WHERE, AND, ORDER BY, LIKE
 SELECT lname AS "Last Name", fname AS "First Name", all_desc AS "Allergy Description"
 FROM person, mbr, allergy
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = allergy.memberid
+AND all_desc LIKE '%pean__%'
 ORDER BY lname, fname;
+
 
 
 --Provide me with the members who have the best and worst attendance for the month of March. 
