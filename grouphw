@@ -1,4 +1,4 @@
--Group 3
+--Group 3
 --Group HW
 --Jean Pratt
 --May 4,2018
@@ -56,6 +56,7 @@ DROP SEQUENCE mbrrlsfrm_seq;
 DROP SEQUENCE sevicesseq;
 DROP SEQUENCE seqfamid;
 DROP SEQUENCE attendanceseq;
+DROP SEQUENCE seqethnicity;
 
 --The code below creates a table for Person where personid is the primary key
 CREATE TABLE person(
@@ -800,8 +801,6 @@ INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 30000, 'R', 'Y', 'Marine');
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 40000, 'B', 'Y', DEFAULT); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army'); 
  
-
- 
 --The table below creates the table for mbr
 INSERT INTO mbr VALUES (2,'M', 2,3,2);
 INSERT INTO mbr VALUES (3, 'M', 3, 3,4);
@@ -813,47 +812,32 @@ INSERT INTO mbr VALUES (8, 'M',7,7,14);
 INSERT INTO mbr VALUES (9, 'F',8,7,16);
 INSERT INTO mbr VALUES (10,'M',9,8,16);
 
+--Sequence created to generate numbers for ethnicity
+CREATE SEQUENCE seqethnicity
+START WITH 1
+INCREMENT BY 1;
 --The code below are the insert statements for the Ethnicity Table
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
-INSERT INTO Ethnicity 
-VALUES (1, 'C');
-INSERT INTO Ethnicity
-VALUES (2, 'AA');
-INSERT INTO Ethnicity
-VALUES (3, 'AP');
-INSERT INTO Ethnicity
-VALUES (4, 'C');
-INSERT INTO Ethnicity
-VALUES (5, 'AP');
-INSERT INTO Ethnicity
-VALUES (6, 'C');
-INSERT INTO Ethnicity
-VALUES (7, 'AA');
-INSERT INTO Ethnicity
-VALUES (8, 'C');
-INSERT INTO Ethnicity
-VALUES (9, 'C');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'C');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'AA');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'AI');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'AP');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'HP');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'ME');
+INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'O');
+
 
 --The code below are the insert statements for teh Member_Ethnicity table
-INSERT INTO Member_Ethnicity
-VALUES (2,1);
-INSERT INTO Member_Ethnicity
-VALUES (3,2);
-INSERT INTO Member_Ethnicity
-VALUES (4,3);
-INSERT INTO Member_Ethnicity
-VALUES (5,4);
-INSERT INTO Member_Ethnicity
-VALUES (6,5);
-INSERT INTO Member_Ethnicity
-VALUES (7,6);
-INSERT INTO Member_Ethnicity
-VALUES (8,7);
-INSERT INTO Member_Ethnicity
-VALUES (9,8);
-INSERT INTO Member_Ethnicity
-VALUES (10,9);
+INSERT INTO Member_Ethnicity VALUES (2,2);
+INSERT INTO Member_Ethnicity VALUES (3,3);
+INSERT INTO Member_Ethnicity VALUES (5,4);
+INSERT INTO Member_Ethnicity VALUES (8,5);
+INSERT INTO Member_Ethnicity VALUES (4,6);
+INSERT INTO Member_Ethnicity VALUES (6,7);
+INSERT INTO Member_Ethnicity VALUES (7,8);
+INSERT INTO Member_Ethnicity VALUES (6,9);
+INSERT INTO Member_Ethnicity VALUES (2,10);
 
 --The code below are the insert statement for Truancy Table
 INSERT INTO truancy VALUES (3,'Fighting with students');
@@ -910,42 +894,25 @@ INCREMENT BY 1
 NOCACHE;
 
 --Insert values into the consent form table
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', '10-JAN-2018', '13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'G', '20-FEB-2018', '23-MAY-2018', TO_DATE('15:30', 'HH24:MI'), 'N', 7, 34, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', '10-OCT-2017', '18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 6, 31, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'R', '26-JAN-2018', '15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
-INSERT INTO consentform
-VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '10-JAN-2018', '13-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 5, 29, 44);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'G', '20-FEB-2018', '23-MAY-2018', TO_DATE('15:30', 'HH24:MI'), 'N', 7, 34, 45);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '10-OCT-2017', '18-OCT-2017', TO_DATE('14:30', 'HH24:MI'), 'Y', 6, 31, 45);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '26-JAN-2018', '15-SEP-2018', TO_DATE('16:00', 'HH24:MI'), 'N', 8, 37, 45);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
+INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
 --Insert values into the paymentinfo table
-INSERT INTO paymentinfo
-VALUES (2, 'CA', '15', '05-JAN-2018', '05-JAN-2018');
-INSERT INTO paymentinfo
-VALUES (3, 'CK', '15', '15-FEB-2018', '15-FEB-2018');
-INSERT INTO paymentinfo
-VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
-INSERT INTO paymentinfo
-VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
-INSERT INTO paymentinfo
-VALUES (7, 'SS', '15', '10-OCT-2017', '10-OCT-2017');
-INSERT INTO paymentinfo
-VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
-INSERT INTO paymentinfo
-VALUES (9, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
-INSERT INTO paymentinfo
-VALUES (10, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
+INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '05-JAN-2018');
+INSERT INTO paymentinfo VALUES (3, 'CK', '15', '15-FEB-2018', '15-FEB-2018');
+INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
+INSERT INTO paymentinfo VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
+INSERT INTO paymentinfo VALUES (7, 'SS', '15', '10-OCT-2017', '10-OCT-2017');
+INSERT INTO paymentinfo VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
+INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
+INSERT INTO paymentinfo VALUES (10, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
 
 --Teh code below creates the sequence for the social development ID
 CREATE SEQUENCE socialdevseq
@@ -1156,12 +1123,14 @@ SELECT * FROM medical_history;
 SELECT * FROM medication;
 SELECT * FROM medstaff;
 SELECT * FROM memberreleaseform;
-SELECT * FROM o_ethnicity;
+SELECT * FROM ethnicity;
+SELECT * FROM member_ethnicity;
 SELECT * FROM org;
 SELECT * FROM paymentinfo;
 SELECT * FROM person;
 SELECT * FROM person_org;
 SELECT * FROM phone;
+SELECT * FROM PERSON_PHONE;
 SELECT * FROM services;
 SELECT * FROM services_provided;
 SELECT * FROM services_used;
