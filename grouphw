@@ -1514,11 +1514,12 @@ CREATE OR REPLACE VIEW member_medications AS
 
 --The select statement below selects from the view above to determine Jamie Simons medication information.
 
-SELECT memberid AS "Member ID", fname AS "First Name", 
+SELECT  fname AS "First Name", 
 lname AS "Last Name", medname AS "Medication Name", amnt_medication 
 AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
 FROM member_medications 
-WHERE member_medications.lname = 'Simon';
+WHERE member_medications.lname = 'Simon'
+ORDER BY medname;
 
 --What is the average time our members spend at our club?
 --SQL Commands: AVG
