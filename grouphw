@@ -1,3 +1,4 @@
+
 --Group 3
 --Group HW
 --Jean Pratt
@@ -768,12 +769,12 @@ NOCACHE;
 
 --The table below creates the date of birth ID 
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '21-OCT-04');
-INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '31-AUG-05');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '31-MAY-06');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '04-JUL-05');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-OCT-02'); 
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '04-JUL-06');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-MAR-15');
-INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '13-APR-13');
+INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '13-MAY-10');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '12-JAN-05');
 
 --The code below are the insers statement for Homework table
@@ -1509,7 +1510,7 @@ SELECT fname AS "First Name",
     AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
     FROM member_medications
     WHERE member_medications.lname = 'Simon'
-    ORDER BY medname;;
+    ORDER BY medname;
 
 --What is the average time our members spend at our club?
 --SQL Commands: AVG
@@ -1569,10 +1570,11 @@ SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name
 --I want the name of the member who has orientation on September 15,2018. 
 --The club is preparing a welcome basket for them and I want 
 --to make sure my staff members will finish it by their date. 
-SELECT memberid,fname AS "Member First Name",lname AS "Member Last Name"
+SELECT fname AS "Member First Name",lname AS "Member Last Name", mname AS "Member Middle Initial"
 FROM consentform,person
 WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY') 
-AND consentform.memberid = person.personid;
+AND consentform.memberid = person.personid
+ORDER BY lname, fname, mname;
 
 
 --Please give me a phone number for all the doctors that we have in our system.  
@@ -1604,3 +1606,12 @@ WHERE stf.personid = consentform.staffid
 AND per.personid = mbr.memberid
 AND mbr.memberid = consentform.conid
 ORDER BY stf.lname, stf.fname, per.lname, per.fname;
+
+--We are looking to up-date the birthday board for this month. Please provide me with all members who have May birthdays and thier ages.
+--SQL Commands: Dervied date, where, and, like, order by, round
+SELECT TO_CHAR(dob, 'MM/DD/YYYY') AS "Birthday", ROUND ((CURRENT_DATE - dob)/365.25) AS "Age",fname AS "Member First Name", 
+lname AS "Member Last Name", mname AS "Member Middle Initial" 
+FROM dobirth, mbr, person
+WHERE dobirth.birthid = mbr.birthid AND mbr.memberid = person.personid
+AND dob LIKE '%%-MAY-%%%%'
+ORDER BY "Birthday", "Age", lname, fname, mname;
