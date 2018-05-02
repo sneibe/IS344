@@ -175,21 +175,21 @@ CREATE TABLE ethnicity (
   
 --The code below creates the table for member_ethnicity where ethnicityid and memberid is the primary and foriegn keys in the table
 CREATE TABLE member_ethnicity (
-  ethnicityid     NUMBER (6) NOT NULL,
   memberid        NUMBER (6) NOT NULL,
+  ethnicityid     NUMBER (6) NOT NULL,
   CONSTRAINT ethnicity_pk PRIMARY KEY (ethnicityid, memberid),
   CONSTRAINT ethnicity_fk FOREIGN KEY (ethnicityid) REFERENCES ethnicity (ethnicityid),
   CONSTRAINT memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
   
---The code below creates the table for attendance where attendance_id is the primary key and
+--The code below creates the table for where attendance_id is the primary key and
 --memberid is the foreign key
 CREATE TABLE attendance (
   attendance_id NUMBER (6) NOT NULL,
+  memberid    NUMBER (6) NOT NULL,
   check_in    DATE NOT NULL,
   check_out   DATE NOT NULL,
   ch_in_out_day DATE NOT NULL,
-  memberid    NUMBER (6) NOT NULL,
   CONSTRAINT attendance_pk PRIMARY KEY (attendance_id),
   CONSTRAINT attendance_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
@@ -832,13 +832,13 @@ INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'O');
 --The code below are the insert statements for teh Member_Ethnicity table
 INSERT INTO Member_Ethnicity VALUES (2,2);
 INSERT INTO Member_Ethnicity VALUES (3,3);
-INSERT INTO Member_Ethnicity VALUES (5,4);
-INSERT INTO Member_Ethnicity VALUES (8,5);
-INSERT INTO Member_Ethnicity VALUES (4,6);
-INSERT INTO Member_Ethnicity VALUES (6,7);
-INSERT INTO Member_Ethnicity VALUES (7,8);
-INSERT INTO Member_Ethnicity VALUES (6,9);
-INSERT INTO Member_Ethnicity VALUES (2,10);
+INSERT INTO Member_Ethnicity VALUES (4,5);
+INSERT INTO Member_Ethnicity VALUES (5,8);
+INSERT INTO Member_Ethnicity VALUES (6,4);
+INSERT INTO Member_Ethnicity VALUES (7,6);
+INSERT INTO Member_Ethnicity VALUES (8,7);
+INSERT INTO Member_Ethnicity VALUES (9,6);
+INSERT INTO Member_Ethnicity VALUES (10,2);
 
 --The code below are the insert statement for Truancy Table
 INSERT INTO truancy VALUES (3,'Fighting with students');
@@ -869,23 +869,23 @@ INCREMENT BY 1
 NOCACHE;
 
 --This table creates the attendance for members.
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018', 6);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 2);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 3);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 4);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018', 6);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 7);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018', 9);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 10);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 2);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018', 3);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 4);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 5);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 8);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018', 9);
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 10);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,6, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,2, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,3, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,4, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,6, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,7, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,9,TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,10, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,2, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,3, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,4, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,5,TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,9, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018');
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,10, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
 
 
 --Sequence is created to generate numbers for the PK conid
