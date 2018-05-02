@@ -785,7 +785,7 @@ INSERT INTO hw VALUES (5,'Statistics and writing');
 INSERT INTO hw VALUES (6,'Reading chapter books');
 INSERT INTO hw VALUES (7,'Writing');
 INSERT INTO hw VALUES (8,'Social Studies');
-INSERT INTO hw VALUES (9,'Alebgra');
+INSERT INTO hw VALUES (9,'Algebra');
 
 --Sequence created to generate numbers for famid
 CREATE SEQUENCE seqfamid
