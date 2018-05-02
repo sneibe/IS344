@@ -1144,7 +1144,8 @@ SELECT * FROM truancy;
 --Each member is a person.
 --Please provide me with the first name and last names of our members at the B&G Club of Chippewa Valley.
 SELECT fname AS "First Name",lname AS "Last Name" FROM person,mbr 
-WHERE person.personid = mbr.memberid;
+WHERE person.personid = mbr.memberid
+ORDER BY lname, fname;
 
 --Business Rule #2 - Authorized Individual:Address
 --An authorized individual provides one address.
@@ -1153,7 +1154,8 @@ WHERE person.personid = mbr.memberid;
 SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode"
 FROM person,authorized_individual,address
 WHERE person.personid = authorized_individual.authorizedindid
-AND address.addrid = authorized_individual.authaddrid;
+AND address.addrid = authorized_individual.authaddrid
+ORDER BY lname, fname;
 
 --Business Rule #3 - Member:Address
 --A member provides one address.
@@ -1162,7 +1164,8 @@ AND address.addrid = authorized_individual.authaddrid;
 SELECT fname AS "First Name",lname AS "Last Name" ,strt AS "Street",city AS "City" ,ste AS "State",zipcode AS "Zipcode" 
 FROM person,mbr,address
 WHERE person.personid = mbr.memberid
-AND address.addrid = mbr.mbraddrid;
+AND address.addrid = mbr.mbraddrid
+ORDER BY lname, fname;
 
 --Business Rule #4 - Person:Person (Teacher)
 --A person may be a teacher.
@@ -1176,16 +1179,16 @@ ORDER BY lname;
 --A person may provide one email address. 
 --Each email address belongs to one person. 
 --I would like to email out our event flyer. Please provide me with the names and email addresses of everyone on file.
-SELECT lname AS "Last Name", fname AS "First Name", email_add AS "Email Address" FROM person INNER JOIN email USING (personid)
+SELECT fname AS "First Name", lname AS "Last Name", email_add AS "Email Address" FROM person INNER JOIN email USING (personid)
 ORDER BY lname, fname;
 
 --Business Rule #6 - Person:Person (Authorized Individual)
 --A person may be an authorized individual for one or more people.
 --Each person may provide one or more authorized individuals.
 --Provide me with a list of all members and their authorized individuals who are the "head of the house".
-SELECT aut.lname AS "Authorized Ind's Last Name", aut.fname AS "Authorized Ind's First Name", 
-per.lname AS "Person's Last Name",
-per.fname AS "Person's First Name" 
+SELECT aut.fname AS "Authorized Ind's First Name", aut.lname AS "Authorized Ind's Last Name",
+per.fname AS "Person's First Name",
+per.lname AS "Person's Last Name"
 FROM person aut, person per, AUTHORIZED_INDIVIDUAL
 WHERE aut.personid = AUTHORIZED_INDIVIDUAL.AUTHORIZEDINDID
 AND per.personid = AUTHORIZED_INDIVIDUAL.memberid
@@ -1212,7 +1215,7 @@ ORDER BY lname,fname;
 --A staff member enters in one or more consent forms. 
 --Each consent form is entered by one staff member. 
 --Provide me with the name of the authorized individuals that have signed a consent form.
-SELECT DISTINCT (personid), lname AS "Last Name", fname AS "First Name" FROM person, authorized_individual, consentform
+SELECT DISTINCT (personid), fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
 WHERE person.PERSONID = authorized_individual.AUTHORIZEDINDID
 AND authorized_individual.AUTHORIZEDINDID = consentform.AUTHORIZEDINDID
 ORDER BY lname, fname;
@@ -1222,7 +1225,7 @@ ORDER BY lname, fname;
 --A member provides one consent form. 
 --Each consent form is provided by one member.
 --Provide me a list of the names of our members and their current status at the club.
-SELECT lname AS "Last Name", fname AS "First Name", memberstatus AS "S"
+SELECT fname AS "First Name", lname AS "Last Name", memberstatus AS "S"
 FROM person, mbr, consentform
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = conid
@@ -1233,7 +1236,7 @@ ORDER BY lname, fname;
 --Each member release form is filled out by one person. 
 --Provide me with the members name and the date that their authorized individual
 --signed their member release form.
-SELECT DISTINCT(personid), lname AS "Last Name", fname AS "First Name", authorizedinddatesigned AS "Date Signed" 
+SELECT DISTINCT(personid), fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
 FROM person, memberreleaseform, authorized_individual
 WHERE person.personid = memberreleaseform.release_form_id
 AND memberreleaseform.authorizedindid = authorized_individual.authorizedindid
@@ -1243,7 +1246,7 @@ ORDER BY lname, fname;
 --A member provides one member release form. 
 --Each member release form  belongs to one member. 
 --Provide me with the names of the members that have permission to access computers.
-SELECT lname AS "Last Name", fname AS "First Name", computer_access
+SELECT fname AS "First Name", lname AS "Last Name", computer_access
 FROM person, mbr, memberreleaseform
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = memberreleaseform.release_form_id
@@ -1286,13 +1289,14 @@ ORDER BY lname, fname;
 SELECT org_name AS "School Name" FROM org, services, services_provided
 WHERE servicename = 'Speech'
 AND services.servicesid = services_provided.servicesid
-AND org.org_id = services_provided.schoolid;
+AND org.org_id = services_provided.schoolid
+ORDER BY org_name;
  
 --Business Rule #15 - Member:Services 
 --A member may use one or more services. 
 --Each service may be used by one or more member. 
  --Which of our members are in the learning disability service at their school?
-SELECT fname AS "First Name", lname AS "Last Name" FROM person, mbr, services_used, services
+SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name" FROM person, mbr, services_used, services
 WHERE servicename = 'Learning Disability'
 AND person.personid = mbr.memberid
 AND services_used.servicesid = services.servicesid
@@ -1303,7 +1307,7 @@ ORDER BY lname, fname;
 --A member provides one date of birth. 
 --Each date of birth belongs to one or more members. 
 --We want to start celebrating birthdays each month for our members, get me a list of our members and their birth dates.
-SELECT fname AS "First Name", lname AS "Last Name", dob AS "Birthday" FROM person, mbr, dobirth
+SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name", dob AS "Birthday" FROM person, mbr, dobirth
 WHERE person.personid = mbr.memberid
 AND mbr.birthid = dobirth.birthid
 ORDER BY lname, fname;
@@ -1312,7 +1316,7 @@ ORDER BY lname, fname;
 --A member may identify as another ethnicity.
 --Each other ethnicity identifies one member.
 --Do any of our members identify with another ethnicity? 
-SELECT fname AS "First Name", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
+SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = o_ethnicity.memberid
 ORDER BY lname, fname;
@@ -1332,13 +1336,12 @@ ORDER BY lname, fname;
 --A member may attend our club one or more times.
 --Each attendance time belongs to one member.
 --Provide me with the check in/check out time and the date for Montrell Johnson
-SELECT fname AS "First Name", lname AS "Last Name", TO_CHAR(check_in, 'HH:MI AM') AS "Chk In", TO_CHAR(check_out, 'HH:MI AM') AS "Chk Out", ch_in_out_day AS "Date" FROM person,mbr,attendance
+SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name", TO_CHAR(check_in, 'HH:MI AM') AS "Chk In", TO_CHAR(check_out, 'HH:MI AM') AS "Chk Out", ch_in_out_day AS "Date" FROM person,mbr,attendance
 WHERE attendance.memberid = mbr.memberid
 AND person.personid = mbr.memberid
 AND fname = 'Montrell'
 AND lname = 'Johnson'
 ORDER BY lname, fname;
-
 --Business Rule #20 - Member:Academic Information
 --A member provides academic information.
 --Academic information belongs to one member.
@@ -1441,7 +1444,7 @@ ORDER BY lname, fname;
 
 --Which members got scholarships and qualify for free lunch?
 --SQL Commands: WHERE, AND, ORDER BY
-SELECT lname AS "Last Name", fname AS "First Name", paymenttype, free_lunch FROM person, mbr, paymentinfo, familyinfo
+SELECT fname AS "First Name", lname AS "Last Name", paymenttype, free_lunch FROM person, mbr, paymentinfo, familyinfo
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = paymentinfo.conid
 AND paymentinfo.conid = familyinfo.famid
@@ -1452,7 +1455,7 @@ ORDER BY lname, fname;
 
 --Which members have an allergy?
 --SQL Commands: WHERE, AND, ORDER BY
-SELECT lname AS "Last Name", fname AS "First Name", all_desc AS "Allergy Description"
+SELECT fname AS "First Name", lname AS "Last Name", all_desc AS "Allergy Description"
 FROM person, mbr, allergy
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = allergy.memberid
@@ -1462,7 +1465,7 @@ ORDER BY lname, fname;
 --Provide me with the members who have the best and worst attendance for the month of March. 
 --Provide in the output the member's name and list their attendance hours for the month of March.
 --SQL Commands: WHERE, AND, GROUP BY, HAVING SUM, MAX, SUM, OR, MIN, ORDER BY, Subqueries(at least two)
-SELECT lname AS "Last Name", fname AS "First Name", SUM(ROUND(((check_out - check_in)*24),2)) AS "Attendance Hours"
+SELECT fname AS "First Name", lname AS "Last Name", SUM(ROUND(((check_out - check_in)*24),2)) AS "Attendance Hours"
 FROM person, mbr, attendance
 WHERE person.personid = mbr.memberid
 AND mbr.memberid = attendance.memberid
@@ -1481,12 +1484,13 @@ HAVING SUM(ROUND(((check_out - check_in)*24),2)) = (
 --Which members have social devlopment issues, what are their grades, and 
 --are their parents satisfied?
 --SQL Commands: WHERE, AND, ORDER BY
-SELECT lname AS "Last Name", fname AS "First Name", socialdevdesc AS "Social Development Description", 
+SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Development Description", 
     grade AS "Grade's Description", g_satis AS "S"
     FROM person, mbr, socialdev, academic_info 
     WHERE person.personid = mbr.memberid
     AND mbr.memberid = socialdev.socialdevid
-    AND socialdev.socialdevid = academic_info.academicid;
+    AND socialdev.socialdevid = academic_info.academicid
+    ORDER BY lname, fname;
 
 --I know various members take medication. Please provide me a list of all the members who take medications.
 --After that, please provide me a list of JUST Jamie Simons' medication information, I know he takes quite a few of them. 
@@ -1500,8 +1504,8 @@ CREATE OR REPLACE VIEW member_medications AS
 --The select statement below selects from the view above to determine Jamie Simons medication information.
 SELECT memberid AS "Member ID", fname AS "First Name", 
     lname AS "Last Name", medname AS "Medication Name", amnt_medication 
-    AS "Amount to take", how_medication AS "How to be taken", TO_CHAR(time_medication, 'HH12:MI AM') AS "Time to be taken" 
-    FROM member_medications 
+    AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
+    FROM member_medications
     WHERE memberid = 7;
 
 --What is the average time our members spend at our club?
@@ -1523,15 +1527,16 @@ SELECT COUNT(memberid) AS "Members" FROM attendance RIGHT JOIN  mbr USING (membe
 
 --I would like to know which members live with either their mother, father, or both. Please provide me the names of the members and their relationship.
 --SQL Commands: WHERE, AND, NOT IN
-SELECT lname AS "Last Name", fname AS "First Name", liveswith FROM person, mbr, familyinfo
+SELECT fname AS "First Name", lname AS "Last Name", liveswith FROM person, mbr, familyinfo
     WHERE person.personid = mbr.memberid
     AND familyinfo.famid = mbr.famid
-    AND liveswith NOT IN ('GB', 'G', 'R', 'FP');
+    AND liveswith NOT IN ('GB', 'G', 'R', 'FP')
+    ORDER BY lname, fname;
 
 --Mary Kay from LakeShore Elementary School left me a message informing me that their bus is running late.
 --Please provide me the school's phone number so I can give them a call back.
 --SQL Commands: WHERE, AND, INNER JOIN
-SELECT lname AS "Last Name", fname AS "First Name", org_name AS "Organization Name", fd_phone AS "Phone Number" 
+SELECT fname AS "First Name", lname AS "Last Name", org_name AS "Organization Name", fd_phone AS "Phone Number" 
     FROM person INNER JOIN person_org USING (personid) INNER JOIN org USING (org_id)
     WHERE org_name = 'LakeShore Elementary School'
     AND fname = 'Mary'
@@ -1540,18 +1545,15 @@ SELECT lname AS "Last Name", fname AS "First Name", org_name AS "Organization Na
 --We need to make sure all of our members have gotten their immunizatin shots. 
 --Do we have any members who have not received it?
 --SQL Commands: LEFT JOIN, WHERE 
-SELECT memberid FROM medical_history LEFT JOIN mbr USING (memberid)
+SELECT COUNT(memberid) AS "Members" FROM medical_history LEFT JOIN mbr USING (memberid)
     WHERE immunizations = 'N';
-
---This select statement finds the names of the member id's who don't have their immunization shots.
-
 
 --I want to make sure Riley Johnson has atleast one person as an authorized individual to pick them up after club hours. 
 --Please provide me a list with their Last name and First names.
 --SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname),WHERE,AND ORDER BY, 
-SELECT relationship AS "Relationship",aut.lname AS "Authorized Ind's Last Name", aut.fname AS "Authorized Ind's First Name", 
-    per.lname AS "Person's Last Name",
-    per.fname AS "Person's First Name"
+SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name", aut.lname AS "Authorized Ind's Last Name",
+    per.fname AS "Person's First Name",
+    per.lname AS "Person's Last Name"
     FROM person aut, person per, AUTHORIZED_INDIVIDUAL
     WHERE aut.personid = AUTHORIZED_INDIVIDUAL.AUTHORIZEDINDID
     AND per.personid = AUTHORIZED_INDIVIDUAL.memberid
@@ -1582,17 +1584,18 @@ ORDER BY LNAME, FNAME;
 
 --Please provide the phone number and name of each authorized individual.
 --SQL Commands: WHERE, EQUIJOIN,ORDER BY
-SELECT fname AS "First Name",lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
+SELECT fname AS "First Name", lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
 FROM person,authorized_individual,phone,person_phone
 WHERE person.personid = authorized_individual.authorizedindid
 AND person.personid = person_phone.personid
-AND phone.phoneid = authorized_individual.authphoneid;
+AND phone.phoneid = authorized_individual.authphoneid
+ORDER BY lname, fname;
 
 --Please Provide me with the name of club members and the staff member that entered in their consent form.
 --SQL Commands: Alias,WHERE,ORDER BY
-SELECT stf.lname AS "Staff Member's Last Name", stf.fname AS "Staff Member's First Name", 
-per.lname AS "Member's Last Name",
-per.fname AS "Member's First Name"
+SELECT  stf.fname AS "Staff Member's First Name", stf.lname AS "Staff Member's Last Name",
+per.fname AS "Member's First Name",
+per.lname AS "Member's Last Name"
 FROM person stf, person per, mbr, consentform
 WHERE stf.personid = consentform.staffid
 AND per.personid = mbr.memberid
