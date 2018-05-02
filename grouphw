@@ -1435,6 +1435,11 @@ SELECT healthcondname AS "Health Condition", fname AS "First Name", lname AS "La
 --The queries below fufill the SQL Command requirements for the Group Project. 
 --Each Managerial Request is followed by a query fuffiliing the request. 
 
+
+--How many of our members have truancy?
+--SQL Commands: RIGHT JOIN, WHERE
+SELECT COUNT(memberid) AS "Members" FROM mbr RIGHT JOIN  truancy USING (memberid);
+
 --How many members qualify for free lunch?
 --SQL Commands: COUNT, WHERE, AND, ORDER BY
 SELECT COUNT(free_lunch) AS "Qualify for Free Lunch" FROM person, mbr, familyinfo 
@@ -1526,12 +1531,6 @@ ORDER BY lname, fname;
 --SQL Commands: TO_CHAR, GROUP BY, DISTINCT
 SELECT DISTINCT TO_CHAR(SUM(paymentamnt), '$999,999,999') AS "Total", paymenttype AS "Type" FROM paymentinfo
     GROUP BY paymenttype;
-
---One of our workers will be gone next Tuesday. We want to make sure that we still have enough workers for our members. 
---How many members were here last Tuesday?
---SQL Commands: RIGHT JOIN, WHERE
-SELECT COUNT(memberid) AS "Members" FROM attendance RIGHT JOIN  mbr USING (memberid)
-    WHERE ch_in_out_day = '06-MAR-2018'; 
 
 --I would like to know which members live with either their mother, father, or both. Please provide me the names of the members and their relationship.
 --SQL Commands: WHERE, AND, NOT IN
