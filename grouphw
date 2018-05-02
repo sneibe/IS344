@@ -415,7 +415,7 @@ CREATE TABLE mbrmedinfo (
     medstaffid NUMBER (6) NOT NULL,
     amnt_medication VARCHAR2 (25) NOT NULL,
     how_medication VARCHAR2 (25) NOT NULL,
-    time_medication VARCHAR2 (25) NOT NULL, 
+    time_medication VARCHAR2 (35) NOT NULL, 
     reason_medication VARCHAR (50) NOT NULL,
     CONSTRAINT mbrmedinfo_memberid_pk PRIMARY KEY (memberid,medicationid,medstaffid),
     CONSTRAINT mbrmedinfo_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid),
@@ -905,16 +905,16 @@ INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-20
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
 --Insert values into the paymentinfo table
-INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '05-JAN-2018');
-INSERT INTO paymentinfo VALUES (3, 'CK', '15', '15-FEB-2018', '15-FEB-2018');
-INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '05-DEC-2017');
-INSERT INTO paymentinfo VALUES (5, 'SS', '15', '10-JAN-2017', '10-JAN-2017');
-INSERT INTO paymentinfo VALUES (7, 'SS', '15', '10-OCT-2017', '10-OCT-2017');
+INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '06-JAN-2018');
+INSERT INTO paymentinfo VALUES (3, 'CK', '15', '15-FEB-2018', '20-FEB-2018');
+INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '08-DEC-2017');
+INSERT INTO paymentinfo VALUES (5, 'SS', '15', '10-JAN-2017', '15-JAN-2017');
+INSERT INTO paymentinfo VALUES (7, 'SS', '15', '10-OCT-2017', '11-OCT-2017');
 INSERT INTO paymentinfo VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
-INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
-INSERT INTO paymentinfo VALUES (10, 'CK', '30', '15-SEP-2017', '15-SEP-2017');
+INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '30-SEP-2017');
+INSERT INTO paymentinfo VALUES (10, 'CK', '30', '25-SEP-2017', '30-SEP-2017');
 
---Teh code below creates the sequence for the social development ID
+--The code below creates the sequence for the social development ID
 CREATE SEQUENCE socialdevseq
 START WITH 1
 INCREMENT BY 1
@@ -1003,44 +1003,23 @@ NOCACHE;
 
 --The code below inserts the value statements for Health Condiiton
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Anxiety');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Asthma');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Attention deficit hyperactive disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Autism');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bi-polar');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bleeding disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bone condition');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Joint condition');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Cancer');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Depression');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Diabetes');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Ear infection');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Eating disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Epilepsy');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Seizures');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Blackouts');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Gastrointestinal disorder');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bowel disorder');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Migraines');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Headaches');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hearing disability');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Heart disease');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Hepatitis');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'High blood pressure');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Low blood pressure');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Kidney disease');
-INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Mental problems');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
 --The code below inserts the value statements for Health Condiiton
-INSERT INTO mbr_health_condition VALUES (20, 3);
-INSERT INTO mbr_health_condition VALUES (21, 4);
+INSERT INTO mbr_health_condition VALUES (6, 3);
+INSERT INTO mbr_health_condition VALUES (7, 4);
 INSERT INTO mbr_health_condition VALUES (2, 4);
-INSERT INTO mbr_health_condition VALUES (6, 5);
-INSERT INTO mbr_health_condition VALUES (20, 6);
-INSERT INTO mbr_health_condition VALUES (29, 7);
-INSERT INTO mbr_health_condition VALUES (11, 7);
-INSERT INTO mbr_health_condition VALUES (6, 7);
-INSERT INTO mbr_health_condition VALUES (4, 8);
+INSERT INTO mbr_health_condition VALUES (4, 5);
+INSERT INTO mbr_health_condition VALUES (6, 6);
+INSERT INTO mbr_health_condition VALUES (8, 7);
+INSERT INTO mbr_health_condition VALUES (5, 7);
+INSERT INTO mbr_health_condition VALUES (4, 7);
+INSERT INTO mbr_health_condition VALUES (3, 8);
 
 
 --The code below inserts the value statements for member medical history.
@@ -1089,15 +1068,15 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
 --The code below inserts the values into the Member Medical Info Table
-INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','15:00','Helps with Severe Migraines');
-INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','16:30','For anxiety');
-INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','15:30','For bipolar disease');
-INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth','16:00','For mild migraines');
-INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth','15:30','For depression');
-INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth','16:30','For emotional problems/social anexity');
-INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth','17:30','For Bipolar problems');
-INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth','16:30','For anxiety');
-INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth','8:30','Keeps attention');
+INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','As Needed','Helps with Severe Migraines');
+INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','4:30PM','For anxiety');
+INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','3:30 PM','For bipolar disease');
+INSERT INTO mbrmedinfo VALUES (6,2,54,'1 Pill','Mouth','As Needed','For mild migraines');
+INSERT INTO mbrmedinfo VALUES (7,7,57,'1 Pills','Mouth','Upon arrival','For depression');
+INSERT INTO mbrmedinfo VALUES (7,5,57,'2 Pills','Mouth','5:30 PM','For emotional problems/social anexity');
+INSERT INTO mbrmedinfo VALUES (7,6,58,'1 Pills','Mouth','5:30 PM','For Bipolar problems');
+INSERT INTO mbrmedinfo VALUES (8,3,59,'1 Pills','Mouth','4:00 PM','For anxiety');
+INSERT INTO mbrmedinfo VALUES (8,4,56,'1 Pill','Mouth','3:30 PM if not taken before arrival','Keeps attention');
 
 
  --SETS PAGE SIZE TO 5000 AND SETS LINE SIZE TO 1000
@@ -1173,7 +1152,7 @@ ORDER BY lname, fname;
 --Please provide me a list of all the teachers. 
 SELECT DISTINCT (teacherid), fname AS "First Name",lname AS "Last Name" FROM person, teacher
 WHERE person.personid = teacher.teacherid
-ORDER BY lname;
+ORDER BY lname, fname;
 
 --Business Rule #5 - Person:Email 
 --A person may provide one email address. 
@@ -1254,23 +1233,35 @@ AND computer_access = 'Y'
 ORDER BY lname, fname; 
 
 --Business Rule #12 - Consent Form:Payment Information
+--Consent Form:Payment Information
 --A consent form may need payment information.
 --Each payment information belongs to one consent form.
---Provide me with all the consent forms that DO NOT have payment information, please provide the consent formid and the member id.
+--Provide me with all the consent forms that do not have payment information, please provide the consent formid, the members name, the authorized
+--Individuals name and the authorized individuals phone number so we can contact them for payment.
 
-SELECT consentform.conid AS "Form ID", consentform.memberid AS "Member ID" from consentform
-WHERE consentform.conid NOT IN (Select conid from paymentinfo
-Group by conid)
-ORDER BY conid;
-
---Provide me with all the consent forms that DO HAVE payment information please provide me with the consent form id, member id, and the payment information.
---The "T" stands for payment type
-SELECT consentform.conid AS "Form ID", memberid AS "Member Id", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
-daterecievedpay AS "Date Received", dateenteredpay AS "Date Entered" from consentform, paymentinfo
-WHERE consentform.conid = paymentinfo.conid
-AND consentform.conid IN (Select conid from paymentinfo
-GROUP BY conid)
-ORDER BY consentform.conid;
+SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.lname AS " Member Last Name", mem.mname AS "Member Middle Initial",
+  au.fname AS "Authorized Ind. First Name", au.lname AS "Authorized Ind. Last Name",TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') 
+  AS "Auth. Phone #" 
+  FROM consentform, mbr, person mem, person au, authorized_individual, person_phone, phone
+  WHERE consentform.memberid = mbr.memberid AND mbr.memberid = mem.personid
+  AND consentform.authorizedindid = authorized_individual.authorizedindid 
+  AND authorized_individual.authorizedindid = au.personid
+  AND au.personid = person_phone.personid
+  AND person_phone.phoneid = phone.phoneid
+  AND consentform.conid NOT IN (Select conid from paymentinfo
+  Group by conid)
+  ORDER BY conid;
+  
+ --Provide me with all the consent forms that have payment information please provide me with the consent form id, member names and the payment information.
+ --The "T" stands for payment type
+SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
+  TO_CHAR(daterecievedpay, 'MM/DD/YYYY') AS "Date Rec.", TO_CHAR (dateenteredpay, 'MM/DD/YYYY') AS "Date Enter" from consentform, paymentinfo, mbr, person
+  WHERE consentform.conid = paymentinfo.conid
+  AND consentform.memberid = mbr.memberid
+  AND mbr.memberid = person.personid
+  AND consentform.conid IN (Select conid from paymentinfo
+  GROUP BY conid)
+  ORDER BY consentform.conid;
 
 --Business Rule #13 - Person:Organization 
 --A person may be a part of one or more organizations. 
@@ -1313,13 +1304,12 @@ AND mbr.birthid = dobirth.birthid
 ORDER BY lname, fname;
  
 --Business Rule #17 - Member:Other Ethnicity
---A member may identify as another ethnicity.
---Each other ethnicity identifies one member.
---Do any of our members identify with another ethnicity? 
-SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name", ethnicity_desc AS "Ethnicity" FROM person, mbr, o_ethnicity
-WHERE person.personid = mbr.memberid
-AND mbr.memberid = o_ethnicity.memberid
-ORDER BY lname, fname;
+--A member provides one or more ethnicities.
+--Each ethnicity is provided by  one or more members.
+--How many members identify as not being caucasian 
+SELECT COUNT(DISTINCT(memberid)) AS "# of Members Not Caucasian" FROM mbr INNER JOIN member_ethnicity USING (memberid) 
+INNER JOIN ethnicity USING (ethnicityid)
+WHERE ethnicity_type <> 'C';
  
 --Business Rule #18 - Member:Family Information 
 --A member provides their family information. 
@@ -1414,16 +1404,21 @@ GROUP BY medstaffid
 HAVING COUNT (memberid) >=2) 
 ORDER BY mem.lname, mem.fname;
 
-
-
---Business Rule #27 - Medication:Health Condition:Medical Staff  
---A member can take one or more medications that may be prescribed by one or more doctors to treat one or more health conditions.
---A health condition may be treated by one or more medications that may be prescribed by one or more doctors for one or more members.
---Each medication can be prescribed by one or more doctors to treat one or more health conditions that is taken by one or more members.
---A doctor may prescribe one or more medications to treat one or more health conditions for one or more members.
-
-
-
+--Business Rule #27-Member:Medication:Medical Staff 
+--A member can take one or more medications that are prescribed by a doctor.
+--Each medication is prescribed by one doctor and taken by one or more members.
+--Each doctor prescribes one or more medications to be taken by one or more members.
+--Please provide me with all members who take more than one medication. What medicationsdo they take at what time and which doctors perscribe them.
+SELECT mem.fname AS "Member First Name", mem.lname AS "Last Name", medname AS "Medication Name", time_medication AS "Time to Take", 
+  doc.fname AS "Doctor Frist Name", doc.lname AS "Doctor Last Name" 
+  FROM person mem, person doc, mbr, mbrmedinfo, medication, medstaff
+  WHERE mbr.memberid = mbrmedinfo.memberid AND mbrmedinfo.medicationid = medication.medicationid
+  AND mbrmedinfo.medstaffid = medstaff.medstaffid 
+  AND mbr.memberid = mem.personid
+  AND medstaff.medstaffid= doc.personid
+  AND mbrmedinfo.memberid IN (SELECT memberid FROM mbrmedinfo
+  GROUP BY memberid HAVING COUNT(medicationid) >1)
+  ORDER BY mem.lname, mem.fname;
 
 --Business Rule #28 Member:Health Condition
 --A member may provide one or more helath conditions.
@@ -1502,11 +1497,12 @@ CREATE OR REPLACE VIEW member_medications AS
     AND medication.medicationid = mbrmedinfo.medicationid;
 
 --The select statement below selects from the view above to determine Jamie Simons medication information.
-SELECT memberid AS "Member ID", fname AS "First Name", 
+SELECT fname AS "First Name", 
     lname AS "Last Name", medname AS "Medication Name", amnt_medication 
     AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
     FROM member_medications
-    WHERE memberid = 7;
+    WHERE member_medications.lname = 'Simon'
+    ORDER BY medname;;
 
 --What is the average time our members spend at our club?
 --SQL Commands: AVG
@@ -1560,7 +1556,7 @@ SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name
     AND per.lname= 'Johnson'
     AND per.fname = 'Riley'
     AND auth_pickup = 'Y'
-    ORDER BY aut.fname,aut.lname;
+    ORDER BY aut.lname, aut.fname;
     
     
 --I want the name of the member who has orientation on September 15,2018. 
@@ -1572,7 +1568,7 @@ WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY')
 AND consentform.memberid = person.personid;
 
 
---Please give me a phone number for all the physicians/doctor.  
+--Please give me a phone number for all the doctors that we have in our system.  
 --SQL Commands: WHERE, EQUIJOIN,ORDER BY
 SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
 FROM medstaff, phone, person, person_phone
