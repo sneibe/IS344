@@ -1512,10 +1512,16 @@ SELECT fname AS "First Name",
     WHERE member_medications.lname = 'Simon'
     ORDER BY medname;
 
---What is the average time our members spend at our club?
---SQL Commands: AVG
-SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) AS "Average Time" FROM attendance
-    GROUP BY attendance_id;
+--What members spend more time at our club than the average?
+--SQL Commands: AVG, GROUP BY, HAVING, SUM
+SELECT fname AS "First Name", lname AS "Last Name", SUM(ROUND(((check_out - check_in)*24), 2)) AS "Total Time" FROM attendance, mbr, person
+WHERE person.personid = mbr.memberid 
+AND attendance.memberid = mbr.memberid
+GROUP BY lname, fname
+HAVING SUM(ROUND(((check_out - check_in)*24), 2)) < (
+SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) FROM attendance 
+GROUP BY (attendance_id))
+ORDER BY lname, fname;
 
 --We are trying to figure out what our most popular form of payment is. 
 --How much money have we collected from each payment type when collecting our membership fees?
