@@ -1423,6 +1423,13 @@ SELECT mem.fname AS "Member First Name", mem.lname AS "Last Name", medname AS "M
 --Business Rule #28 Member:Health Condition
 --A member may provide one or more helath conditions.
 --Each health condition is provided by one or more members. 
+SELECT healthcondname AS "Health Condition", fname AS "First Name", lname AS "Last Name" FROM person, mbr, mbr_health_condition, healthcondition
+  WHERE person.personid = mbr.memberid AND mbr.memberid = mbr_health_condition.memberid
+  AND mbr_health_condition.healthcondid = healthcondition.healthcondid AND
+  mbr_health_condition.healthcondid IN (SELECT healthcondid FROM mbr_health_condition
+  GROUP BY healthcondid Having COUNT(healthcondid)>=2)
+  ORDER BY healthcondname;
+
 
 
 --The queries below fufill the SQL Command requirements for the Group Project. 
