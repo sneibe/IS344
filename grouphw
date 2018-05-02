@@ -1436,10 +1436,21 @@ SELECT healthcondname AS "Health Condition", fname AS "First Name", lname AS "La
 --Each Managerial Request is followed by a query fuffiliing the request. 
 
 
---How many of our members have truancy?
---SQL Commands: RIGHT JOIN, WHERE
-SELECT COUNT(memberid) AS "Members" FROM mbr RIGHT JOIN  truancy USING (memberid);
+--The queries below fufill the SQL Command requirements for the Group Project. 
+--Each Managerial Request is followed by a query fuffiliing the request. 
 
+--We have an important event coming up and we need volunteers, please provide me with all the email addresses
+--in our database with their names.
+--SQL Commands: RIGHT OUTER JOIN
+SELECT fname AS "First Name",lname AS "Last Name" ,email_add AS "Email Address"
+FROM email RIGHT OUTER JOIN person USING (personid)
+ORDER BY lname, fname;
+
+--Provide me with each consent forms payment information
+--SQL Commands: LEFT OUTER JOIN  
+SELECT conid AS "ID", paymenttype AS "T", paymentamnt AS "Amount" FROM consentform LEFT OUTER JOIN paymentinfo  USING (conid)
+ORDER BY conid;
+  
 --How many members qualify for free lunch?
 --SQL Commands: COUNT, WHERE, AND, ORDER BY
 SELECT COUNT(free_lunch) AS "Qualify for Free Lunch" FROM person, mbr, familyinfo 
@@ -1447,7 +1458,6 @@ WHERE person.personid = mbr.memberid
 AND mbr.memberid = familyinfo.famid
 AND free_lunch = 'Y'
 ORDER BY lname, fname;
-
 
 --Which members got scholarships and qualify for free lunch?
 --SQL Commands: WHERE, AND, ORDER BY
@@ -1521,10 +1531,10 @@ SELECT fname AS "First Name", lname AS "Last Name", SUM(ROUND(((check_out - chec
 WHERE person.personid = mbr.memberid 
 AND attendance.memberid = mbr.memberid
 GROUP BY lname, fname
-HAVING SUM(ROUND(((check_out - check_in)*24), 2)) < (
+HAVING SUM(ROUND(((check_out - check_in)*24), 2)) > (
 SELECT AVG(SUM(ROUND(((check_out - check_in)*24), 2))) FROM attendance 
 GROUP BY (attendance_id))
-ORDER BY lname, fname;
+ORDER BY "Total Time" DESC ;
 
 --We are trying to figure out what our most popular form of payment is. 
 --How much money have we collected from each payment type when collecting our membership fees?
@@ -1622,5 +1632,3 @@ FROM dobirth, mbr, person
 WHERE dobirth.birthid = mbr.birthid AND mbr.memberid = person.personid
 AND dob LIKE '%%-MAY-%%%%'
 ORDER BY "Birthday", "Age", lname, fname, mname;
-
-
