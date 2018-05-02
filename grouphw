@@ -1151,9 +1151,9 @@ ORDER BY lname, fname;
 --A person may be a teacher.
 --A teacher is a person.
 --Please provide me a list of all the teachers. 
-SELECT DISTINCT (teacherid), fname AS "First Name",lname AS "Last Name" FROM person, teacher
-WHERE person.personid = teacher.teacherid
-ORDER BY lname, fname;
+SELECT DISTINCT (teacherid) AS "Teacher ID", fname AS "First Name",lname AS "Last Name" FROM person, teacher
+ WHERE person.personid = teacher.teacherid
+ ORDER BY lname, fname;
 
 --Business Rule #5 - Person:Email 
 --A person may provide one email address. 
@@ -1183,10 +1183,10 @@ ORDER BY aut.lname, aut.fname;
 --A phone number references one or more people.
 --Please provide me with the names of the people in our database who we collect phone numbers  of. 
 --Order by last name,please. 
-SELECT fname,lname,TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-')
-FROM phone,person,person_phone
-WHERE person.personid = person_phone.personid
-AND person_phone.phoneid = phone.phoneid
+SELECT fname AS "First Name",lname AS "Last Name",TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number"
+ FROM phone,person,person_phone
+ WHERE person.personid = person_phone.personid
+ AND person_phone.phoneid = phone.phoneid
 ORDER BY lname,fname; 
 
 --Business Rule #8 - Person:Consent Form 
@@ -1195,10 +1195,10 @@ ORDER BY lname,fname;
 --A staff member enters in one or more consent forms. 
 --Each consent form is entered by one staff member. 
 --Provide me with the name of the authorized individuals that have signed a consent form.
-SELECT DISTINCT (personid), fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
-WHERE person.PERSONID = authorized_individual.AUTHORIZEDINDID
-AND authorized_individual.AUTHORIZEDINDID = consentform.AUTHORIZEDINDID
-ORDER BY lname, fname;
+SELECT DISTINCT (personid) AS "Person ID", fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
+ WHERE person.PERSONID = authorized_individual.AUTHORIZEDINDID
+ AND authorized_individual.AUTHORIZEDINDID = consentform.AUTHORIZEDINDID
+ ORDER BY lname, fname;
 
 
 --Business Rule #9 - Member:Consent Form 
@@ -1216,10 +1216,10 @@ ORDER BY lname, fname;
 --Each member release form is filled out by one person. 
 --Provide me with the members name and the date that their authorized individual
 --signed their member release form.
-SELECT DISTINCT(personid), fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
-FROM person, memberreleaseform, authorized_individual
-WHERE person.personid = memberreleaseform.release_form_id
-AND memberreleaseform.authorizedindid = authorized_individual.authorizedindid
+SELECT DISTINCT(personid) AS "Person ID", fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
+ FROM person, memberreleaseform, authorized_individual
+ WHERE person.personid = memberreleaseform.release_form_id
+ AND memberreleaseform.authorizedindid = authorized_individual.authorizedindid
 ORDER BY lname, fname;
 
 --Business Rule #11 - Member:Member Release 
@@ -1316,11 +1316,10 @@ WHERE ethnicity_type <> 'C';
 --A member provides their family information. 
 --Each family information belongs to one or more members. 
 --How big is Ethan Berkley family? 
-SELECT famsize FROM person, mbr, familyinfo
-WHERE person.personid = mbr.memberid
-AND mbr.famid = familyinfo.famid
-AND fname = 'Ethan'
-AND lname = 'Berkley'
+SELECT famsize AS "Family Size" FROM person, mbr, familyinfo
+ WHERE person.personid = mbr.memberid
+ AND mbr.famid = familyinfo.famid
+ AND fname = 'Ethan'
 ORDER BY lname, fname;
 
 --Business Rule #19 - Member:Attendance
@@ -1409,7 +1408,7 @@ ORDER BY mem.lname, mem.fname;
 --A member can take one or more medications that are prescribed by a doctor.
 --Each medication is prescribed by one doctor and taken by one or more members.
 --Each doctor prescribes one or more medications to be taken by one or more members.
---Please provide me with all members who take more than one medication. What medicationsdo they take at what time and which doctors perscribe them.
+--Please provide me with all members who take more than one medication. What medications do they take at what time and which doctors perscribe them.
 SELECT mem.fname AS "Member First Name", mem.lname AS "Last Name", medname AS "Medication Name", time_medication AS "Time to Take", 
   doc.fname AS "Doctor Frist Name", doc.lname AS "Doctor Last Name" 
   FROM person mem, person doc, mbr, mbrmedinfo, medication, medstaff
