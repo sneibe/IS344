@@ -1457,7 +1457,7 @@ ORDER BY lname, fname;
 
 
 --Which members have an allergy?
---SQL Commands: WHERE, AND, ORDER BY
+--SQL Commands: WHERE, AND, ORDER BY, 1:1 RELATIONSHIP 
 SELECT fname AS "First Name", lname AS "Last Name", all_desc AS "Allergy Description"
 FROM person, mbr, allergy
 WHERE person.personid = mbr.memberid
@@ -1489,7 +1489,8 @@ HAVING SUM(ROUND(((check_out - check_in)*24),2)) = (
 --SQL Commands: WHERE, AND, ORDER BY
 SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Development Description", 
     grade AS "Grade's Description", g_satis AS "S"
-    FROM person, mbr, socialdev, academic_info 
+    FROM person, mbr, socialdev, academic_
+    fo 
     WHERE person.personid = mbr.memberid
     AND mbr.memberid = socialdev.socialdevid
     AND socialdev.socialdevid = academic_info.academicid
@@ -1497,7 +1498,7 @@ SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Dev
 
 --I know various members take medication. Please provide me a list of all the members who take medications.
 --After that, please provide me a list of JUST Jamie Simons' medication information, I know he takes quite a few of them. 
---SQL Commands: VIEW,WHERE,AND, TO_CHAR 
+--SQL Commands: VIEW, WHERE, AND
 CREATE OR REPLACE VIEW member_medications AS 
     SELECT memberid,fname,lname,medname,amnt_medication,how_medication,time_medication 
     FROM person,medication,mbrmedinfo
@@ -1559,7 +1560,7 @@ SELECT COUNT(memberid) AS "Members" FROM medical_history LEFT JOIN mbr USING (me
 
 --I want to make sure Riley Johnson has atleast one person as an authorized individual to pick them up after club hours. 
 --Please provide me a list with their Last name and First names.
---SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname),WHERE,AND ORDER BY, 
+--SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname), WHERE, AND, ORDER BY 
 SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name", aut.lname AS "Authorized Ind's Last Name",
     per.fname AS "Person's First Name",
     per.lname AS "Person's Last Name"
@@ -1575,6 +1576,7 @@ SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name
 --I want the name of the member who has orientation on September 15,2018. 
 --The club is preparing a welcome basket for them and I want 
 --to make sure my staff members will finish it by their date. 
+--SQL Commands: WHERE, AND, TO_DATE, ORDER BY 
 SELECT fname AS "Member First Name",lname AS "Member Last Name", mname AS "Member Middle Initial"
 FROM consentform,person
 WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY') 
@@ -1584,7 +1586,8 @@ ORDER BY lname, fname, mname;
 
 --Please give me a phone number for all the doctors that we have in our system.  
 --SQL Commands: WHERE, EQUIJOIN,ORDER BY
-SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
+SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  
+(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
 FROM medstaff, phone, person, person_phone
 WHERE person.personid = medstaff.medstaffid
 AND person.personid = person_phone.personid
