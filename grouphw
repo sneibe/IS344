@@ -1,7 +1,8 @@
---Group 3: Stacey Ibe, Alison Von Haden, Molly Brewer, Brandon Simonis, Jamie Berger
+
+--Group 3
 --Group HW
 --Jean Pratt
---May 4, 2018
+--May 4,2018
 
 
 --Drop tables plus cascade constraints
@@ -96,7 +97,7 @@ CREATE TABLE familyinfo (
   CONSTRAINT free_lunch_cc CHECK (free_lunch IN ('Y','N')),
   CONSTRAINT familyinfo_pk PRIMARY KEY (famid));
   
---The code below creates the Phone table where phoneid is the primary key. 
+--The code below creates the Phone table where phoneid is the primary key 
 --Check constraint for ptype: 'M'= Mobile, 'H'= Home, 'W' = Work
 CREATE TABLE phone (
   phoneid NUMBER (6) NOT NULL,
@@ -175,21 +176,21 @@ CREATE TABLE ethnicity (
   
 --The code below creates the table for member_ethnicity where ethnicityid and memberid is the primary and foriegn keys in the table
 CREATE TABLE member_ethnicity (
-  memberid        NUMBER (6) NOT NULL,
   ethnicityid     NUMBER (6) NOT NULL,
+  memberid        NUMBER (6) NOT NULL,
   CONSTRAINT ethnicity_pk PRIMARY KEY (ethnicityid, memberid),
   CONSTRAINT ethnicity_fk FOREIGN KEY (ethnicityid) REFERENCES ethnicity (ethnicityid),
   CONSTRAINT memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
   
---The code below creates the table for where attendance_id is the primary key and
+--The code below creates the table for attendance where attendance_id is the primary key and
 --memberid is the foreign key
 CREATE TABLE attendance (
   attendance_id NUMBER (6) NOT NULL,
-  memberid    NUMBER (6) NOT NULL,
   check_in    DATE NOT NULL,
   check_out   DATE NOT NULL,
   ch_in_out_day DATE NOT NULL,
+  memberid    NUMBER (6) NOT NULL,
   CONSTRAINT attendance_pk PRIMARY KEY (attendance_id),
   CONSTRAINT attendance_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
 
@@ -231,9 +232,9 @@ CREATE TABLE person_org (
   CONSTRAINT person_org_org_fk FOREIGN KEY (org_id) REFERENCES org (org_id));
 
 --The code below creates the table for Teacher where personid and teacherid are the primary and foreign keys
---The check constraint in this table to make sure they are entering a a valid school year
+--The check constraint in this table to make sure they are entering a valid school year
 --'PK'= preschool,'4K'= 4k, '5K'= 5k, '1'= 1st grade, '2'=2nd grade,'3'= 3rd grade,'4'= 4th grade,'5'= 5th grade,
---'6'= 6th grade,'7'= 7th grade,'8'= 8th grade,'FR'= Freshman,'SO'= Sophmore,'JR'= Junior,'SR'= Senior
+--'6'= 6th grade,'7'= 7th grade,'8'= 8th grade,'FR'= Freshman,'SO'= Sophomore,'JR'= Junior,'SR'= Senior
 CREATE TABLE teacher (
   personid NUMBER (6) NOT NULL,
   teacherid NUMBER (6) NOT NULL,
@@ -245,7 +246,7 @@ CREATE TABLE teacher (
   CONSTRAINT teacher_person_fk FOREIGN KEY (personid) REFERENCES person (personid),
   CONSTRAINT teacher_teacher_fk FOREIGN KEY (personid) REFERENCES person (personid));
 
---The code below creates the table for Member Release Form where memberid and authorized individualids are the primary and foreign keys
+--The code below creates the table for Member Release Form where memberid and authorized individualid are the primary and foreign keys
 --Check constraints for liability, transportation, photo_video, academics, computer policy, and electronics "Y" = Yes, understood
 --and "N" = No,did not understand
 --Check constraint for computer access is "Y"= Yes, they have permission to access computers or "N" No, they do not give permission to access computers
@@ -326,7 +327,7 @@ CREATE TABLE allergy (
   
 --The code below creates the table for Consent Form where conid is the primary key and foreign keys are memberid, authorizedindid and staffid
 --Check constraint for memberstatus: 'G'= Guest, 'N'= New Member,'R'= Returning Member
---Check constraint for completedorient: Y = Completed, N= Not completed
+--Check constraint for completedorient: Y = Completed, N= Not Completed
 CREATE TABLE consentform (
     conid NUMBER (6) NOT NULL,
     memberstatus CHAR(1) NOT NULL,
@@ -357,7 +358,7 @@ CREATE TABLE paymentinfo (
     CONSTRAINT paymentinfo_conid_pk PRIMARY KEY (conid),
     CONSTRAINT paymentinfo2_conid_fk FOREIGN KEY (conid) REFERENCES paymentinfo (conid));  
 
---The code below creates the table for Social Development wheresocialdevid is the primary key and the memberid is the foreign key
+--The code below creates the table for Social Development where socialdevid is the primary key and the memberid is the foreign key
 --Check constraint for socialdevtype: 'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
 CREATE TABLE socialdev (
     socialdevid NUMBER (6) NOT NULL,
@@ -376,7 +377,7 @@ CONSTRAINT medication_medid_pk PRIMARY KEY (medicationid));
 
 --The code below creates the table for Health Condition where helathcondid is the primary key
 --The check constraint is for the health condition name, we want to make sure whoever is entering the data spells the name right.
---We us VARCHAR2 (39) because the longest helath condition we track is 39 characters long
+--We use VARCHAR2 (39) because the longest health condition we track is 39 characters long
 CREATE TABLE healthcondition (
     healthcondid NUMBER (6) NOT NULL,
     healthcondname VARCHAR2 (39) NOT NULL, 
@@ -389,12 +390,11 @@ CREATE TABLE healthcondition (
     
 --The code below creates the table for Member Health Condition where healthcondid and memberid are the primary and foreign keys.
 CREATE TABLE mbr_health_condition (
-  memberid NUMBER (6) NOT NULL,
   healthcondid NUMBER (6) NOT NULL,
+  memberid NUMBER (6) NOT NULL,
   CONSTRAINT mbr_health_condition_pk PRIMARY KEY (healthcondid, memberid),
   CONSTRAINT mbr_health_conditionid_fk FOREIGN KEY (healthcondid) REFERENCES healthcondition (healthcondid),
   CONSTRAINT mbr_health_memberid_fk FOREIGN KEY (memberid) REFERENCES mbr (memberid));
-
 
 --The code below creates the table for Medical Staff where medstaffid and memberid are the primary and foreign keys
 --Check constraint for job type: 'P' = Physician, 'D' = Doctor
@@ -491,7 +491,7 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Pelton
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'The Counter', 'Over');
 
 
---Insert statements for email
+--Insert statements for table email
 INSERT INTO email VALUES (2, 'mjohnson@gmail.com');
 INSERT INTO email VALUES (3, 'bsimonis59@gmail.com');
 INSERT INTO email VALUES (5, 'rjohnson@yahoo.com');
@@ -522,7 +522,7 @@ INSERT INTO email VALUES (39, 'tim.berkley@gmail.com');
 INSERT INTO email VALUES (40, 'shannon.berkley2@gmail.com');
 INSERT INTO email VALUES (43, 'bvarian3459@outlook.com');
 
---Insert statements for teacher
+--Insert statements for table teacher
 INSERT INTO teacher VALUES (2,11,'FR', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
 INSERT INTO teacher VALUES (2,15,'8', TO_DATE( '2016', 'YYYY'), TO_DATE( '2017', 'YYYY'));
 INSERT INTO teacher VALUES (3,12,'5', TO_DATE( '2017', 'YYYY'), TO_DATE( '2018', 'YYYY'));
@@ -545,7 +545,7 @@ CREATE SEQUENCE seqaddressid
   INCREMENT BY 1
   NOCACHE;
 
---Insert Statments for address
+--Insert Statments for table address
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Kay Street', 'Eau Claire',DEFAULT, '54703-6362');
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '505 5th Street', 'Chippewa Falls',DEFAULT, '54729');
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '800 Keith Street', 'Eau Claire',DEFAULT, '54703-6362');
@@ -651,7 +651,7 @@ INSERT INTO person_phone VALUES (36,57);
 INSERT INTO person_phone VALUES (37,58);
 INSERT INTO person_phone VALUES (38,59);
 
---Insert statements for authorized individual (AuthorizedID,MbrID,Relship,Y,Y,Y,Y,Addrid,PhoneId)
+--Insert statements for table authorized individual (AuthorizedID,MbrID,Relship,Y,Y,Y,Y,Addrid,PhoneId)
 INSERT INTO authorized_individual VALUES (19,2,'M', 'Father', 'Y', 'Y', 'Y','Y',2,2);
 INSERT INTO authorized_individual VALUES (20,2, 'F', 'Mother', 'N', 'Y', 'Y','Y',2,3);
 INSERT INTO authorized_individual VALUES (21,2, 'F', 'Aunt', 'N', 'Y', 'Y','N',3,4);
@@ -761,13 +761,13 @@ INSERT INTO person_org VALUES (9, 14);
 INSERT INTO person_org VALUES (10, 5);
 
 
---the code below creates the sequence for Date of Birth ID. 
+--The code below creates the sequence for Date of Birth ID. 
 CREATE SEQUENCE dobirthseq
-START WITH 1
+START WITH 
 INCREMENT BY 1
 NOCACHE;
 
---The table below creates the date of birth ID 
+--Insert statements for table dobirth
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '21-OCT-04');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '31-MAY-06');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '04-JUL-05');
@@ -777,7 +777,7 @@ INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '05-MAR-15');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '13-MAY-10');
 INSERT INTO dobirth VALUES (dobirthseq.NEXTVAL, '12-JAN-05');
 
---The code below are the insers statement for Homework table
+--Insert statements for table Homework
 INSERT INTO hw VALUES (2,'Geometry and history');
 INSERT INTO hw VALUES (3,'Math and reading Harry Potter');
 INSERT INTO hw VALUES (4,'Help with Science of rocks');
@@ -792,7 +792,7 @@ CREATE SEQUENCE seqfamid
 START WITH 1
 INCREMENT BY 1;
 
---Insert statement for Familyinfo
+--Insert statements for table Familyinfo
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 3, 50000, 'B', 'N', DEFAULT); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 4, 27000, 'B', 'N', 'Army');
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 35000, 'M', 'Y', DEFAULT); 
@@ -802,7 +802,7 @@ INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 2, 30000, 'R', 'Y', 'Marine');
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 5, 40000, 'B', 'Y', DEFAULT); 
 INSERT INTO familyinfo VALUES (seqfamid.NEXTVAL, 6, 55000, 'GP', 'Y', 'Army'); 
  
---The table below creates the table for mbr
+--Insert statements for table mbr
 INSERT INTO mbr VALUES (2,'M', 2,3,2);
 INSERT INTO mbr VALUES (3, 'M', 3, 3,4);
 INSERT INTO mbr VALUES (4, 'F', 3, 4,6);
@@ -817,7 +817,8 @@ INSERT INTO mbr VALUES (10,'M',9,8,16);
 CREATE SEQUENCE seqethnicity
 START WITH 1
 INCREMENT BY 1;
---The code below are the insert statements for the Ethnicity Table
+
+--Insert statements for table ethnicity 
 --Check Constraint for ethnicity 'C'= Caucasian, 'AA' = African American, 'AI' = American Indian, 'AP' = Asian-Asian Pacific,
 --'HP' = Hispanic-Latino, 'ME' = Multi-Ethnic, 'O'= Other
 INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'C');
@@ -829,29 +830,29 @@ INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'ME');
 INSERT INTO Ethnicity VALUES (seqethnicity.NEXTVAL, 'O');
 
 
---The code below are the insert statements for teh Member_Ethnicity table
+--Insert statements for table Member_Ethnicity
 INSERT INTO Member_Ethnicity VALUES (2,2);
 INSERT INTO Member_Ethnicity VALUES (3,3);
-INSERT INTO Member_Ethnicity VALUES (4,5);
-INSERT INTO Member_Ethnicity VALUES (5,8);
-INSERT INTO Member_Ethnicity VALUES (6,4);
-INSERT INTO Member_Ethnicity VALUES (7,6);
-INSERT INTO Member_Ethnicity VALUES (8,7);
-INSERT INTO Member_Ethnicity VALUES (9,6);
-INSERT INTO Member_Ethnicity VALUES (10,2);
+INSERT INTO Member_Ethnicity VALUES (5,4);
+INSERT INTO Member_Ethnicity VALUES (8,5);
+INSERT INTO Member_Ethnicity VALUES (4,6);
+INSERT INTO Member_Ethnicity VALUES (6,7);
+INSERT INTO Member_Ethnicity VALUES (7,8);
+INSERT INTO Member_Ethnicity VALUES (6,9);
+INSERT INTO Member_Ethnicity VALUES (2,10);
 
---The code below are the insert statement for Truancy Table
+--Insert statements for table Truancy 
 INSERT INTO truancy VALUES (3,'Fighting with students');
 INSERT INTO truancy VALUES (5,'Skipping class');
 INSERT INTO truancy VALUES (9,'Bullying');
 
---the code below creates the sequence for Academic Information. 
+--Sequence created to generate numbers for Academic Information
 CREATE SEQUENCE academicinformationseq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---The code below are the insert statements for Academic Information
+--Insert statements for table Academic Information
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,2,'Does well in classes, gets As and Bs','Y','N','FR');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,3,'Grades are bad,Failing most classes','N','N','5');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,4,'A,B,C grades, not failing','Y','N','5');
@@ -862,30 +863,30 @@ INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,8,'Needs help w
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,9,'Practice Speech','N','Y','3');
 INSERT INTO academic_info VALUES (academicinformationseq.NEXTVAL,10,'Needs assistance with Math and Science','N','N','5');
 
---The code below creates the sequence for attendance. 
+--Sequence created to generate numbers for attendance 
 CREATE SEQUENCE attendanceseq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---This table creates the attendance for members.
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,6, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,2, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,3, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,4, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,6, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,7, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,9,TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,10, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,2, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,3, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,4, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,5,TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,8, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,9, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018');
-INSERT INTO attendance VALUES (attendanceseq.NEXTVAL,10, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018');
+--Insert statements for the attendance of members
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '1-MAR-2018', 6);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '1-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 2);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 3);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 4);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:30', 'HH24:MI'), '2-MAR-2018', 6);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '2-MAR-2018', 7);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '2-MAR-2018', 9);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '2-MAR-2018', 10);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 2);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('13:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '5-MAR-2018', 3);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:00', 'HH24:MI'), '5-MAR-2018', 4);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 5);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('14:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 8);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:00', 'HH24:MI'), TO_DATE('17:30', 'HH24:MI'), '6-MAR-2018', 9);
+INSERT INTO attendance VALUES (attendanceseq.NEXTVAL, TO_DATE('15:30', 'HH24:MI'), TO_DATE('18:00', 'HH24:MI'), '6-MAR-2018', 10);
 
 
 --Sequence is created to generate numbers for the PK conid
@@ -894,7 +895,7 @@ START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---Insert values into the consent form table
+--Insert statements for the table consentform
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '05-JAN-2018', '15-JAN-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 4, 26, 44);
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '15-FEB-2018', '20-FEB-2018', TO_DATE('15:30', 'HH24:MI'), 'Y', 3, 22, 45);
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '05-DEC-2017', '08-DEC-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 2, 19, 44);
@@ -905,7 +906,7 @@ INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'R', '26-JAN-2018', '15-SEP-20
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 9, 41, 44);
 INSERT INTO consentform VALUES (seqconid.NEXTVAL, 'N', '15-SEP-2017', '20-SEP-2017', TO_DATE('15:30', 'HH24:MI'), 'Y', 10, 41, 44);
 
---Insert values into the paymentinfo table
+--Insert stements for the table paymentinfo
 INSERT INTO paymentinfo VALUES (2, 'CA', '15', '05-JAN-2018', '06-JAN-2018');
 INSERT INTO paymentinfo VALUES (3, 'CK', '15', '15-FEB-2018', '20-FEB-2018');
 INSERT INTO paymentinfo VALUES (4, 'MO', '50', '05-DEC-2017', '08-DEC-2017');
@@ -915,26 +916,26 @@ INSERT INTO paymentinfo VALUES (8, 'CA', '15', '26-JAN-2018', '26-JAN-2018');
 INSERT INTO paymentinfo VALUES (9, 'CK', '30', '15-SEP-2017', '30-SEP-2017');
 INSERT INTO paymentinfo VALUES (10, 'CK', '30', '25-SEP-2017', '30-SEP-2017');
 
---The code below creates the sequence for the social development ID
+--Sequence created for the social development ID
 CREATE SEQUENCE socialdevseq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---The code below are the insert statements for the Social Devlopment Table
+--Insert statements for table Social Devlopment
 --Check constraint for socialdevtype: 
 --'DA' = Drug and Alcohol, 'LI'= Legal Issue, 'BU'= Bullying, 'FS' =Family Stress
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,3,'LI','Fighting with students');
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,5,'FS','Parents getting divorced');
 INSERT INTO socialdev VALUES (socialdevseq.NEXTVAL,9,'LI','Bullies other students');
 
---The code below creates the sequence for school services.
+--Sequence for created to generate numbers for the school services
 CREATE SEQUENCE sevicesseq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---The table below creates the types of services offered.
+--Insert statements for the types of services offered
 INSERT INTO services VALUES (sevicesseq.NEXTVAL,'Speech');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'English Language Learner');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Title I');
@@ -943,7 +944,7 @@ INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Learning Disability');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Emotional/behavioral Disability');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Advanced Learning Services');
 
---The table below creates the services provided by schools.
+--Insert statements for the services provided by schools
 INSERT INTO services_provided VALUES (10, 2);
 INSERT INTO services_provided VALUES (10, 3);
 INSERT INTO services_provided VALUES (10, 6);
@@ -967,7 +968,7 @@ INSERT INTO services_provided VALUES (13, 7);
 INSERT INTO services_provided VALUES (13, 8);
 
 
---The table below creates the services used by each member.
+--Insert statements for services used by each member
 INSERT INTO services_used VALUES (2, 2);
 INSERT INTO services_used VALUES (2, 3);
 INSERT INTO services_used VALUES (5, 5);
@@ -976,18 +977,18 @@ INSERT INTO services_used VALUES (6, 7);
 INSERT INTO services_used VALUES (9, 6);
 
 
---The table below creates allergry descriptions that members provide.
+--Insert statements for allergry descriptions that members provide
 INSERT INTO allergy VALUES (2, 'tree nuts, peanuts');
 INSERT INTO allergy VALUES (5, 'peanuts');
 INSERT INTO allergy VALUES (9, 'pollen');
 
---the code below creates the sequence for Medication ID. 
+--Sequence created to generate numbers for Medication ID
 CREATE SEQUENCE seqmedicationid
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---The table below creates the medication ID
+--Insert statements for table medication
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Sumatriptan');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Clonazepam');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Adderall');
@@ -996,13 +997,13 @@ INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Ziprasidone');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Celexa');
 INSERT INTO medication VALUES (seqmedicationid.NEXTVAL, 'Dr. Kings Natural Medicine Anxiety And Nervousness');
 
---the code below creates the sequence for Medication ID. 
+--Sequence created for Medication ID
 CREATE SEQUENCE seqhealthcondid
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---The code below inserts the value statements for Health Condiiton
+--Insert statements for table Health Condition
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Anxiety');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Attention deficit hyperactive disorder');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Bi-polar');
@@ -1011,19 +1012,19 @@ INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Migraines');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Headaches');
 INSERT INTO healthcondition VALUES (seqhealthcondid.NEXTVAL, 'Emotional problems');
 
---The code below inserts the value statements for Health Condiiton
-INSERT INTO mbr_health_condition VALUES (3, 6);
-INSERT INTO mbr_health_condition VALUES (4, 7);
-INSERT INTO mbr_health_condition VALUES (4, 2);
-INSERT INTO mbr_health_condition VALUES (5, 4);
-INSERT INTO mbr_health_condition VALUES (6, 6);
-INSERT INTO mbr_health_condition VALUES (7, 8);
-INSERT INTO mbr_health_condition VALUES (7, 5);
+--Insert statements for table Member Health Condition
+INSERT INTO mbr_health_condition VALUES (6, 3);
 INSERT INTO mbr_health_condition VALUES (7, 4);
-INSERT INTO mbr_health_condition VALUES (8, 3);
+INSERT INTO mbr_health_condition VALUES (2, 4);
+INSERT INTO mbr_health_condition VALUES (4, 5);
+INSERT INTO mbr_health_condition VALUES (6, 6);
+INSERT INTO mbr_health_condition VALUES (8, 7);
+INSERT INTO mbr_health_condition VALUES (5, 7);
+INSERT INTO mbr_health_condition VALUES (4, 7);
+INSERT INTO mbr_health_condition VALUES (3, 8);
 
 
---The code below inserts the value statements for member medical history.
+--Insert statements for table member medical history
 INSERT INTO medical_history VALUES (2, '11-NOV-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (3, '19-AUG-2017', 'Y', 'Y');
 INSERT INTO medical_history VALUES (4, '08-JUL-2017', 'N', 'N');
@@ -1034,7 +1035,7 @@ INSERT INTO medical_history VALUES (8, '01-NOV-2017', 'Y', 'Y');
 INSERT INTO medical_history VALUES (9, '25-JAN-2017', 'Y', 'N');
 INSERT INTO medical_history VALUES (10, '14-APR-2017', 'Y', 'N');
 
---The code below inserts the value statements for Medical Staff
+--Insert statements for table Medical Staff
 INSERT INTO MEDSTAFF VALUES (46,2,'P');
 INSERT INTO MEDSTAFF VALUES (47,3,'P');
 INSERT INTO MEDSTAFF VALUES (48,4,'P');
@@ -1051,13 +1052,13 @@ INSERT INTO MEDSTAFF VALUES (57,9,'D');
 INSERT INTO MEDSTAFF VALUES (58,8,'D');
 INSERT INTO MEDSTAFF VALUES (59,7,'D');
 
---The code below creates the sequence for member release form id. 
+--Sequence created for the member release form id. 
 CREATE SEQUENCE mbrrlsfrm_seq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
---This table creates the member realse form.
+--Insert statements for table member realse form
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'A', 'Y', '18-AUG-2017', '18-AUG-2017', 2, 19);
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '22-AUG-2017', '22-AUG-2017', 3, 22);
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '01-SEP-2017', '01-SEP-2017', 4, 26);
@@ -1068,7 +1069,7 @@ INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y',
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 9, 41);
 INSERT INTO memberreleaseform VALUES (mbrrlsfrm_seq.NEXTVAL, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'U', DEFAULT, '04-AUG-2017', '04-AUG-2017', 10, 41);
 
---The code below inserts the values into the Member Medical Info Table
+--Insert statements for table Member Medical Info
 INSERT INTO mbrmedinfo VALUES (3,2,54,'2 Pills','Mouth','As Needed','Helps with Severe Migraines');
 INSERT INTO mbrmedinfo VALUES (4,8,60,'2 Fluid Ounces','Mouth','4:30PM','For anxiety');
 INSERT INTO mbrmedinfo VALUES (5,6,55,'1 Pill','Mouth','3:30 PM','For bipolar disease');
@@ -1151,7 +1152,7 @@ ORDER BY lname, fname;
 --A person may be a teacher.
 --A teacher is a person.
 --Please provide me a list of all the teachers. 
-SELECT DISTINCT (teacherid) AS "Teacher ID", fname AS "First Name",lname AS "Last Name" FROM person, teacher
+SELECT DISTINCT (teacherid), fname AS "First Name",lname AS "Last Name" FROM person, teacher
 WHERE person.personid = teacher.teacherid
 ORDER BY lname, fname;
 
@@ -1181,9 +1182,9 @@ ORDER BY aut.lname, aut.fname;
 --Business Rule #7 - Person:Phone 
 --A person may provide one phone number.
 --A phone number references one or more people.
---Please provide me with the names of the people in our database who we collect phone numbers  of. 
---Order by last name,please. 
-SELECT fname AS "First Name",lname AS "Last Name",TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number"
+--Please provide me with the names of the people in our database who we collect phone numbers of. 
+--Order by last name, please. 
+SELECT fname,lname,TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-')
 FROM phone,person,person_phone
 WHERE person.personid = person_phone.personid
 AND person_phone.phoneid = phone.phoneid
@@ -1195,7 +1196,7 @@ ORDER BY lname,fname;
 --A staff member enters in one or more consent forms. 
 --Each consent form is entered by one staff member. 
 --Provide me with the name of the authorized individuals that have signed a consent form.
-SELECT DISTINCT (personid) AS "Person ID", fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
+SELECT DISTINCT (personid), fname AS "First Name", lname AS "Last Name" FROM person, authorized_individual, consentform
 WHERE person.PERSONID = authorized_individual.AUTHORIZEDINDID
 AND authorized_individual.AUTHORIZEDINDID = consentform.AUTHORIZEDINDID
 ORDER BY lname, fname;
@@ -1216,7 +1217,7 @@ ORDER BY lname, fname;
 --Each member release form is filled out by one person. 
 --Provide me with the members name and the date that their authorized individual
 --signed their member release form.
-SELECT DISTINCT(personid) AS "Person ID", fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
+SELECT DISTINCT(personid), fname AS "First Name", lname AS "Last Name", authorizedinddatesigned AS "Date Signed" 
 FROM person, memberreleaseform, authorized_individual
 WHERE person.personid = memberreleaseform.release_form_id
 AND memberreleaseform.authorizedindid = authorized_individual.authorizedindid
@@ -1238,8 +1239,7 @@ ORDER BY lname, fname;
 --A consent form may need payment information.
 --Each payment information belongs to one consent form.
 --Provide me with all the consent forms that do not have payment information, please provide the consent formid, the members name, the authorized
---Individuals name and the authorized individuals phone number so we can contact them for payment.
-
+--individual's name and the authorized individual's phone number so we can contact them for payment.
 SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.lname AS " Member Last Name", mem.mname AS "Member Middle Initial",
   au.fname AS "Authorized Ind. First Name", au.lname AS "Authorized Ind. Last Name",TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') 
   AS "Auth. Phone #" 
@@ -1253,8 +1253,8 @@ SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.lnam
   Group by conid)
   ORDER BY conid;
   
- --Provide me with all the consent forms that have payment information please provide me with the consent form id, member names and the payment information.
- --The "T" stands for payment type
+ --Provide me with all the consent forms that have payment information. Please provide me with the consent form id, member names, and the payment information.
+ --The "T" stands for payment type.
 SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
   TO_CHAR(daterecievedpay, 'MM/DD/YYYY') AS "Date Rec.", TO_CHAR (dateenteredpay, 'MM/DD/YYYY') AS "Date Enter" from consentform, paymentinfo, mbr, person
   WHERE consentform.conid = paymentinfo.conid
@@ -1267,7 +1267,7 @@ SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " 
 --Business Rule #13 - Person:Organization 
 --A person may be a part of one or more organizations. 
 --Each organization contains one or more people. 
- --Who works at Menards?
+--Who works at Menards?
 SELECT fname AS "First Name", lname AS "Last Name" FROM person, person_org, org
 WHERE person.personid = person_org.personid
 AND person_org.org_id = org.org_id
@@ -1287,7 +1287,7 @@ ORDER BY org_name;
 --Business Rule #15 - Member:Services 
 --A member may use one or more services. 
 --Each service may be used by one or more member. 
- --Which of our members are in the learning disability service at their school?
+--Which of our members use the learning disability service at their school?
 SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name" FROM person, mbr, services_used, services
 WHERE servicename = 'Learning Disability'
 AND person.personid = mbr.memberid
@@ -1307,7 +1307,7 @@ ORDER BY lname, fname;
 --Business Rule #17 - Member:Other Ethnicity
 --A member provides one or more ethnicities.
 --Each ethnicity is provided by  one or more members.
---How many members identify as not being caucasian 
+--How many members identify as not being caucasian. 
 SELECT COUNT(DISTINCT(memberid)) AS "# of Members Not Caucasian" FROM mbr INNER JOIN member_ethnicity USING (memberid) 
 INNER JOIN ethnicity USING (ethnicityid)
 WHERE ethnicity_type <> 'C';
@@ -1316,7 +1316,7 @@ WHERE ethnicity_type <> 'C';
 --A member provides their family information. 
 --Each family information belongs to one or more members. 
 --How big is Ethan Berkley family? 
-SELECT famsize AS "Family Size" FROM person, mbr, familyinfo
+SELECT famsize FROM person, mbr, familyinfo
 WHERE person.personid = mbr.memberid
 AND mbr.famid = familyinfo.famid
 AND fname = 'Ethan'
@@ -1326,17 +1326,18 @@ ORDER BY lname, fname;
 --Business Rule #19 - Member:Attendance
 --A member may attend our club one or more times.
 --Each attendance time belongs to one member.
---Provide me with the check in/check out time and the date for Montrell Johnson
+--Provide me with the check in/check out time and the date for Montrell Johnson.
 SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name", TO_CHAR(check_in, 'HH:MI AM') AS "Chk In", TO_CHAR(check_out, 'HH:MI AM') AS "Chk Out", ch_in_out_day AS "Date" FROM person,mbr,attendance
 WHERE attendance.memberid = mbr.memberid
 AND person.personid = mbr.memberid
 AND fname = 'Montrell'
 AND lname = 'Johnson'
 ORDER BY lname, fname;
+
 --Business Rule #20 - Member:Academic Information
 --A member provides academic information.
 --Academic information belongs to one member.
---I want to know the acedemic information from my members attending B&G Club
+--I want to know the acedemic information of my members attending B&G Club.
 SELECT GRADE AS "Grade", LNAME AS "Last Name", FNAME AS "First Name" FROM PERSON, MBR, ACADEMIC_INFO
 WHERE person.personid = mbr.memberid
 AND academic_info.memberid = mbr.memberid
@@ -1345,7 +1346,7 @@ ORDER BY lname, fname;
 --Business Rule #21 - Member:Homework
 --A member may be assigned homework.
 --Homework is assigned to one member.
---I want to see what homework has been assigned to our members
+--I want to see what homework has been assigned to our members.
 SELECT HW_DESC AS "Homework", LNAME AS "Last Name", FNAME AS "First Name" FROM HW, MBR, PERSON
 WHERE person.personid = mbr.memberid
 AND HW.HW_ID = MBR.MEMBERID
@@ -1354,7 +1355,7 @@ ORDER BY lname, fname;
 --Business Rule #22 - Member:Allergy
 --A member may provide an allergy description.
 --Each allergy description is provided by one member.
---Give me a list of members who have allergies and provide me with those allergies
+--Give me a list of members who have allergies and provide me with those allergies.
 SELECT fname AS "First Name", lname AS "Last Name", all_desc AS "Allergy Description" FROM person,mbr,allergy
 WHERE person.personid = mbr.memberid
 AND allergy.memberid = mbr.memberid
@@ -1363,7 +1364,7 @@ ORDER BY lname, fname;
 --Business Rule #23 - Member:Social Development
 --A member may report one or more social development issues.
 --Each social development issue is reported by one member.
---Give me a list of members with Social Development issues
+--Give me a list of members with Social Development issues.
 SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Development Issue" FROM person, mbr, socialdev
 WHERE person.personid = mbr.memberid
 AND socialdev.socialdevid = mbr.memberid
@@ -1372,7 +1373,7 @@ ORDER BY lname, fname;
 --Business Rule #24 - Member:Truancy
 --A member may be involved in truancy issues.
 --Each truancy issue is associated with one member.
---Give me a list members with Truancy and their issue descriptions 
+--Give me a list members with Truancy and their issue descriptions.
 SELECT fname AS "First Name", lname AS "Last Name", truancy_desc AS "Truancy Description" FROM person, mbr, truancy
 WHERE person.personid = mbr.memberid
 AND truancy.memberid = mbr.memberid
@@ -1381,7 +1382,7 @@ ORDER BY lname, fname;
 --Business Rule #25 - Member:Medical history:
 --A member provides their medical history. 
 --Each medical history is provided by one member. 
---Which members are receiving counseling? Provide their first, middle(if they have one) and last name
+--Which members are receiving counseling? Provide their first, middle(if they have one), and last name.
 SELECT fname AS "First Name", mname as "Middle Initial", lname as "Last Name" FROM person, mbr, medical_history
 WHERE person.personid = mbr.memberid AND
 mbr.memberid = medical_history.memberid 
@@ -1392,8 +1393,8 @@ ORDER BY lname, fname;
 --A person may provide one or more medical staff people(doctor or physician).
 --Each medical staff person is provided by one person.
 --Which physician(s) were provided by two or more members? Please provide the physcians first and last name of the physician(s) and the name of the members
--- who provided the physician.
--- Which members have the same physician please provide me with the member's first, middle, and last name, and the physician's first and last name
+--who provided the physician.
+--Which members have the same physician, please provide me with the member's first, middle, and last name, and the physician's first and last name.
 
 SELECT med.fname AS "Physician's First Name", med.lname AS "Physician's Last Name", mem.fname AS "Member's First Name",
 mem.mname AS "Member's Middle Name", mem.lname AS "Member's Last Name" FROM person med, person mem, medstaff
@@ -1434,7 +1435,7 @@ SELECT healthcondname AS "Health Condition", fname AS "First Name", lname AS "La
 
 
 --The queries below fufill the SQL Command requirements for the Group Project. 
---Each Managerial Request is followed by a query fuffiliing the request. 
+--Each Managerial Request is followed by a query fulfilling the request. 
 
 --How many members qualify for free lunch?
 --SQL Commands: COUNT, WHERE, AND, ORDER BY
@@ -1457,7 +1458,7 @@ ORDER BY lname, fname;
 
 
 --Which members have an allergy?
---SQL Commands: WHERE, AND, ORDER BY, 1:1 RELATIONSHIP 
+--SQL Commands: WHERE, AND, ORDER BY
 SELECT fname AS "First Name", lname AS "Last Name", all_desc AS "Allergy Description"
 FROM person, mbr, allergy
 WHERE person.personid = mbr.memberid
@@ -1489,8 +1490,7 @@ HAVING SUM(ROUND(((check_out - check_in)*24),2)) = (
 --SQL Commands: WHERE, AND, ORDER BY
 SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Development Description", 
     grade AS "Grade's Description", g_satis AS "S"
-    FROM person, mbr, socialdev, academic_
-    fo 
+    FROM person, mbr, socialdev, academic_info 
     WHERE person.personid = mbr.memberid
     AND mbr.memberid = socialdev.socialdevid
     AND socialdev.socialdevid = academic_info.academicid
@@ -1498,7 +1498,7 @@ SELECT fname AS "First Name", lname AS "Last Name", socialdevdesc AS "Social Dev
 
 --I know various members take medication. Please provide me a list of all the members who take medications.
 --After that, please provide me a list of JUST Jamie Simons' medication information, I know he takes quite a few of them. 
---SQL Commands: VIEW, WHERE, AND
+--SQL Commands: VIEW, WHERE, AND, TO_CHAR 
 CREATE OR REPLACE VIEW member_medications AS 
     SELECT memberid,fname,lname,medname,amnt_medication,how_medication,time_medication 
     FROM person,medication,mbrmedinfo
@@ -1506,14 +1506,15 @@ CREATE OR REPLACE VIEW member_medications AS
     AND medication.medicationid = mbrmedinfo.medicationid;
 
 --The select statement below selects from the view above to determine Jamie Simons medication information.
-SELECT fname AS "First Name", lname AS "Last Name", medname AS "Medication Name", amnt_medication 
+SELECT fname AS "First Name", 
+    lname AS "Last Name", medname AS "Medication Name", amnt_medication 
     AS "Amount to take", how_medication AS "How to be taken", time_medication AS "Time to be taken" 
     FROM member_medications
     WHERE member_medications.lname = 'Simon'
     ORDER BY medname;
 
---We are trying to figure out who are most active members are. What members spend more time at our club than the average?
---SQL Commands: AVG, GROUP BY, HAVING, SUM
+--What members spend more time at our club than the average?
+--SQL Commands: AVG, GROUP BY, HAVING, SUM, ROUND
 SELECT fname AS "First Name", lname AS "Last Name", SUM(ROUND(((check_out - check_in)*24), 2)) AS "Total Time" FROM attendance, mbr, person
 WHERE person.personid = mbr.memberid 
 AND attendance.memberid = mbr.memberid
@@ -1552,15 +1553,15 @@ SELECT fname AS "First Name", lname AS "Last Name", org_name AS "Organization Na
     AND fname = 'Mary'
     AND lname = 'Kay';
 
---We need to make sure all of our members have received their immunization shots. 
+--We need to make sure all of our members have gotten their immunization shots. 
 --Do we have any members who have not received it?
 --SQL Commands: LEFT JOIN, WHERE 
 SELECT COUNT(memberid) AS "Members" FROM medical_history LEFT JOIN mbr USING (memberid)
     WHERE immunizations = 'N';
 
---I want to make sure Riley Johnson has atleast one person as an authorized individual to pick them up after club hours. 
+--I want to make sure Riley Johnson has at least one person as an authorized individual to pick them up after club hours. 
 --Please provide me a list with their Last name and First names.
---SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname), WHERE, AND, ORDER BY 
+--SQL Commands: ALIAS (per.lname,perfname,aut.lname,aut.fname), WHERE, AND, ORDER BY
 SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name", aut.lname AS "Authorized Ind's Last Name",
     per.fname AS "Person's First Name",
     per.lname AS "Person's Last Name"
@@ -1576,7 +1577,7 @@ SELECT relationship AS "Relationship", aut.fname AS "Authorized Ind's First Name
 --I want the name of the member who has orientation on September 15,2018. 
 --The club is preparing a welcome basket for them and I want 
 --to make sure my staff members will finish it by their date. 
---SQL Commands: WHERE, AND, TO_DATE, ORDER BY 
+--SQL Commands: WHERE, AND, ORDER BY, TO_DATE
 SELECT fname AS "Member First Name",lname AS "Member Last Name", mname AS "Member Middle Initial"
 FROM consentform,person
 WHERE orienschedule = TO_DATE('September 15,2018','Month DD, YYYY') 
@@ -1585,9 +1586,8 @@ ORDER BY lname, fname, mname;
 
 
 --Please give me a phone number for all the doctors that we have in our system.  
---SQL Commands: WHERE, EQUIJOIN,ORDER BY
-SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  
-(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
+--SQL Commands: WHERE, EQUIJOIN, ORDER BY
+SELECT fname AS "Doctor's First Name", lname AS "Doctor's Last Name",  TO_CHAR(pnumber, '999g999g9999','nls_numeric_characters=.-') AS "Phone Number" 
 FROM medstaff, phone, person, person_phone
 WHERE person.personid = medstaff.medstaffid
 AND person.personid = person_phone.personid
@@ -1596,7 +1596,7 @@ AND jobtype = 'D'
 ORDER BY LNAME, FNAME;
 
 --Please provide the phone number and name of each authorized individual.
---SQL Commands: WHERE, EQUIJOIN,ORDER BY
+--SQL Commands: WHERE, EQUIJOIN, ORDER BY
 SELECT fname AS "First Name", lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
 FROM person,authorized_individual,phone,person_phone
 WHERE person.personid = authorized_individual.authorizedindid
@@ -1605,7 +1605,7 @@ AND phone.phoneid = authorized_individual.authphoneid
 ORDER BY lname, fname;
 
 --Please Provide me with the name of club members and the staff member that entered in their consent form.
---SQL Commands: Alias,WHERE,ORDER BY
+--SQL Commands: Alias, WHERE, ORDER BY
 SELECT  stf.fname AS "Staff Member's First Name", stf.lname AS "Staff Member's Last Name",
 per.fname AS "Member's First Name",
 per.lname AS "Member's Last Name"
@@ -1615,8 +1615,8 @@ AND per.personid = mbr.memberid
 AND mbr.memberid = consentform.conid
 ORDER BY stf.lname, stf.fname, per.lname, per.fname;
 
---We are looking to up-date the birthday board for this month. Please provide me with all members who have May birthdays and thier ages.
---SQL Commands: Dervied date, where, and, like, order by, round
+--We are looking to up-date the birthday board for this month. Please provide me with all members who have May birthdays and their ages.
+--SQL Commands: Dervied DATE, WHERE, AND, LIKE, ORDER BY, ROUND
 SELECT TO_CHAR(dob, 'MM/DD/YYYY') AS "Birthday", ROUND ((CURRENT_DATE - dob)/365.25) AS "Age",fname AS "Member First Name", 
 lname AS "Member Last Name", mname AS "Member Middle Initial" 
 FROM dobirth, mbr, person
