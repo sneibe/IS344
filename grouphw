@@ -473,7 +473,7 @@ INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wentze
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wentzel', 'Mike');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Varian', 'Brooke');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kapping', 'Mitchell');
-INSERT INTO person (Personid, lname, fname) VALUES(seqpersonid.NEXTVAL, 'Carter', 'Matthew');
+INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Carter', 'Matthew');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Kelley', 'Aaron');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Wians', 'Andy');
 INSERT INTO person (personid, lname, fname) VALUES (seqpersonid.NEXTVAL, 'Gust', 'Leisha');
@@ -547,7 +547,7 @@ CREATE SEQUENCE seqaddressid
 
 --Insert Statments for address
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '422 Kay Street', 'Eau Claire',DEFAULT, '54703-6362');
-INSERT INTO address VALUES(seqaddressid.NEXTVAL, '505 5th Street', 'Chippewa Falls',DEFAULT, ' 54729');
+INSERT INTO address VALUES(seqaddressid.NEXTVAL, '505 5th Street', 'Chippewa Falls',DEFAULT, '54729');
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '800 Keith Street', 'Eau Claire',DEFAULT, '54703-6362');
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '900 Lake Sreet', 'Eau Claire',DEFAULT, '54701-6362');
 INSERT INTO address VALUES(seqaddressid.NEXTVAL, '122 4th Sreet', 'Eau Claire',DEFAULT, '54701-6362');
@@ -842,8 +842,8 @@ INSERT INTO Member_Ethnicity VALUES (2,10);
 
 --The code below are the insert statement for Truancy Table
 INSERT INTO truancy VALUES (3,'Fighting with students');
-INSERT INTO truancy  VALUES (5,'Skipping class');
-INSERT INTO truancy  VALUES (9,'Bullying');
+INSERT INTO truancy VALUES (5,'Skipping class');
+INSERT INTO truancy VALUES (9,'Bullying');
 
 --the code below creates the sequence for Academic Information. 
 CREATE SEQUENCE academicinformationseq
@@ -937,7 +937,7 @@ NOCACHE;
 --The table below creates the types of services offered.
 INSERT INTO services VALUES (sevicesseq.NEXTVAL,'Speech');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'English Language Learner');
-INSERT INTO services  VALUES (sevicesseq.NEXTVAL, 'Title I');
+INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Title I');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Cognitive Disability');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Learning Disability');
 INSERT INTO services VALUES (sevicesseq.NEXTVAL, 'Emotional/behavioral Disability');
