@@ -1253,16 +1253,7 @@ SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.lnam
   Group by conid)
   ORDER BY conid;
   
- --Provide me with all the consent forms that have payment information please provide me with the consent form id, member names and the payment information.
- --The "T" stands for payment type
-SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", 
-  TO_CHAR(daterecievedpay, 'MM/DD/YYYY') AS "Date Rec.", TO_CHAR (dateenteredpay, 'MM/DD/YYYY') AS "Date Enter" from consentform, paymentinfo, mbr, person
-  WHERE consentform.conid = paymentinfo.conid
-  AND consentform.memberid = mbr.memberid
-  AND mbr.memberid = person.personid
-  AND consentform.conid IN (Select conid from paymentinfo
-  GROUP BY conid)
-  ORDER BY consentform.conid;
+
 
 --Business Rule #13 - Person:Organization 
 --A person may be a part of one or more organizations. 
@@ -1632,3 +1623,17 @@ FROM dobirth, mbr, person
 WHERE dobirth.birthid = mbr.birthid AND mbr.memberid = person.personid
 AND dob LIKE '%%-MAY-%%%%'
 ORDER BY "Birthday", "Age", lname, fname, mname;
+
+
+ --Provide me with all the consent forms that have payment information please provide me with the consent form id, member names and the payment information.
+ --The "T" stands for payment type
+ --SQL Commands:Where, and, in , group by, to char, as
+SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", 
+  paymenttype AS "T",TO_CHAR (paymentamnt, '$999,999') AS "Amount", TO_CHAR(daterecievedpay, 'MM/DD/YYYY') AS "Date Rec.", 
+  TO_CHAR (dateenteredpay, 'MM/DD/YYYY') AS "Date Enter" from consentform, paymentinfo, mbr, person
+  WHERE consentform.conid = paymentinfo.conid
+  AND consentform.memberid = mbr.memberid
+  AND mbr.memberid = person.personid
+  AND consentform.conid IN (Select conid from paymentinfo
+  GROUP BY conid)
+  ORDER BY consentform.conid;
