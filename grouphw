@@ -1592,14 +1592,18 @@ AND person_phone.phoneid = phone.phoneid
 AND jobtype = 'D'
 ORDER BY LNAME, FNAME;
 
---Please provide the phone number and name of each authorized individual.
+--Please provide the phone number and name of each authorized individual who is the emergency contact for member. 
 --SQL Commands: WHERE, EQUIJOIN,ORDER BY
-SELECT fname AS "First Name", lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
-FROM person,authorized_individual,phone,person_phone
-WHERE person.personid = authorized_individual.authorizedindid
-AND person.personid = person_phone.personid
+SELECT mem.fname AS "Member First Name", mem.lname AS "Member Last Name", mem.mname AS "Member Middle Initial",
+au.fname AS "Authorized Ind. First Name", au.lname AS "Last Name",pnumber AS "Phone Number",ptype AS "Phone Type" 
+FROM person au, person mem, mbr, authorized_individual,phone,person_phone
+WHERE au.personid = authorized_individual.authorizedindid
+AND au.personid = person_phone.personid
 AND phone.phoneid = authorized_individual.authphoneid
-ORDER BY lname, fname;
+AND mem.personid= mbr.memberid
+AND mem.personid = authorized_individual.memberid
+AND emg_cont ='Y'
+ORDER BY mem.lname, mem.fname, mem.mname;
 
 --Please Provide me with the name of club members and the staff member that entered in their consent form.
 --SQL Commands: Alias,WHERE,ORDER BY
