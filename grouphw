@@ -1628,7 +1628,8 @@ AND dob LIKE '%%-MAY-%%%%'
 ORDER BY "Birthday", "Age", lname, fname, mname;
 
 
- --Provide me with all the consent forms that have payment information, please provide me with the consent form id, member names, and the payment information.
+ --Provide me with all the members who have payed. Please provide the members full name, consent form id, payment information,
+ --The date the payment was received and then entered into our sytem.
  --The "T" stands for payment type
  --SQL Commands: WHERE, AND, IN, GROUP BY, TO_CHAR, AS
 SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " Member Last Name", mname AS "Member Middle Initial", 
@@ -1637,6 +1638,6 @@ SELECT consentform.conid AS "Form ID", fname AS "Member First Name", lname AS " 
   WHERE consentform.conid = paymentinfo.conid
   AND consentform.memberid = mbr.memberid
   AND mbr.memberid = person.personid
-  AND consentform.conid IN (Select conid from paymentinfo
+  AND consentform.conid IN (SELECT conid FROM paymentinfo
   GROUP BY conid)
   ORDER BY consentform.conid;
