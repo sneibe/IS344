@@ -1151,8 +1151,8 @@ AND address.addrid = mbr.mbraddrid
 ORDER BY lname, fname;
 
 --Business Rule #4 - Person:Person (Teacher)
---A person may be a teacher.
---A teacher is a person.
+--A person may be taught by one or teachers.
+--A teacher may teach one or more people.
 --Please provide me a list of all the teachers. 
 SELECT DISTINCT (teacherid) AS "Teacher ID", fname AS "First Name",lname AS "Last Name" FROM person, teacher
  WHERE person.personid = teacher.teacherid
@@ -1248,8 +1248,8 @@ ORDER BY lname, fname;
 
 --Business Rule #12 - Consent Form:Payment Information
 --Consent Form:Payment Information
---A consent form may need payment information.
---Each payment information belongs to one consent form.
+--A consent form may need a payment.
+--Each payment belongs to one consent form.
 --Provide me with all the consent forms that do not have payment information, please provide the consent form id, the members name, the authorized
 --individual's name, and the authorized individual's phone number so we can contact them for payment.
 
@@ -1269,7 +1269,7 @@ SELECT consentform.conid AS "Form ID",mem.fname AS "Member First Name", mem.mnam
 --Business Rule #13 - Person:Organization 
 --A person may be a part of one or more organizations. 
 --Each organization contains one or more people. 
- --Who works at Menards?
+--Who works at Menards?
 SELECT fname AS "First Name", lname AS "Last Name" FROM person, person_org, org
 WHERE person.personid = person_org.personid
 AND person_org.org_id = org.org_id
@@ -1288,8 +1288,8 @@ ORDER BY org_name;
  
 --Business Rule #15 - Member:Services 
 --A member may use one or more services. 
---Each service may be used by one or more member. 
- --Which of our members use the learning disability service at their school?
+--Each service may be used by one or more members. 
+--Which of our members use the learning disability service at their school?
 SELECT fname AS "First Name", mname as "Middle", lname AS "Last Name" FROM person, mbr, services_used, services
 WHERE servicename = 'Learning Disability'
 AND person.personid = mbr.memberid
@@ -1316,7 +1316,7 @@ ORDER BY lname, fname;
  
 --Business Rule #18 - Member:Family Information 
 --A member provides their family information. 
---Each family information belongs to one or more members. 
+--Each families information belongs to one or more members. 
 --How big is Ethan Berkley's family? 
 SELECT famsize AS "Family Size" FROM person, mbr, familyinfo
  WHERE person.personid = mbr.memberid
@@ -1392,8 +1392,8 @@ AND rec_counseling =  'Y'
 ORDER BY lname, fname;
 
 --Business Rule #26 - Person:Person (Doctor/Physician) 
---A person may provide one or more medical staff people(doctor or physician).
---Each medical staff person is provided by one person.
+--A person may provide one or more doctors or physicians (Medical Staff) for the member.
+--Each doctor or physician is provided by one person.
 --Which physician(s) were provided by two or more members? Please provide the physician's first and last name and the name of the members
 -- who provided the physician.
 -- Which members have the same physician? Please provide me with the member's first, middle, and last name, and the physician's first and last name
@@ -1426,7 +1426,7 @@ SELECT mem.fname AS "Member First Name", mem.lname AS "Last Name", medname AS "M
   ORDER BY mem.lname, mem.fname;
 
 --Business Rule #28 Member:Health Condition
---A member may provide one or more helath conditions.
+--A member may provide one or more health conditions.
 --Each health condition is provided by one or more members.
 --Which members have the same health condition. Please provide me with the health condition and members name
 SELECT healthcondname AS "Health Condition", lname AS "Last Name", fname AS "First Name", mname AS "Middle Name" FROM person, mbr, mbr_health_condition, healthcondition
